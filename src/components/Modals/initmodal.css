@@ -1,0 +1,29 @@
+.font-init {
+    font-family: 'Roboto Condensed', sans-serif;
+}
+
+.font-link2 {
+    font-family: 'Open Sans', sans-serif;
+    color: #5a869f;
+    font-size: 0.8rem !important;
+}
+
+.font-title {
+    color: #3074a4;
+
+}
+
+.modal-body {
+    text-align: center;
+}
+
+p {
+    padding-bottom: 20px;
+}
+
+.font-subtitle {
+    font-family: 'Roboto', sans-serif;
+    color: #5a869f;
+    font-size: 0.8rem !important;
+
+}

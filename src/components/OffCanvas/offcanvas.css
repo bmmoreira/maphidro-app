@@ -1,0 +1,25 @@
+.main {
+    background-color: #3887BE !important;
+    color: white;
+}
+
+
+.offcanvas {
+    width: 440px !important;
+ 
+}
+
+.main2 {
+    background-color: #ffff !important;
+    color: #3887BE;
+    text-align: center;
+    width: 100% !important;
+}
+
+.bt1 {
+    margin-top: 40px !important;
+}
+
+.sc-logo {
+    margin-bottom: 30px !important;
+}

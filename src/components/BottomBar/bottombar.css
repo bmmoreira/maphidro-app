@@ -1,0 +1,17 @@
+.bottom-bar {
+    background-color: 'transparent'; 
+    position: fixed;
+    left: 50%;
+    bottom: -20px;
+    transform: translate(-50%, -50%);
+    margin: 0 auto;
+    z-index: 3;
+    
+  }
+
+.bar-buttons {
+    margin: 0px;
+    padding: 0px;
+    border: none;
+    background-color: transparent;
+}

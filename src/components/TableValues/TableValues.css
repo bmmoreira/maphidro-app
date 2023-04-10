@@ -1,0 +1,55 @@
+.station-details{
+    text-align: left;
+    left: 0px;
+    font-size: medium;
+    color:blue;
+    background-color:beige;
+
+}
+
+.station-details span {
+    font-size: small;
+    font-weight: 800;
+    color:#1c445f;
+}
+
+.data-details{
+    text-align: left;
+    left: 0px;
+    font-size: medium;
+    color: #1c445f;
+    background-color:beige;
+
+}
+
+.station-details tr:nth-child(odd) {
+    background-color: #dce5e9;
+}
+
+.station-details tr:nth-child(even) {
+    background-color: #c2cacd;
+}
+
+.station-details th {
+    background-color: #000000;
+}
+
+.station-sat{
+    text-align: center;
+    font-size: 10px;
+    background-color:rgb(193, 225, 237);
+}
+
+.station-sat td{
+    color: #777;
+    font-weight: bolder;
+}
+
+
+.station-sat tr:nth-child(odd) {
+    color: rgb(47, 209, 98);
+}
+
+.station-sat tr:nth-child(even) {
+    color: rgb(146, 202, 253);
+}
