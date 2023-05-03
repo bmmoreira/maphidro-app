@@ -46,7 +46,7 @@ const mystyle = {
       let sat = props.satValues.prec;  
       let local = props.localValues.prec;
      
-      setDaily(props.dailyPrec); // execute side effect
+      //setDaily(props.dailyPrec); // execute side effect
       setLocYear(props.locYear);
       setYearValues(props.localValues);
       setSatValues(props.satValues);

@@ -8,11 +8,11 @@ import "./searchtoast.css";
 type StationData = {
   id: number;
   attributes: {
-    code: string;
-    longitude: number;
-    latitude: number;
-    name: string;
-    type: string;
+    stCode: string;
+    stLongitude: number;
+    stLatitude: number;
+    stName: string;
+    stUF: string;
   }
 }
 
@@ -64,8 +64,8 @@ const SearchToast = (props: SearchProp) => {
                   props.searchData.stationData!.map((item, idx) => (
                     
                  <li key={idx} ><button className='btn btn-default' 
-                  onClick={()=>{props.flyTo([item.attributes.longitude,item.attributes.latitude])}}>
-                    <span className="font-search">{item.attributes.code} - {item.attributes.name} - {item.attributes.type}</span>
+                  onClick={()=>{props.flyTo([item.attributes.stLongitude,item.attributes.stLatitude])}}>
+                    <span className="font-search">{item.attributes.stCode} - {item.attributes.stName} - {item.attributes.stUF}</span>
                     </button></li>
                   ))}
                   </ul>
