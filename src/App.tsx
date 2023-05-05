@@ -33,7 +33,13 @@ const App: React.FC = () => {
     localData: {},
     satData: {},
     dataSatLoaded: false,
-    dataLocLoaded: false
+    dataLocLoaded: false,
+    barChart: {
+      yearSelectSatData: 0,
+      yearSelectLocData: 0,
+      locBar: {},
+      satbar: {}
+    }
   };
 
   function mapReducer(draft: any, action: any) {
@@ -48,6 +54,20 @@ const App: React.FC = () => {
       case 'loadSat':
         draft.satData = action.value;
         draft.dataSatLoaded = action.loaded;
+        break;
+      case 'loadData':
+        draft.stationData = action.infoValue;
+        draft.satData = action.satValue;
+        draft.localData = action.locValue;
+        draft.dataSatLoaded = action.locDataloaded;
+        draft.dataLocLoaded = action.satDataloaded;
+        () => {
+          toggleChartModal();
+        };
+        break;
+      case 'chart':
+        draft.barChart.locBar = action.locBar;
+        //draft.barChart.satBar = action.satBar;
         break;
     }
   }
@@ -107,12 +127,19 @@ const App: React.FC = () => {
   };
 
   const [chartModal, setChartModal] = useState(false);
-  const toggleChartModal = (stationObj: Station) => {
-    setStationObj(stationObj);
+  const toggleChartModal = () => {
+    //setStationObj(stationObj);
     setChartModal((prevState) => {
       return !prevState;
     });
   };
+
+  /*   const toggleChartModal = (stationObj: Station) => {
+    setStationObj(stationObj);
+    setChartModal((prevState) => {
+      return !prevState;
+    });
+  }; */
 
   return (
     <StateContext.Provider value={state}>
@@ -137,7 +164,7 @@ const App: React.FC = () => {
 
           {chartModal && (
             <ChartModal
-              stationObj={stationObj}
+              //stationObj={stationObj}
               show={chartModal}
               onHide={() => setChartModal(false)}
             />

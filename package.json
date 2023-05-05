@@ -12,6 +12,7 @@
     "@testing-library/user-event": "^13.5.0",
     "@turf/turf": "^6.5.0",
     "@types/jest": "^27.5.2",
+    "@types/maplibre-gl": "^1.14.0",
     "@types/node": "^17.0.45",
     "@types/react": "^18.0.17",
     "@types/react-dom": "^18.0.6",
@@ -22,6 +23,7 @@
     "i18next-http-backend": "^1.4.1",
     "immer": "^10.0.1",
     "json2csv": "^5.0.7",
+    "lodash": "^4.17.21",
     "maplibre-gl": "^2.3.0",
     "react": "^18.2.0",
     "react-bootstrap": "^2.5.0",
@@ -81,6 +83,7 @@
   },
   "devDependencies": {
     "@types/json2csv": "^5.0.3",
+    "@types/lodash": "^4.14.194",
     "@types/react-calendar-heatmap": "^1.6.3",
     "@typescript-eslint/eslint-plugin": "^5.33.1",
     "@typescript-eslint/parser": "^5.33.1",

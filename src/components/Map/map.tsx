@@ -367,14 +367,15 @@ function Map(props: MaplibreMapProps) {
         coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
       }
 
-      getLocData(stationJSON.code, stationJSON.uf);
-      getSatData(stationJSON.code, stationJSON.uf);
+      //getLocData(stationJSON.code, stationJSON.uf);
+      //getSatData(stationJSON.code, stationJSON.uf);
 
-      /*      const reactRoot = ReactDOM.createRoot(rootRef.current!);
-      reactRoot.render(<StationPopup
-        stationObj={stationJSON}
-         getData={getStationData}
-       />); */
+      /*       const reactRoot = ReactDOM.createRoot(node);
+      reactRoot.render(
+        <div>
+          <StationPopup stationObj={stationJSON} getData={getStationData} />
+        </div>
+      ); */
 
       const popupNode = document.createElement('div');
       ReactDOM.render(
@@ -382,6 +383,7 @@ function Map(props: MaplibreMapProps) {
         popupNode
       );
       popUpRef.current.setLngLat(coordinates).setDOMContent(popupNode).addTo(mapLibre);
+      //popUpRef.current.setLngLat(coordinates).setHTML('<div>'+ teste +'</div>').addTo(mapLibre);
     }); // map on click
 
     mapLibre.on('mouseenter', 'clusters', function () {
@@ -496,11 +498,19 @@ function Map(props: MaplibreMapProps) {
 
   async function getStationData(id: string, uf: string) {
     try {
-      const res = await axios({
+      const sId = String(id).padStart(8, '0');
+
+      const [stData, stLocData, stSatData] = await Promise.all([
+        axios.get(`/data/stations/stations-${uf}.json`),
+        axios.get(`data/BR/${uf}/chuvas_L${sId}.json`),
+        axios.get(`data/BR/${uf}/chuvas_S${sId}.json`)
+      ]);
+
+      /*    const res = await axios({
         method: 'get',
         url: `/data/stations/stations-${uf}.json`
-      });
-      const ufStations = res.data.stations;
+      }); */
+      const ufStations = stData.data.stations;
       let st: any;
 
       ufStations.forEach((item: any) => {
@@ -510,9 +520,30 @@ function Map(props: MaplibreMapProps) {
       });
 
       appDispatch({
+        type: 'loadData',
+        infoValue: st,
+        locValue: stLocData.data,
+        satValue: stSatData.data._satData,
+        locDataloaded: stLocData.data != null,
+        satDataloaded: stSatData.data._satData != null
+      });
+
+      /*       appDispatch({
         type: 'loadStation',
         value: st
       });
+
+      appDispatch({
+        type: 'loadLocal',
+        value: stLocData.data,
+        loaded: true
+      });
+
+      appDispatch({
+        type: 'loadSat',
+        value: stSatData.data._satData,
+        loaded: true
+      }); */
       //const sObj = new Station(res.data.data.attributes);
       //show Station Modal;
       props.showModalChart(new Station(st));

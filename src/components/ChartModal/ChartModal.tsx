@@ -15,6 +15,8 @@ import { useTranslation } from 'react-i18next';
 import Select from 'react-select';
 import DispatchContext from '../../DispatchContext';
 import StateContext from '../../StateContext';
+import { useImmer } from 'use-immer';
+import { cloneDeep, groupBy } from 'lodash';
 
 import './chartmodal.css';
 
@@ -24,7 +26,7 @@ interface AllYearsOptions {
 }
 
 interface ChartProps {
-  stationObj: Station | undefined;
+  //stationObj: Station | undefined;
   show: boolean;
   onHide(): void;
 }
@@ -63,6 +65,27 @@ type HeatSquareValue = {
 
 const ChartModal = function (props: ChartProps) {
   const { t } = useTranslation();
+  const [state, setState] = useImmer({
+    barChart: {
+      yearSelectSatData: 0,
+      yearSelectLocData: 0,
+      chartData: [
+        { name: t('Jan') },
+        { name: t('Fev') },
+        { name: t('Mar') },
+        { name: t('Apr') },
+        { name: t('May') },
+        { name: t('Jun') },
+        { name: t('Jul') },
+        { name: t('Aug') },
+        { name: t('Sep') },
+        { name: t('Oct') },
+        { name: t('Nov') },
+        { name: t('Dec') }
+      ]
+    }
+  });
+
   const appDispatch = useContext(DispatchContext);
   const appState = useContext(StateContext);
 
@@ -84,7 +107,7 @@ const ChartModal = function (props: ChartProps) {
   // const [sumYear, setSumYears] = useState({});
 
   // State 8
-  const [stObj, setStObj] = useState<Station>();
+  // const [stObj, setStObj] = useState<Station>();
   // State 9
   const [loading, setLoading] = useState(true);
   // State 10
@@ -127,8 +150,8 @@ const ChartModal = function (props: ChartProps) {
 
   useEffect(() => {
     //setStationObj(props.stobj);
-    const stObjJSON = props.stationObj;
-    if (stObjJSON != undefined) {
+    //const stObjJSON = props.stationObj;
+    /*     if (stObjJSON != undefined) {
       const stationType = stObjJSON._type;
 
       setStObj(stObjJSON);
@@ -138,9 +161,12 @@ const ChartModal = function (props: ChartProps) {
       }
 
       getSatData();
-    }
+    } */
+    getLocData();
+    getSatData();
+
     return () => {
-      setStObj(undefined);
+      //setStObj(undefined);
       setSatObj(null);
       setLocalObj(null);
       setLocalValues({});
@@ -155,27 +181,40 @@ const ChartModal = function (props: ChartProps) {
       setSelectedYear('2021');
       //setLocal(false);
     };
-  }, [props.stationObj]);
+  }, [appState.stationData._id]);
 
   const getLocData = async () => {
     try {
       // Create Local Object with the JSON Data object from the response with station data
       const localRainData = new LocalData(appState.localData, appState.stationData._coordinates);
-      console.log(appState);
+      //console.log(appState);
       //stObj._faultDays = response.data._faultDays;
       //stObj._faultMonths = response.data._faultMonths.length;
 
       //Populate Bar Chart Data with the Overall Years and the Last Year by default.
-      const lastMonths: number[] = localRainData.getLastYear();
-      lastMonths.reverse();
 
-      const meanPerMonth: MeanPerMonth = localRainData.getMeanPerMonth();
-      const dataMedian: number[] = meanPerMonth.months;
-      const arrayLength = dataMedian.length;
-      const firstYear: string = meanPerMonth.initialYear;
-      const lastYear: string = meanPerMonth.endYear;
+      //calculate last year average to display in BarChart
+      const lastMonths: number[] = localRainData.getLastYear().reverse();
+
+      //calculate average of each month for all years
+      const averagePerMonth: MeanPerMonth = localRainData.getMeanPerMonth();
+      const precpAverage: number[] = averagePerMonth.months;
+      const arrayLength = precpAverage.length;
+      const firstYear: string = averagePerMonth.initialYear;
+      const lastYear: string = averagePerMonth.endYear;
+      /*
+         ## Add to the array of Months - Precipitation Data
+         { name: t('Jan') }
+         Ex:
+         { name: "Jan", 
+           [`loc_${firstYear}-${lastYear}`]: dMedian.toFixed(2),
+           ['loc_' + lastYear]: lastMonths[i]
+         Result:
+          Month Name -----  Year -------- Average -- Year -- Average
+         { name: "Jan",  "loc_1981-2020": "393.61", loc_2020: 206.7,}
+      */
       for (let i = 0; i < arrayLength; i++) {
-        const dMedian: number = dataMedian[i];
+        const dMedian: number = precpAverage[i];
         Object.assign(chartData[i], {
           [`loc_${firstYear}-${lastYear}`]: dMedian.toFixed(2)
         });
@@ -183,8 +222,19 @@ const ChartModal = function (props: ChartProps) {
           ['loc_' + lastYear]: lastMonths[i]
         });
       }
+      const deep = cloneDeep(chartData);
+
+      appDispatch({
+        type: 'chart',
+        locBar: deep
+      });
+
       //var bdata = localRainData.getBarData(chartData);
       setChartData(chartData);
+      setState((draft) => {
+        draft.barChart.chartData = JSON.parse(JSON.stringify(deep));
+      });
+      //const cloneUser = JSON.parse(JSON.stringify(chartData));
 
       //populate Select Box with Labels and Values from the Local Data
       const years: number[] = localRainData.getAllYears().sort();
@@ -285,9 +335,9 @@ const ChartModal = function (props: ChartProps) {
       //setChartData(chartData);
     } catch (err: any) {
       console.log('error' + err);
-      if (props.stationObj != undefined) {
+      /*  if (props.stationObj != undefined) {
         //setChartData(null);
-      }
+      } */
     } finally {
       setLoading(false);
     }
@@ -323,6 +373,11 @@ const ChartModal = function (props: ChartProps) {
       setSelectedOption((prevValue: any) => ({
         ...prevValue
       }));
+
+      setState((draft) => {
+        draft.barChart.yearSelectSatData = event.value;
+        draft.barChart.chartData = JSON.parse(JSON.stringify(chartValue));
+      });
     }
   };
 
@@ -350,6 +405,9 @@ const ChartModal = function (props: ChartProps) {
           });
         }
         setChartData(chartValue);
+        setState((draft) => {
+          draft.barChart.chartData = cloneDeep(chartValue);
+        });
       }
       const locTest = localObj;
       const locValues = localObj.getLocalYearValues(event.value);
@@ -370,6 +428,10 @@ const ChartModal = function (props: ChartProps) {
       setSelectedOption((prevValue: any) => ({
         ...prevValue
       }));
+
+      setState((draft) => {
+        draft.barChart.yearSelectLocData = event.value;
+      });
     }
   };
 
@@ -398,7 +460,7 @@ const ChartModal = function (props: ChartProps) {
             className="text-center"
             style={{ color: '#3887be' }}>
             <span style={{ fontWeight: '700' }}>
-              {stObj && stObj.getName()} &#40;{stObj && stObj.getOperator()}&#41;
+              {appState.stationData._stationName} &#40;{appState.stationData._stationOperator}&#41;
             </span>
           </Modal.Title>
         </Modal.Header>
