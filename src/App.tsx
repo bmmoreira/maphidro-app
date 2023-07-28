@@ -2,10 +2,11 @@ import React, { useState } from 'react';
 import Map from './components/Map/map';
 import './App.css';
 import './global.css';
+
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 import Axios from 'axios';
-Axios.defaults.baseURL = 'http://localhost:3000';
+Axios.defaults.baseURL = 'http://localhost:3002';
 
 import { useImmerReducer } from 'use-immer';
 import StateContext from './StateContext';
@@ -21,6 +22,9 @@ import SideBar from './components/OffCanvas/OffCanvas2';
 import ChartModal from './components/ChartModal/ChartModal';
 import Station from './components/DataModels/Station4';
 import useWindowDimensions from './utils/useWindowDimensions';
+import Header from './components/Header.js';
+import Footer from './components/Footer.js';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 export type Basin = {
   id: number;
@@ -144,43 +148,23 @@ const App: React.FC = () => {
   return (
     <StateContext.Provider value={state}>
       <DispatchContext.Provider value={dispatch}>
-        <div className="App">
-          <LocalModal show={localModal} onHide={() => setLocalModal(false)} />
+        <BrowserRouter>
+          <div className="App">
+            <Header />
 
-          <SatModal show={satModal} onHide={() => setSatModal(false)} />
-
-          <Toolbar
-            drawerClickHandler={() => toggleDrawer(basin)}
-            localClickHandler={() => toggleLocalModal()}
-            satClickHandler={() => toggleSatModal()}
-            widthValue={width}
-          />
-
-          {width > 480 ? (
-            <InitModal show={initModal} onHide={() => setInitModal(false)} />
-          ) : (
-            <InitScreen show={initScreen} onHide={() => setInitScreen(false)} />
-          )}
-
-          {chartModal && (
-            <ChartModal
-              //stationObj={stationObj}
-              show={chartModal}
-              onHide={() => setChartModal(false)}
+            <Map
+              initialOptions={{ center: [-55.59, -15.91], zoom: 4.1 }}
+              onLoaded={handleMapLoading}
+              showModalChart={toggleChartModal}
+              drawerClickHandler={toggleDrawer}
+              offCanvas={offCanvas}
+              setOffCanvas={setOffCanvas}
             />
-          )}
 
-          <Map
-            initialOptions={{ center: [-55.59, -15.91], zoom: 4.1 }}
-            onLoaded={handleMapLoading}
-            showModalChart={toggleChartModal}
-            drawerClickHandler={toggleDrawer}
-            offCanvas={offCanvas}
-            setOffCanvas={setOffCanvas}
-          />
-
-          {loading && <MapLoadingHolder className="loading-holder" />}
-        </div>
+            {loading && <MapLoadingHolder className="loading-holder" />}
+          </div>
+          <Footer />
+        </BrowserRouter>
       </DispatchContext.Provider>
     </StateContext.Provider>
   );
