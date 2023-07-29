@@ -1,29 +1,20 @@
 import React, { useState } from 'react';
 import Map from './components/Map/map';
-import './App.css';
-import './global.css';
-
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 import Axios from 'axios';
-Axios.defaults.baseURL = 'http://localhost:3002';
+Axios.defaults.baseURL = 'http://localhost:3000';
 
 import { useImmerReducer } from 'use-immer';
 import StateContext from './StateContext';
 import DispatchContext from './DispatchContext';
-
-import MapLoadingHolder from './components/Map/map-loading-holder';
-import Toolbar from './components/Toolbar/Toolbar';
-import LocalModal from './components/Modals/LocalModal';
-import InitModal from './components/Modals/InitModal';
-import InitScreen from './components/OffCanvas/InitScreen';
-import SatModal from './components/Modals/SatModal';
-import SideBar from './components/OffCanvas/OffCanvas2';
-import ChartModal from './components/ChartModal/ChartModal';
 import Station from './components/DataModels/Station4';
 import useWindowDimensions from './utils/useWindowDimensions';
-import Header from './components/Header.js';
-import Footer from './components/Footer.js';
+import Header from './components/pages/Header';
+import Footer from './components/pages/Footer';
+import About from './components/pages/About';
+import Terms from './components/pages/Terms';
+import HomeGuest from './components/pages/HomeGuest';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 export type Basin = {
@@ -151,17 +142,24 @@ const App: React.FC = () => {
         <BrowserRouter>
           <div className="App">
             <Header />
-
-            <Map
-              initialOptions={{ center: [-55.59, -15.91], zoom: 4.1 }}
-              onLoaded={handleMapLoading}
-              showModalChart={toggleChartModal}
-              drawerClickHandler={toggleDrawer}
-              offCanvas={offCanvas}
-              setOffCanvas={setOffCanvas}
-            />
-
-            {loading && <MapLoadingHolder className="loading-holder" />}
+            <Routes>
+              <Route path="/" element={<HomeGuest />} />
+              <Route
+                path="/map"
+                element={
+                  <Map
+                    initialOptions={{ center: [-55.59, -15.91], zoom: 4.1 }}
+                    onLoaded={handleMapLoading}
+                    showModalChart={toggleChartModal}
+                    drawerClickHandler={toggleDrawer}
+                    offCanvas={offCanvas}
+                    setOffCanvas={setOffCanvas}
+                  />
+                }
+              />
+              <Route path="/about-maphidro" element={<About />} />
+              <Route path="/terms" element={<Terms />} />
+            </Routes>
           </div>
           <Footer />
         </BrowserRouter>
