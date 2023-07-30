@@ -589,7 +589,7 @@ textarea.tall-textarea {
 }
 
 .page {
-  height: calc(100vh - 157px) !important; /* calculate height of the screen minus the heading */
+  height: calc(100vh - 169px) !important; /* calculate height of the screen minus the heading */
 }
 
 .logo {

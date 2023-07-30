@@ -1,7 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import Axios from 'axios';
-
-function HeaderLoggedOut() {
+import DispatchContext from '../../DispatchContext';
+import StateContext from '../../StateContext';
+function HeaderLoggedOut(props) {
+  const appDispatch = useContext(DispatchContext);
+  const appState = useContext(StateContext);
   const [username, setUsername] = useState();
   const [password, setPassword] = useState();
 
@@ -12,8 +15,18 @@ function HeaderLoggedOut() {
       const response = await Axios.post('http://localhost:8080/login', { username, password });
       if (response.data) {
         console.log(response.data);
+        // save values from response to local storage to remember user in the web browser's local storage, so that way they persist, or we can access them later
+        appDispatch({ type: 'login', data: response.data });
+        appDispatch({
+          type: 'flashMessages',
+          value: 'You have successfully logged in'
+        });
       } else {
         console.log('incorrect username /password');
+        appDispatch({
+          type: 'flashMessages',
+          value: 'Invalid username / password. '
+        });
       }
     } catch (error) {
       console.log('there was a problem in log in');
