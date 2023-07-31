@@ -27,6 +27,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import InputAdornment from '@mui/material/InputAdornment';
 import TextField from '@mui/material/TextField';
+import Chip from '@mui/material/Chip';
 
 function HeaderLoggedIn(props) {
   const appDispatch = useContext(DispatchContext);
@@ -81,12 +82,10 @@ function HeaderLoggedIn(props) {
           container
           spacing={0}
           sx={{
-            backgroundColor: 'green',
-            boxShadow: '0px 5px 10px 0px rgba(0, 0, 0, 0.5)',
             m: 0
           }}>
           <Grid xs={4} sx={{ backgroundColor: '#f0f0f0' }}>
-            <img src="images/skeleton-logo.png" />
+            <img src="images/mh_logo.png" />
           </Grid>
           <Grid xs={8} sx={{ backgroundColor: '#f0f0f0', display: 'flex', gap: '10px' }}>
             <IconButton
@@ -164,21 +163,21 @@ function HeaderLoggedIn(props) {
           </Grid>
         </Grid>
 
-        <Grid container spacing={0} sx={{ flexGrow: 1, m: 0 }}>
+        <Grid container spacing={0} sx={{ backgroundColor: '#f0f0f0', display: 'flex' }}>
           <Grid
             xs={12}
             sx={{
-              backgroundColor: 'blue',
               display: 'flex',
               height: '40px',
-              justifyContent: 'center'
+              justifyContent: 'center',
+              alignItems: 'center'
             }}>
             <TextField
               label="search stations"
               size="small"
               sx={{
                 width: '400px',
-                height: '18px',
+
                 fontStyle: 'italic',
                 borderRadius: '20%'
               }}
@@ -186,9 +185,11 @@ function HeaderLoggedIn(props) {
                 style: {
                   border: '1px solid #EAEAEA',
                   borderRadius: '25px',
-                  padding: '0px 0 0px 0px'
+                  height: '30px',
+                  padding: '0px 0 0px 0px',
+                  backgroundColor: 'white'
                 },
-                endAdornment: (
+                startAdornment: (
                   <InputAdornment size="small">
                     <IconButton>
                       <SearchIcon />
@@ -201,20 +202,22 @@ function HeaderLoggedIn(props) {
           <Grid
             xs={12}
             sx={{
-              backgroundColor: 'green',
               display: 'flex',
               height: '40px',
-              justifyContent: 'center'
+              gap: '10px',
+              justifyContent: 'center',
+              alignItems: 'center'
             }}>
-            2
+            <Chip icon={<PublicIcon />} label="Where" />
+            <Chip icon={<WatchLaterIcon />} label="When" />
+            <Chip icon={<TuneIcon />} label="How" />
           </Grid>
         </Grid>
 
-        <Grid container spacing={0} sx={{ flexGrow: 1, m: 0 }}>
+        <Grid container spacing={0} sx={{ backgroundColor: '#f0f0f0', display: 'flex' }}>
           <Grid
             xs={8}
             sx={{
-              backgroundColor: 'white',
               display: 'flex',
               gap: '10px',
               justifyContent: 'center'
@@ -297,11 +300,40 @@ function HeaderLoggedIn(props) {
           <Grid
             xs={4}
             sx={{
-              backgroundColor: 'purple',
               display: 'flex',
-              justifyContent: 'end'
+              flexDirection: 'column',
+              alignItems: 'flex-end',
+              paddingRight: '20px',
+              height: '80px'
             }}>
-            <img src="images/skeleton-login.png" />
+            <div>
+              <IconButton aria-label="delete" color="primary">
+                <SettingsIcon />
+              </IconButton>
+              <IconButton aria-label="delete" color="primary">
+                <MailIcon />
+              </IconButton>
+              <IconButton aria-label="delete" color="primary">
+                <HelpIcon />
+              </IconButton>
+            </div>
+            <Button
+              aria-label="delete"
+              endIcon={<PersonIcon />}
+              color="primary"
+              sx={{
+                backgroundColor: 'white',
+                display: 'flex',
+                flexDirection: 'row',
+                justifyContent: 'center',
+                fontSize: '0.9rem',
+                height: '30px',
+                width: '140px',
+                borderRadius: '5px',
+                marginTop: '5px'
+              }}>
+              Log in
+            </Button>
           </Grid>
         </Grid>
       </Box>
