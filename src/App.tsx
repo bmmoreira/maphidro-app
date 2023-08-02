@@ -54,19 +54,19 @@ const App: React.FC = () => {
   };
 
   /*Goal that all of our loading and saving user related actions takes place in one place
-  now have the user object that will be available in our global or app wide state.
-  So now any other component that needs to access this data will no longer need to talk
-  to the browser's localStorage. It can just find these values in State. 
-  But we need to ask ourselves how should these values get set into localStorage 
-  in the first place when you perform a successful login?
-  Well, we would also want to perform that within our Main.js file.
-  we first need to actually save these values into localStorage in the first place when you log in
+now have the user object that will be available in our global or app wide state.
+So now any other component that needs to access this data will no longer need to talk
+to the browser's localStorage. It can just find these values in State. 
+But we need to ask ourselves how should these values get set into localStorage 
+in the first place when you perform a successful login?
+Well, we would also want to perform that within our Main.js file.
+we first need to actually save these values into localStorage in the first place when you log in
 because remember we just commented out that code within HeaderLoggedOut. Now, technically yes, 
 we could just include code right here(Reducer Function) in this case that saves it into localStorage. 
 But philosophically, we want to keep our Reducer pure in terms of it only working
 with React ish things or only working with State. In other words if we need to do 
 something that's considered a side effect like directly changing the browser's dom
- in rare situations, or in this case working with the browser's local storage
+in rare situations, or in this case working with the browser's local storage
 we should probably do those types of things within a useEffect.
   */
 

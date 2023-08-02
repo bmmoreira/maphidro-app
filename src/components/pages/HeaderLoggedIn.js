@@ -1,3 +1,5 @@
+/** @format */
+
 import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import DispatchContext from '../../DispatchContext';
@@ -5,9 +7,6 @@ import StateContext from '../../StateContext';
 import Box from '@mui/material/Box';
 import Grid from '@mui/system/Unstable_Grid';
 import Button from '@mui/material/Button';
-import SendIcon from '@mui/icons-material/Book';
-import { styled } from '@mui/material/styles';
-import ButtonBase from '@mui/material/ButtonBase';
 import IconButton from '@mui/material/IconButton';
 import Badge from '@mui/material/Badge';
 import MailIcon from '@mui/icons-material/Mail';
@@ -20,36 +19,46 @@ import AutoAwesomeMotionIcon from '@mui/icons-material/AutoAwesomeMotion';
 import SettingsIcon from '@mui/icons-material/Settings';
 import HelpIcon from '@mui/icons-material/Help';
 import PersonIcon from '@mui/icons-material/Person';
+import LogoutIcon from '@mui/icons-material/Logout';
 import PublicIcon from '@mui/icons-material/Public';
 import WatchLaterIcon from '@mui/icons-material/WatchLater';
 import TuneIcon from '@mui/icons-material/Tune';
 import SearchIcon from '@mui/icons-material/Search';
-import { ThemeProvider, createTheme } from '@mui/material/styles';
 import InputAdornment from '@mui/material/InputAdornment';
 import TextField from '@mui/material/TextField';
 import Chip from '@mui/material/Chip';
+import { roundedButton, loginButtom, styleWhite } from '../Utils/constants.js';
 
 function HeaderLoggedIn(props) {
   const appDispatch = useContext(DispatchContext);
   const appState = useContext(StateContext);
-  const theme = createTheme({
-    components: {
-      // Name of the component
 
-      MuiButton: {
-        styleOverrides: {
-          // Name of the slot
-          root: {
-            // Some CSS
-            fontSize: '0.8rem',
-            border: `2px dashed blue`,
-            height: '50px',
-            width: '80px'
-          }
-        }
-      }
+  const buttonStyle = {
+    backgroundColor: styleWhite.bgButton,
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '20px',
+    justifyContent: 'center',
+    fontSize: '0.9rem',
+    height: '80px',
+    width: '80px',
+    borderRadius: '5px',
+    color: styleWhite.colorButtonTitle,
+    '&:hover': {
+      backgroundColor: styleWhite.bgButtonHover,
+      borderColor: styleWhite.borderColorHover,
+      boxShadow: 'none'
+    },
+    '&:active': {
+      boxShadow: 'none',
+      backgroundColor: styleWhite.bgButtonActive,
+      borderColor: styleWhite.borderColorActive
+    },
+    '&:focus': {
+      boxShadow: styleWhite.boxShadowFocus
     }
-  });
+  };
+
   function notificationsLabel(count) {
     if (count === 0) {
       return 'no notifications';
@@ -75,6 +84,7 @@ function HeaderLoggedIn(props) {
           display: 'grid',
           gridTemplateColumns: 'repeat(3, 1fr)',
           alignItems: { xs: 'center', md: 'center' },
+          backgroundColor: styleWhite.bgBox,
           height: '90px',
           m: 0
         }}>
@@ -84,23 +94,15 @@ function HeaderLoggedIn(props) {
           sx={{
             m: 0
           }}>
-          <Grid xs={4} sx={{ backgroundColor: '#f0f0f0' }}>
-            <img src="images/mh_logo.png" />
-          </Grid>
-          <Grid xs={8} sx={{ backgroundColor: '#f0f0f0', display: 'flex', gap: '10px' }}>
-            <IconButton
-              aria-label={notificationsLabel(100)}
-              sx={{
-                backgroundColor: 'white',
-                display: 'flex',
-                flexDirection: 'column',
-                gap: '20px',
-                justifyContent: 'center',
-                fontSize: '0.9rem',
-                height: '80px',
-                width: '80px',
-                borderRadius: '5px'
-              }}>
+          <Grid xs={4} sx={{ backgroundColor: styleWhite.bg }}></Grid>
+          <Grid
+            xs={8}
+            sx={{
+              backgroundColor: styleWhite.bg,
+              display: 'flex',
+              gap: '10px'
+            }}>
+            <IconButton aria-label={notificationsLabel(100)} sx={{ ...buttonStyle }}>
               <Badge
                 anchorOrigin={{
                   vertical: 'bottom',
@@ -112,19 +114,7 @@ function HeaderLoggedIn(props) {
               </Badge>
               <div>Projects</div>
             </IconButton>
-            <IconButton
-              aria-label={notificationsLabel(100)}
-              sx={{
-                backgroundColor: 'white',
-                display: 'flex',
-                flexDirection: 'column',
-                gap: '20px',
-                justifyContent: 'center',
-                fontSize: '0.9rem',
-                height: '80px',
-                width: '80px',
-                borderRadius: '5px'
-              }}>
+            <IconButton aria-label={notificationsLabel(100)} sx={{ ...buttonStyle }}>
               <Badge
                 anchorOrigin={{
                   vertical: 'bottom',
@@ -136,19 +126,7 @@ function HeaderLoggedIn(props) {
               </Badge>
               <div>Timeline</div>
             </IconButton>
-            <IconButton
-              aria-label={notificationsLabel(100)}
-              sx={{
-                backgroundColor: 'white',
-                display: 'flex',
-                flexDirection: 'column',
-                gap: '20px',
-                justifyContent: 'center',
-                fontSize: '0.9rem',
-                height: '80px',
-                width: '80px',
-                borderRadius: '5px'
-              }}>
+            <IconButton aria-label={notificationsLabel(100)} sx={{ ...buttonStyle }}>
               <Badge
                 anchorOrigin={{
                   vertical: 'bottom',
@@ -163,7 +141,7 @@ function HeaderLoggedIn(props) {
           </Grid>
         </Grid>
 
-        <Grid container spacing={0} sx={{ backgroundColor: '#f0f0f0', display: 'flex' }}>
+        <Grid container spacing={0} sx={{ backgroundColor: styleWhite.bg, display: 'flex' }}>
           <Grid
             xs={12}
             sx={{
@@ -173,21 +151,21 @@ function HeaderLoggedIn(props) {
               alignItems: 'center'
             }}>
             <TextField
-              label="search stations"
+              hiddenLabel
               size="small"
+              placeholder="search for stations"
               sx={{
                 width: '400px',
-
                 fontStyle: 'italic',
-                borderRadius: '20%'
+                height: '20px'
               }}
               InputProps={{
                 style: {
-                  border: '1px solid #EAEAEA',
-                  borderRadius: '25px',
-                  height: '30px',
-                  padding: '0px 0 0px 0px',
-                  backgroundColor: 'white'
+                  border: '1px solid #cccccc',
+
+                  height: '35px',
+                  padding: '0px 0px 0px 0px',
+                  backgroundColor: '#b3e5f7'
                 },
                 startAdornment: (
                   <InputAdornment size="small">
@@ -208,13 +186,34 @@ function HeaderLoggedIn(props) {
               justifyContent: 'center',
               alignItems: 'center'
             }}>
-            <Chip icon={<PublicIcon />} label="Where" />
-            <Chip icon={<WatchLaterIcon />} label="When" />
-            <Chip icon={<TuneIcon />} label="How" />
+            <Chip
+              icon={<PublicIcon />}
+              label="Where"
+              sx={{
+                color: styleWhite.colorButtonTitle,
+                backgroundColor: styleWhite.bgButton
+              }}
+            />
+            <Chip
+              icon={<WatchLaterIcon />}
+              label="When"
+              sx={{
+                color: styleWhite.colorButtonTitle,
+                backgroundColor: styleWhite.bgButton
+              }}
+            />
+            <Chip
+              icon={<TuneIcon />}
+              label="How"
+              sx={{
+                color: styleWhite.colorButtonTitle,
+                backgroundColor: styleWhite.bgButton
+              }}
+            />
           </Grid>
         </Grid>
 
-        <Grid container spacing={0} sx={{ backgroundColor: '#f0f0f0', display: 'flex' }}>
+        <Grid container spacing={0} sx={{ backgroundColor: styleWhite.bg, display: 'flex' }}>
           <Grid
             xs={8}
             sx={{
@@ -222,19 +221,7 @@ function HeaderLoggedIn(props) {
               gap: '10px',
               justifyContent: 'center'
             }}>
-            <IconButton
-              aria-label={notificationsLabel(100)}
-              sx={{
-                backgroundColor: 'white',
-                display: 'flex',
-                flexDirection: 'column',
-                gap: '20px',
-                justifyContent: 'center',
-                fontSize: '0.9rem',
-                height: '80px',
-                width: '80px',
-                borderRadius: '5px'
-              }}>
+            <IconButton aria-label={notificationsLabel(100)} sx={{ ...buttonStyle }}>
               <Badge
                 anchorOrigin={{
                   vertical: 'bottom',
@@ -246,19 +233,7 @@ function HeaderLoggedIn(props) {
               </Badge>
               <div>Select</div>
             </IconButton>
-            <IconButton
-              aria-label={notificationsLabel(100)}
-              sx={{
-                backgroundColor: 'white',
-                display: 'flex',
-                flexDirection: 'column',
-                gap: '20px',
-                justifyContent: 'center',
-                fontSize: '0.9rem',
-                height: '80px',
-                width: '80px',
-                borderRadius: '5px'
-              }}>
+            <IconButton aria-label={notificationsLabel(100)} sx={{ ...buttonStyle }}>
               <Badge
                 anchorOrigin={{
                   vertical: 'bottom',
@@ -271,19 +246,7 @@ function HeaderLoggedIn(props) {
               <div>Filters</div>
             </IconButton>
 
-            <IconButton
-              aria-label={notificationsLabel(100)}
-              sx={{
-                backgroundColor: 'white',
-                display: 'flex',
-                flexDirection: 'column',
-                gap: '20px',
-                justifyContent: 'center',
-                fontSize: '0.9rem',
-                height: '80px',
-                width: '80px',
-                borderRadius: '5px'
-              }}>
+            <IconButton aria-label={notificationsLabel(100)} sx={{ ...buttonStyle }}>
               <Badge
                 anchorOrigin={{
                   vertical: 'bottom',
@@ -307,33 +270,34 @@ function HeaderLoggedIn(props) {
               height: '80px'
             }}>
             <div>
-              <IconButton aria-label="delete" color="primary">
+              <IconButton aria-label="settings" sx={{ ...roundedButton }}>
                 <SettingsIcon />
               </IconButton>
-              <IconButton aria-label="delete" color="primary">
+              <IconButton aria-label="mail" sx={{ ...roundedButton }}>
                 <MailIcon />
               </IconButton>
-              <IconButton aria-label="delete" color="primary">
+              <IconButton aria-label="help" sx={{ ...roundedButton }}>
                 <HelpIcon />
               </IconButton>
             </div>
-            <Button
-              aria-label="delete"
-              endIcon={<PersonIcon />}
-              color="primary"
-              sx={{
-                backgroundColor: 'white',
-                display: 'flex',
-                flexDirection: 'row',
-                justifyContent: 'center',
-                fontSize: '0.9rem',
-                height: '30px',
-                width: '140px',
-                borderRadius: '5px',
-                marginTop: '5px'
-              }}>
-              Log in
-            </Button>
+            {appState.loggedIn ? (
+              <Button
+                aria-label="account"
+                onClick={handleLogout}
+                endIcon={<LogoutIcon />}
+                color="primary"
+                sx={{ ...loginButtom }}>
+                Log out
+              </Button>
+            ) : (
+              <Button
+                aria-label="logout"
+                endIcon={<PersonIcon />}
+                color="primary"
+                sx={{ ...loginButtom }}>
+                Log in
+              </Button>
+            )}
           </Grid>
         </Grid>
       </Box>

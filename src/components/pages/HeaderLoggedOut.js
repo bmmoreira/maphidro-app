@@ -2,6 +2,16 @@ import React, { useContext, useState } from 'react';
 import Axios from 'axios';
 import DispatchContext from '../../DispatchContext';
 import StateContext from '../../StateContext';
+import Box, { BoxProps } from '@mui/material/Box';
+import Grid from '@mui/system/Unstable_Grid';
+import PersonIcon from '@mui/icons-material/Person';
+import Button from '@mui/material/Button';
+import { loginButtom } from '../Utils/constants.js';
+import { Link } from 'react-router-dom';
+
+import Input, { InputProps } from '@mui/base/Input';
+import { styled } from '@mui/system';
+
 function HeaderLoggedOut(props) {
   const appDispatch = useContext(DispatchContext);
   const appState = useContext(StateContext);
@@ -34,37 +44,108 @@ function HeaderLoggedOut(props) {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="mb-0 pt-2 pt-md-0">
-      <div className="row align-items-center">
-        <div className="col-md mr-0 pr-md-0 mb-3 mb-md-0">
-          <input
+    <div style={{ width: '100%' }}>
+      <form onSubmit={handleSubmit}>
+        <Box
+          display="flex"
+          flexDirection="row"
+          alignItems="center"
+          justifyContent="center"
+          flexWrap="wrap"
+          sx={{ backgroundColor: '#007bff' }}>
+          <h4 className="my-0 mr-md-auto font-weight-normal">
+            <Link to={`/`} className="text-white" style={{ textDecoration: 'none' }}>
+              <img src="assets/mh_logo.png" alt="maphidro logo" />
+              MapHidro
+            </Link>
+          </h4>
+
+          <CustomInput
+            aria-label="username"
+            placeholder="Username"
             onChange={(e) => {
               setUsername(e.target.value);
             }}
             name="username"
-            className="form-control form-control-sm input-dark"
             type="text"
-            placeholder="Username"
-            autoComplete="off"
           />
-        </div>
-        <div className="col-md mr-0 pr-md-0 mb-3 mb-md-0">
-          <input
+          <CustomInput
+            aria-label="username"
+            placeholder="Password"
             onChange={(e) => {
               setPassword(e.target.value);
             }}
             name="password"
-            className="form-control form-control-sm input-dark"
             type="password"
-            placeholder="Password"
           />
-        </div>
-        <div className="col-md-auto">
-          <button className="btn btn-success btn-sm">Sign In</button>
-        </div>
-      </div>
-    </form>
+          <Button
+            aria-label="logout"
+            endIcon={<PersonIcon />}
+            color="primary"
+            type="submit"
+            sx={{ marginLeft: '20px', ...loginButtom }}>
+            Sign In
+          </Button>
+        </Box>
+      </form>
+    </div>
   );
 }
 
 export default HeaderLoggedOut;
+
+const CustomInput = React.forwardRef(function CustomInput(props, ref) {
+  return <Input slots={{ input: StyledInputElement }} {...props} ref={ref} />;
+});
+
+const blue = {
+  100: '#DAECFF',
+  200: '#80BFFF',
+  400: '#3399FF',
+  500: '#007FFF',
+  600: '#0072E5'
+};
+
+const grey = {
+  50: '#F3F6F9',
+  100: '#E7EBF0',
+  200: '#E0E3E7',
+  300: '#CDD2D7',
+  400: '#B2BAC2',
+  500: '#A0AAB4',
+  600: '#6F7E8C',
+  700: '#3E5060',
+  800: '#2D3843',
+  900: '#1A2027'
+};
+
+const StyledInputElement = styled('input')(
+  ({ theme }) => `
+  width: 300px;
+  font-family: IBM Plex Sans, sans-serif;
+  font-size: 0.875rem;
+  font-weight: 400;
+  line-height: 1.5;
+  padding: 4px 12px;
+  margin: 10px 10px 10px;
+  border-radius: 8px;
+  color: ${theme.palette.mode === 'dark' ? grey[300] : grey[900]};
+  background: ${theme.palette.mode === 'dark' ? grey[900] : '#fff'};
+  border: 1px solid ${theme.palette.mode === 'dark' ? grey[700] : grey[200]};
+  box-shadow: 0px 2px 2px ${theme.palette.mode === 'dark' ? grey[900] : grey[50]};
+
+  &:hover {
+    border-color: ${blue[400]};
+  }
+
+  &:focus {
+    border-color: ${blue[400]};
+    box-shadow: 0 0 0 3px ${theme.palette.mode === 'dark' ? blue[500] : blue[200]};
+  }
+
+  // firefox
+  &:focus-visible {
+    outline: 0;
+  }
+`
+);
