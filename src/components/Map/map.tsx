@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState, useReducer, useContext } from 'react';
 import * as ReactDOMClient from 'react-dom/client';
+import LoadingDotsIcon from '../pages/LoadingDotsIcon';
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 //@ts-ignore
@@ -51,6 +52,7 @@ import RoomIcon from '@mui/icons-material/Room';
 import { grey } from '@mui/material/colors';
 import RiverPopup from '../Popup/RiverPopup';
 import { Basin } from '../../App';
+import Page from '../pages/Page';
 
 interface MaplibreMapProps {
   initialOptions?: Omit<maplibregl.MapOptions, 'container' | 'style'>;
@@ -66,6 +68,7 @@ interface MaplibreMapProps {
 function Map(props: MaplibreMapProps) {
   const rootRef = React.useRef(null);
   const appDispatch = useContext(DispatchContext);
+  const [isLoading, setIsLoading] = useState(true);
 
   if (process.env.REACT_APP_API_KEY == null) {
     throw new Error('You have to configure env REACT_APP_API_KEY, see README');
@@ -487,7 +490,14 @@ function Map(props: MaplibreMapProps) {
     // if onMapLoaded is specified it will be called once
     // by "load" map event
     if (props.onLoaded) mapLibre.once('load', () => props.onLoaded(mapLibre));
-    // removing map object and calling onMapRemoved callback
+
+    mapLibre.on('idle', (e: any) => {
+      // do things every time the map idles
+      console.log('idle');
+      setIsLoading(false);
+      setShowOverlay(false);
+    });
+    console.log('not idle'); // removing map object and calling onMapRemoved callback
     // when component will unmout
     return () => {
       mapLibre.remove();
@@ -596,18 +606,35 @@ function Map(props: MaplibreMapProps) {
       console.log('Map-getLocData-error: ' + error.message);
     }
   };
+  const [showOverlay, setShowOverlay] = useState(true);
 
-  const [value, setValue] = React.useState(0);
+  const toggleOverlay = () => {
+    setShowOverlay(!showOverlay);
+    console.log('overlay');
+  };
+
+  const Overlay = () => {
+    return (
+      <div className="overlay">
+        <div className="spinner"></div>
+        {/* Optionally, you can add a loading message */}
+        <p
+          style={{
+            marginLeft: '60px',
+            marginBottom: '40px',
+            fontWeight: '600',
+            fontSize: '1.5rem',
+            color: '#b3e5f7'
+          }}>
+          Loading MapHidro...
+        </p>
+      </div>
+    );
+  };
 
   return (
     <div ref={rootRef} className="map-wrap">
       <div ref={mapContainerRef} className="map">
-        {spinner && (
-          <Spinner animation="border" role="status" className="spinner">
-            <span className="visually-hidden">Loading...</span>
-          </Spinner>
-        )}
-
         <SideBar
           show={props.offCanvas}
           onHide={() => props.setOffCanvas(false)}
@@ -618,6 +645,8 @@ function Map(props: MaplibreMapProps) {
           onToggleClusters={toggleClusters}
           onToggleHMControls={toggleSat}
         />
+
+        {showOverlay && <Overlay />}
       </div>
     </div>
   );

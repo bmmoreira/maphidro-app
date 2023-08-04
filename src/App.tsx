@@ -22,6 +22,7 @@ import ViewSinglePost from './components/pages/ViewSinglePost';
 import FlashMessages from './components/pages/FlashMessages';
 import NotFound from './components/pages/NotFound';
 import MapGuest from './components/pages/MapGuest';
+import { useTranslation } from 'react-i18next';
 
 export type Basin = {
   id: number;
@@ -206,6 +207,38 @@ we should probably do those types of things within a useEffect.
       return !prevState;
     });
   }; */
+
+  /*
+  Well, when our main component first renders we would just immediately wanna send an Axios request
+  to the server to check if our token is still valid or not. If it's no longer valid, if the server says
+  that the token is too old, we can just force the user to log out and have them log back in
+  so they will have a new perfectly working token.
+  */
+  useEffect(() => {
+    if (state.loggedIn) {
+      const ourRequest = Axios.CancelToken.source();
+      const fResults = async function fetchResults() {
+        try {
+          const response = await Axios.post(
+            '/checkToken',
+            { token: state.user.token },
+            { cancelToken: ourRequest.token }
+          );
+          if (!response.data) {
+            dispatch({ type: 'logout' });
+            dispatch({
+              type: 'flashMessages',
+              value: 'Your session has expired. Please log in again.'
+            });
+          }
+        } catch (e) {
+          console.log('There was a problem or the request was cancelled.');
+        }
+      };
+      fResults();
+      return () => ourRequest.cancel();
+    }
+  }, []);
 
   return (
     <StateContext.Provider value={state}>

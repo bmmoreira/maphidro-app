@@ -1,42 +1,34 @@
 /** @format */
 
-import React from "react";
-import Page from "./Page";
+import React from 'react';
+import Page from './Page';
 
 function Terms() {
-	return (
-		<Page title="Terms and Conditions">
-			<h2>Our Terms &amp; Conditions</h2>
-			<p className="lead text-muted">
-				Lorem ipsum dolor sit amet consectetur adipisicing elit. Corporis
-				dolorum labore quisquam vel id dicta fuga! Ducimus, quo. Dolore
-				commodi aliquid error veritatis consequuntur, excepturi cumque fuga
-				eum incidunt doloremque?
-			</p>
-			<p>
-				Lorem ipsum, dolor sit amet consectetur adipisicing elit. At qui
-				enim rem totam voluptatum. Aut saepe temporibus, facilis ex a iste
-				expedita minima dolorum dicta doloribus libero aliquid, quae
-				maxime? Lorem ipsum dolor sit amet consectetur adipisicing elit.
-				Fugiat suscipit beatae eum, est soluta ducimus ratione et impedit
-				sapiente, nihil, atque dignissimos adipisci? Totam atque officia
-				quis voluptates sed veniam?
-			</p>
-			<p>
-				Lorem, ipsum dolor sit amet consectetur adipisicing elit. Expedita
-				voluptates quisquam possimus tenetur, dicta enim rerum quis,
-				quaerat id nobis provident quo dolorum sapiente temporibus facere
-				non repellendus consequatur cupiditate!
-			</p>
-			<h3>Details</h3>
-			<p>
-				Lorem ipsum dolor sit amet consectetur adipisicing elit. Quae
-				laboriosam distinctio atque sint earum? Temporibus, voluptas
-				aspernatur aliquam nisi sed harum laborum, nemo odio animi officia
-				quisquam. Veniam, natus reprehenderit.
-			</p>
-		</Page>
-	);
+  return (
+    <Page title="Terms and Conditions">
+      <h2>Our Terms &amp; Conditions</h2>
+      <p className="lead text-muted">
+        Permission is hereby granted, free of charge, to any person obtaining a copy of this
+        software and associated documentation files (the “Software”), to deal in the Software
+        without restriction, including without limitation the rights to use, copy, modify, merge,
+        publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons
+        to whom the Software is furnished to do so, subject to the following conditions:
+      </p>
+      <p className="lead text-muted">
+        The above copyright notice and this permission notice shall be included in all copies or
+        substantial portions of the Software.
+      </p>
+
+      <p className="lead text-muted">
+        The software is provided “as is”, without warranty of any kind, express or implied,
+        including but not limited to the warranties of merchantability, fitness for a particular
+        purpose and noninfringement. in no event shall the authors or copyright holders be liable
+        for any claim, damages or other liability, whether in an action of contract, tort or
+        otherwise, arising from, out of or in connection with the software or the use or other
+        dealings in the software.
+      </p>
+    </Page>
+  );
 }
 
 export default Terms;

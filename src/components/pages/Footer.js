@@ -4,8 +4,8 @@ import { Link } from 'react-router-dom';
 function Footer() {
   return (
     <>
-      <footer className="border-top text-center small text-muted py-3">
-        <p>
+      <footer className="border-top text-center small text-muted pt-3 my-0">
+        <div>
           <Link to="/" className="mx-1">
             Home
           </Link>{' '}
@@ -15,20 +15,17 @@ function Footer() {
           </Link>{' '}
           |{' '}
           <Link className="mx-1" to="/about-maphidro">
-            About Us
+            About MapHidro
           </Link>{' '}
-          |{' '}
-          <Link className="mx-1" to="/terms">
-            Terms
-          </Link>
-        </p>
-        <p className="m-0">
-          Copyright &copy; {new Date().getFullYear()}{' '}
-          <a href="/" className="text-muted">
-            MapHidro
-          </a>
-          . All rights reserved.
-        </p>
+          <span>
+            {' '}
+            - Copyright &copy; {new Date().getFullYear()}{' '}
+            <a href="/" className="text-muted">
+              MapHidro
+            </a>
+            . All rights reserved.
+          </span>
+        </div>
       </footer>
     </>
   );

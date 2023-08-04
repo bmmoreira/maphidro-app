@@ -8,6 +8,7 @@ import PersonIcon from '@mui/icons-material/Person';
 import Button from '@mui/material/Button';
 import { loginButtom } from '../Utils/constants.js';
 import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import Input, { InputProps } from '@mui/base/Input';
 import { styled } from '@mui/system';
@@ -17,12 +18,16 @@ function HeaderLoggedOut(props) {
   const appState = useContext(StateContext);
   const [username, setUsername] = useState();
   const [password, setPassword] = useState();
+  const navigate = useNavigate();
 
   async function handleSubmit(e) {
     e.preventDefault();
     try {
       // get token from db if succefully logged
-      const response = await Axios.post('http://localhost:8080/login', { username, password });
+      const response = await Axios.post('https://mh-api.maphidro.com/login', {
+        username,
+        password
+      });
       if (response.data) {
         console.log(response.data);
         // save values from response to local storage to remember user in the web browser's local storage, so that way they persist, or we can access them later
@@ -31,6 +36,7 @@ function HeaderLoggedOut(props) {
           type: 'flashMessages',
           value: 'You have successfully logged in'
         });
+        navigate(`/map`);
       } else {
         console.log('incorrect username /password');
         appDispatch({
@@ -45,49 +51,66 @@ function HeaderLoggedOut(props) {
 
   return (
     <div style={{ width: '100%' }}>
-      <form onSubmit={handleSubmit}>
-        <Box
-          display="flex"
-          flexDirection="row"
-          alignItems="center"
-          justifyContent="center"
-          flexWrap="wrap"
-          sx={{ backgroundColor: '#007bff' }}>
-          <h4 className="my-0 mr-md-auto font-weight-normal">
-            <Link to={`/`} className="text-white" style={{ textDecoration: 'none' }}>
-              <img src="assets/mh_logo.png" alt="maphidro logo" />
-              MapHidro
-            </Link>
-          </h4>
-
-          <CustomInput
-            aria-label="username"
-            placeholder="Username"
-            onChange={(e) => {
-              setUsername(e.target.value);
-            }}
-            name="username"
-            type="text"
-          />
-          <CustomInput
-            aria-label="username"
-            placeholder="Password"
-            onChange={(e) => {
-              setPassword(e.target.value);
-            }}
-            name="password"
-            type="password"
-          />
-          <Button
-            aria-label="logout"
-            endIcon={<PersonIcon />}
-            color="primary"
-            type="submit"
-            sx={{ marginLeft: '20px', ...loginButtom }}>
-            Sign In
-          </Button>
-        </Box>
-      </form>
+      <Box
+        display="flex"
+        flexDirection="row"
+        alignItems="center"
+        justifyContent="center"
+        flexWrap="wrap"
+        sx={{ backgroundColor: '#007bff' }}>
+        <h4 style={{ margin: '0px 30px 0px 0px' }}>
+          <Link to={`/`} className="text-white" style={{ textDecoration: 'none' }}>
+            <img src="assets/mh_logo.png" alt="maphidro logo" />
+            MapHidro
+          </Link>
+        </h4>
+        <form onSubmit={handleSubmit} className="mb-0 pt-2 pt-md-0">
+          <div className="row align-items-center">
+            <div className="col-md mr-0 pr-md-0 mb-3 mb-md-0">
+              <CustomInput
+                aria-label="username"
+                placeholder="Username"
+                onChange={(e) => {
+                  setUsername(e.target.value);
+                }}
+                name="username"
+                type="text"
+              />
+            </div>
+            <div className="col-md mr-0 pr-md-0 mb-3 mb-md-0">
+              <CustomInput
+                aria-label="username"
+                placeholder="Password"
+                onChange={(e) => {
+                  setPassword(e.target.value);
+                }}
+                name="password"
+                type="password"
+              />
+            </div>
+            <div className="col-md-auto">
+              <Button
+                aria-label="logout"
+                endIcon={<PersonIcon />}
+                color="primary"
+                type="submit"
+                sx={{
+                  ...loginButtom,
+                  marginLeft: '20px',
+                  marginBottom: '3px',
+                  backgroundColor: '#198754',
+                  '&:hover': {
+                    backgroundColor: '#146c43',
+                    borderColor: '#0677b2',
+                    boxShadow: 'none'
+                  }
+                }}>
+                Sign In
+              </Button>
+            </div>
+          </div>
+        </form>
+      </Box>
     </div>
   );
 }
