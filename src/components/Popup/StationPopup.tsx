@@ -59,10 +59,6 @@ const StationPopup = (props: StPopupProp) => {
               <th scope="row">{t('longitude')}</th>
               <td>{props.stationObj.longitude.toFixed(4)}</td>
             </tr>
-            <tr>
-              <th scope="row">{t('operator')}</th>
-              <td>{props.stationObj.operator}</td>
-            </tr>
           </tbody>
         </table>
       </div>

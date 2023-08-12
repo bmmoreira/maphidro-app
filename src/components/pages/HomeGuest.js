@@ -256,6 +256,11 @@ function HomeGuest() {
 
   useEffect(() => {
     if (state.email.checkCount) {
+      /* ourRequest Cancel function in case user moves away from page 
+        So that generates a token that can be used. And now we just want 
+        to identify this actual request. Adding a cancelToken to Axios request
+        an to the return function ourRequest.cancel();
+      */
       const ourRequest = Axios.CancelToken.source();
       const fResults = async function fetchResults() {
         try {
@@ -358,7 +363,7 @@ function HomeGuest() {
           </p>
           <Image src="./images/modals/logo_uab.png" alt="Uab_Logo" rounded />
         </div>
-        <div className="col-lg-5 pl-lg-5 pb-3 py-lg-5">
+        <div className="col-lg-5 pl-lg-5 pb-3 py-lg-5 d-flex justify-content-center justify-content-lg-start">
           <form onSubmit={handleSubmit}>
             <div className="form-group">
               <label htmlFor="username-register" className="text-muted mb-1">
@@ -445,10 +450,10 @@ function HomeGuest() {
                   {state.password.message}
                 </div>
               </CSSTransition>
+              <button type="submit" className="py-3 mt-4 btn btn-lg btn-success btn-block">
+                Sign up for MapHidro
+              </button>
             </div>
-            <button type="submit" className="py-3 mt-4 btn btn-lg btn-success btn-block">
-              Sign up for MapHidro
-            </button>
           </form>
         </div>
       </div>

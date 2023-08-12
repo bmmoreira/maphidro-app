@@ -50,23 +50,19 @@ function HeaderLoggedOut(props) {
   }
 
   return (
-    <div style={{ width: '100%' }}>
-      <Box
-        display="flex"
-        flexDirection="row"
-        alignItems="center"
-        justifyContent="center"
-        flexWrap="wrap"
-        sx={{ backgroundColor: '#007bff' }}>
-        <h4 style={{ margin: '0px 30px 0px 0px' }}>
-          <Link to={`/`} className="text-white" style={{ textDecoration: 'none' }}>
-            <img src="assets/mh_logo.png" alt="maphidro logo" />
-            MapHidro
-          </Link>
-        </h4>
-        <form onSubmit={handleSubmit} className="mb-0 pt-2 pt-md-0">
-          <div className="row align-items-center">
-            <div className="col-md mr-0 pr-md-0 mb-3 mb-md-0">
+    <div style={{ width: '100%', backgroundColor: '#b3e5f7' }}>
+      <form onSubmit={handleSubmit}>
+        <div className="container">
+          <div className="row ">
+            <div className="col-12 d-flex justify-content-center col-lg-3 p-2 justify-content-lg-end">
+              <h4 style={{ margin: '0px 30px 0px 0px' }}>
+                <Link to={`/`} className="text-white" style={{ textDecoration: 'none' }}>
+                  <img src="assets/mh_logo.png" alt="maphidro logo" />
+                  MapHidro
+                </Link>
+              </h4>
+            </div>
+            <div className="col-12 d-flex justify-content-center col-lg-3 p-0 align-items-center">
               <CustomInput
                 aria-label="username"
                 placeholder="Username"
@@ -77,9 +73,9 @@ function HeaderLoggedOut(props) {
                 type="text"
               />
             </div>
-            <div className="col-md mr-0 pr-md-0 mb-3 mb-md-0">
+            <div className="col-12 d-flex justify-content-center col-lg-3 p-0 align-items-center">
               <CustomInput
-                aria-label="username"
+                aria-label="Password"
                 placeholder="Password"
                 onChange={(e) => {
                   setPassword(e.target.value);
@@ -88,7 +84,7 @@ function HeaderLoggedOut(props) {
                 type="password"
               />
             </div>
-            <div className="col-md-auto">
+            <div className="col-12 d-flex justify-content-center col-lg-3 p-2 justify-content-lg-start align-items-center">
               <Button
                 aria-label="logout"
                 endIcon={<PersonIcon />}
@@ -109,8 +105,8 @@ function HeaderLoggedOut(props) {
               </Button>
             </div>
           </div>
-        </form>
-      </Box>
+        </div>
+      </form>
     </div>
   );
 }
@@ -144,12 +140,12 @@ const grey = {
 
 const StyledInputElement = styled('input')(
   ({ theme }) => `
-  width: 300px;
+  width: 240px;
   font-family: IBM Plex Sans, sans-serif;
   font-size: 0.875rem;
   font-weight: 400;
   line-height: 1.5;
-  padding: 4px 12px;
+  padding: 4px 10px;
   margin: 10px 10px 10px;
   border-radius: 8px;
   color: ${theme.palette.mode === 'dark' ? grey[300] : grey[900]};

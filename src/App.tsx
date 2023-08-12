@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import Map from './components/Map/map';
-import 'bootstrap/dist/css/bootstrap.min.css';
 
 import Axios from 'axios';
 Axios.defaults.baseURL = 'http://localhost:3000';
@@ -23,6 +22,8 @@ import FlashMessages from './components/pages/FlashMessages';
 import NotFound from './components/pages/NotFound';
 import MapGuest from './components/pages/MapGuest';
 import { useTranslation } from 'react-i18next';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import ChartModal from './components/ChartModal/ChartModal';
 
 export type Basin = {
   id: number;
@@ -276,6 +277,13 @@ we should probably do those types of things within a useEffect.
             </Routes>
           </div>
           <Footer />
+          {chartModal && (
+            <ChartModal
+              //stationObj={stationObj}
+              show={chartModal}
+              onHide={() => setChartModal(false)}
+            />
+          )}
         </BrowserRouter>
       </DispatchContext.Provider>
     </StateContext.Provider>

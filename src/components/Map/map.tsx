@@ -309,7 +309,7 @@ function Map(props: MaplibreMapProps) {
         type: 'geojson',
         // Point to GeoJSON data. This example visualizes all M1.0+ stationIcons
         // from 12/22/15 to 1/21/16 as logged by USGS' Earthquake hazards program.
-        data: './data/geojson/rhn-new3.geojson',
+        data: './data/geojson/rhn-CPRM.geojson',
         cluster: true,
         clusterMaxZoom: 5, // Max zoom to cluster points on
         clusterRadius: 50 // Radius of each cluster when clustering points (defaults to 50)
@@ -361,7 +361,7 @@ function Map(props: MaplibreMapProps) {
         longitude: parseFloat(e.features[0].geometry.coordinates[0]),
         latitude: parseFloat(e.features[0].geometry.coordinates[1]),
         operator: e.features[0].properties.operator,
-        uf: e.features[0].properties.state
+        uf: e.features[0].properties.uf
       };
       // Ensure that if the map is zoomed out such that
       // multiple copies of the feature are visible, the
@@ -620,11 +620,11 @@ function Map(props: MaplibreMapProps) {
         {/* Optionally, you can add a loading message */}
         <p
           style={{
-            marginLeft: '60px',
+            marginLeft: '80px',
             marginBottom: '40px',
             fontWeight: '600',
             fontSize: '1.5rem',
-            color: '#b3e5f7'
+            color: '#0f9bd9'
           }}>
           Loading MapHidro...
         </p>
@@ -645,7 +645,13 @@ function Map(props: MaplibreMapProps) {
           onToggleClusters={toggleClusters}
           onToggleHMControls={toggleSat}
         />
-
+        <LayersToast
+          showLc={true}
+          toggleLc={toggleLc}
+          layers={layers}
+          onLayersHandleChange={layersHandleChange}
+          position={'bottom-start'}
+        />
         {showOverlay && <Overlay />}
       </div>
     </div>
