@@ -7,9 +7,9 @@ class RainData2 {
   _yearMonthMean = [];
   _precipitation = [];
   _meanPerMonth = {
-    initialYear: "",
-    endYear: "",
-    months: [],
+    initialYear: '',
+    endYear: '',
+    months: []
   };
   constructor(
     id,
@@ -32,8 +32,8 @@ class RainData2 {
 
   convertToDate(dateString) {
     //  Convert a "dd/MM/yyyy" string into a Date object
-    let d = dateString.split("/");
-    let dat = new Date(d[2] + "/" + d[1] + "/" + d[0]);
+    let d = dateString.split('/');
+    let dat = new Date(d[2] + '/' + d[1] + '/' + d[0]);
     return dat;
   }
 
@@ -72,7 +72,7 @@ class RainData2 {
     this._meanPerMonth.months = monthValues;
   }
 
-  getMeanPerMonth(){
+  getMeanPerMonth() {
     return this._meanPerMonth;
   }
 
@@ -88,14 +88,21 @@ class RainData2 {
     return monthValues;
   }
 
+  /*
+    returns array of precipitation total values 
+    of the months of that year
+  */
   getYear(value) {
-    var lastYear = new Date(value);
-
-    var year = lastYear.getFullYear();
-    var monthValues = [];
+    //console.log(value);
+    let date = new Date(value, 0, 1);
+    //console.log(date);
+    let year = date.getFullYear();
+    let monthValues = Array(12).fill(0.01);
     this._precipitation.forEach((item) => {
-      if (item._year === year) {
-        monthValues.push(this.toNumber(item._total, 1));
+      //console.log(item._year + ' ' + year);
+      if (item._year == year) {
+        //console.log(item);
+        monthValues[item._month] = this.toNumber(item._total, 1);
       }
     });
     return monthValues;
@@ -114,7 +121,7 @@ class RainData2 {
       year: year,
       max: maxValues,
       total: totalValues,
-      prec: this.getDailyValues(year),
+      prec: this.getDailyValues(year)
     };
   }
 
@@ -133,7 +140,7 @@ class RainData2 {
       year: year,
       max: maxValues,
       total: totalValues,
-      prec: this.getLocalDailyValues(year),
+      prec: this.getLocalDailyValues(year)
     };
   }
 
@@ -159,9 +166,9 @@ class RainData2 {
           countValue = 5;
         }
         datesValues.push({
-          date: new Date(ndate).toISOString().split("T")[0],
+          date: new Date(ndate).toISOString().split('T')[0],
           count: countValue,
-          prec: value.toFixed(1),
+          prec: value.toFixed(1)
         });
       });
     });
@@ -191,9 +198,9 @@ class RainData2 {
           countValue = 5;
         }
         datesValues.push({
-          date: new Date(ndate).toISOString().split("T")[0],
+          date: new Date(ndate).toISOString().split('T')[0],
           count: countValue,
-          prec: value.toFixed(1),
+          prec: value.toFixed(1)
         });
       });
     });

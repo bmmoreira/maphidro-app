@@ -70,6 +70,9 @@ function Map(props: MaplibreMapProps) {
   const appDispatch = useContext(DispatchContext);
   const [isLoading, setIsLoading] = useState(true);
 
+  const BASE_URL = 'http://localhost:1337';
+  const COLLECTION_NAME = 'api/mhstations';
+
   if (process.env.REACT_APP_API_KEY == null) {
     throw new Error('You have to configure env REACT_APP_API_KEY, see README');
   }
@@ -506,16 +509,37 @@ function Map(props: MaplibreMapProps) {
     };
   }, []);
 
+  async function getFromAPI(id: any) {
+    try {
+      const response = await axios.get(`${BASE_URL}/${COLLECTION_NAME}?filters[stCode]=${id}`);
+
+      const entries = response.data.data;
+      console.log(entries);
+      if (entries.length > 0) {
+        return entries[0].attributes;
+      } else {
+        return 'No entry found with the specified custom specific field.!!!';
+      }
+    } catch (error: any) {
+      console.log(error);
+    }
+  }
+
   async function getStationData(id: string, uf: string) {
     try {
       const sId = String(id).padStart(8, '0');
 
-      const [stData, stLocData, stSatData] = await Promise.all([
+      const [stData, stLocData, stSatData, apiData] = await Promise.all([
         axios.get(`/data/stations/stations-${uf}.json`),
         axios.get(`data/BR/${uf}/chuvas_L${sId}.json`),
-        axios.get(`data/BR/${uf}/chuvas_S${sId}.json`)
+        axios.get(`data/BR/${uf}/chuvas_S${sId}.json`),
+        getFromAPI(id)
       ]);
 
+      console.log(apiData);
+      console.log(stLocData.data);
+      console.log(stSatData.data);
+      console.log(apiData.satdata._satData);
       /*    const res = await axios({
         method: 'get',
         url: `/data/stations/stations-${uf}.json`
@@ -529,13 +553,24 @@ function Map(props: MaplibreMapProps) {
         }
       });
 
+      const locFirstYear = new Date(apiData.raindata._initRegisterTime).getFullYear();
+      const locLastYear = new Date(apiData.raindata._lastRegisterTime).getFullYear();
+      const satFirstYear = new Date(apiData.satdata._satData._initRegisterTime).getFullYear();
+      const satLastYear = new Date(apiData.satdata._satData._lastRegisterTime).getFullYear();
+
       appDispatch({
         type: 'loadData',
         infoValue: st,
-        locValue: stLocData.data,
-        satValue: stSatData.data._satData,
+        locValue: apiData.raindata,
+        satValue: apiData.satdata._satData,
         locDataloaded: stLocData.data != null,
-        satDataloaded: stSatData.data._satData != null
+        satDataloaded: stSatData.data._satData != null,
+        valueLocLastYear: locLastYear,
+        valueLocFirstYear: locFirstYear,
+        valueSatLastYear: satLastYear,
+        valueSatFirstYear: satFirstYear,
+        valueSelecetedLocBar: locLastYear - 1,
+        valueSelecetedSatBar: satLastYear - 1
       });
 
       /*       appDispatch({

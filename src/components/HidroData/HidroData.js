@@ -116,17 +116,15 @@ const HidroData = function ({ chartData, localValues, satValues }) {
             <Tooltip />
             <Legend />
             <Bar
-              dataKey={
-                appState.dataLocLoaded
-                  ? 'loc_' + localValues.year
-                  : 'sat_' + satValues.init + '-' + satValues.end
-              }
+              dataKey={'loc_' + String(appState.barChart.locBarSelectedYear)}
               fill="#8884d8"
-              name={
-                appState.dataLocLoaded ? localValues.year : satValues.init + '-' + satValues.end
-              }
+              name={String(appState.barChart.locBarSelectedYear)}
             />
-            <Bar dataKey={'sat_' + satValues.year} fill="#82ca9d" name={satValues.year} />
+            <Bar
+              dataKey={'sat_' + String(appState.barChart.satBarSelectedYear)}
+              fill="#82ca9d"
+              name={String(appState.barChart.satBarSelectedYear)}
+            />
           </BarChart>
         </ResponsiveContainer>
 

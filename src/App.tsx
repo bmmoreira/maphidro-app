@@ -41,8 +41,16 @@ const App: React.FC = () => {
       yearSelectSatData: 0,
       yearSelectLocData: 0,
       locBar: {},
-      satbar: {}
+      satbar: {},
+      chartData: null,
+      satFirsYear: '',
+      satLastYear: '',
+      satBarSelectedYear: '',
+      locLastYear: '',
+      locFirstYear: '',
+      locBarSelectedYear: ''
     },
+    chartData: null,
     loggedIn: Boolean(localStorage.getItem('mapHidroToken')),
     flashMessages: [],
     user: {
@@ -101,13 +109,29 @@ we should probably do those types of things within a useEffect.
         draft.localData = action.locValue;
         draft.dataSatLoaded = action.locDataloaded;
         draft.dataLocLoaded = action.satDataloaded;
+        draft.barChart.locLastYear = action.valueLocLastYear;
+        draft.barChart.locFirstYear = action.valueLocFirstYear;
+        draft.barChart.satFirstYear = action.valueSatFirstYear;
+        draft.barChart.satLastYear = action.valueSatLastYear;
+
+        draft.barChart.locBarSelectedYear = action.valueSelecetedLocBar;
+        draft.barChart.satBarSelectedYear = action.valueSelecetedSatBar;
         () => {
           toggleChartModal();
         };
         break;
       case 'chart':
         draft.barChart.locBar = action.locBar;
-        //draft.barChart.satBar = action.satBar;
+        draft.barChart.chartData = action.locBar;
+        break;
+      case 'setChart':
+        draft.barChart.chartData = action.valueChart;
+        break;
+      case 'setLocBarSelectedYear':
+        draft.barChart.locBarSelectedYear = action.valueSelecetedLocBar;
+        break;
+      case 'setSatBarSelectedYear':
+        draft.barChart.satBarSelectedYear = action.valueSelecetedSatBar;
         break;
     }
   }

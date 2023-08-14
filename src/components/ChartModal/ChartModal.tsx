@@ -104,6 +104,14 @@ const ChartModal = function (props: ChartProps) {
     { name: t('Dec') }
   ];
 
+  const [locObj, setLocObject] = useState<LocalData | null>(
+    new LocalData(appState.localData, appState.stationData._coordinates)
+  );
+  const [satObj, setSatObject] = useState<SatData | null>(
+    new LocalData(appState.satData, appState.stationData._coordinates)
+  );
+  const [selectLocal, setSelectLocal] = useState<AllYearsOptions[]>([]);
+  const [selectSat, setSelectSat] = useState<AllYearsOptions[]>([]);
   // const [sumYear, setSumYears] = useState({});
 
   // State 8
@@ -137,7 +145,7 @@ const ChartModal = function (props: ChartProps) {
   const [selectedYearLocal, setSelectedYearLocal] = useState<string>('2020');
   const [locYear, setLocYear] = useState<string>('2020');
   const [localObj, setLocalObj] = useState<LocalData | null>(null);
-  const [satObj, setSatObj] = useState<SatData | null>(null);
+  // const [satObj, setSatObj] = useState<SatData | null>(null);
 
   const [satStatus, setSatStatus] = useState(false);
   //const [monthLocalDays,setLocalDays] = useState([]);
@@ -147,6 +155,12 @@ const ChartModal = function (props: ChartProps) {
   //const [loadSat, setSat] = useState(false);
   const [debug, setDebug] = useState(false);
   //const [loaded, setLoaded] = useState(false);
+
+  useEffect(() => {
+    if (locObj) {
+      populateSelectOptions();
+    }
+  }, []);
 
   useEffect(() => {
     //setStationObj(props.stobj);
@@ -167,7 +181,8 @@ const ChartModal = function (props: ChartProps) {
 
     return () => {
       //setStObj(undefined);
-      setSatObj(null);
+      //setSatObject(null);
+      //setLocObject(null);
       setLocalObj(null);
       setLocalValues({});
       setSatValues({});
@@ -186,11 +201,19 @@ const ChartModal = function (props: ChartProps) {
   const getLocData = async () => {
     try {
       // Create Local Object with the JSON Data object from the response with station data
-      const localRainData = new LocalData(appState.localData, appState.stationData._coordinates);
+      //const localRainData = new LocalData(appState.localData, appState.stationData._coordinates);
       //console.log(appState);
       //stObj._faultDays = response.data._faultDays;
       //stObj._faultMonths = response.data._faultMonths.length;
-
+      const selectedYear = appState.barChart.locBarSelectedYear;
+      const precipitation = locObj!.getYear(selectedYear);
+      console.log(precipitation);
+      for (let i = 0; i < 12; i++) {
+        Object.assign(chartData[i], {
+          ['loc_' + selectedYear]: precipitation[i]
+        });
+      }
+      /*
       //Populate Bar Chart Data with the Overall Years and the Last Year by default.
 
       //calculate last year average to display in BarChart
@@ -202,7 +225,7 @@ const ChartModal = function (props: ChartProps) {
       const arrayLength = precpAverage.length;
       const firstYear: string = averagePerMonth.initialYear;
       const lastYear: string = averagePerMonth.endYear;
-      /*
+      
          ## Add to the array of Months - Precipitation Data
          { name: t('Jan') }
          Ex:
@@ -212,7 +235,7 @@ const ChartModal = function (props: ChartProps) {
          Result:
           Month Name -----  Year -------- Average -- Year -- Average
          { name: "Jan",  "loc_1981-2020": "393.61", loc_2020: 206.7,}
-      */
+      
       for (let i = 0; i < arrayLength; i++) {
         const dMedian: number = precpAverage[i];
         Object.assign(chartData[i], {
@@ -222,20 +245,23 @@ const ChartModal = function (props: ChartProps) {
           ['loc_' + lastYear]: lastMonths[i]
         });
       }
-      const deep = cloneDeep(chartData);
+      */
 
-      appDispatch({
+      //const deep = cloneDeep(chartData);
+
+      /*  appDispatch({
         type: 'chart',
         locBar: deep
-      });
+      }); */
 
       //var bdata = localRainData.getBarData(chartData);
       setChartData(chartData);
-      setState((draft) => {
+
+      //const cloneUser = JSON.parse(JSON.stringify(chartData));
+      /*
+       setState((draft) => {
         draft.barChart.chartData = JSON.parse(JSON.stringify(deep));
       });
-      //const cloneUser = JSON.parse(JSON.stringify(chartData));
-
       //populate Select Box with Labels and Values from the Local Data
       const years: number[] = localRainData.getAllYears().sort();
       const allYearsOptions: AllYearsOptions[] = [];
@@ -245,28 +271,29 @@ const ChartModal = function (props: ChartProps) {
           label: `${item}`
         });
       });
-      // Add Overal Values from Start Data to Last Date
+       Add Overal Values from Start Data to Last Date
       allYearsOptions.push({
         value: `${firstYear}-${lastYear}`,
         label: `${firstYear}-${lastYear}`
       });
+     
 
       setLocYear(`${lastYear}`);
       setOptionsYearsLocal(allYearsOptions);
       setSelectedYearLocal(`${firstYear}-${lastYear}`);
-
+ 
       setChartDataLabels({
         firstLabel: parseInt(firstYear),
         secondLabel: parseInt(String(lastYear)),
         firstName: String(firstYear + '-' + lastYear),
         secondName: lastYear
       });
-
-      setLocalObj(localRainData);
+*/
+      //setLocalObj(localRainData);
 
       //Data for Daily Heatmap Tab
       //let datesValues = localRainData.getLocalDailyValues(lastYear);
-      const locValues: LocalYearValues = localRainData.getLocalYearValues(lastYear);
+      const locValues: LocalYearValues = locObj!.getLocalYearValues(selectedYear);
       // adds the initial daily rain for the Tab Daily Precipitation
       //setLocalDays(datesValues);
       Object.assign(locValues, {
@@ -308,6 +335,10 @@ const ChartModal = function (props: ChartProps) {
             ['sat_' + lastYear]: parseFloat(lastYearPrec[i])
           });
         }
+        /*   appDispatch({
+          type: 'setChart',
+          valueChart: cloneDeep(prevValue)
+        }); */
         return prevValue;
       });
 
@@ -331,7 +362,7 @@ const ChartModal = function (props: ChartProps) {
       //setLocal(true);
       //setLoaded(true);
 
-      setSatObj(satRainData);
+      //setSatObj(satRainData);
       //setChartData(chartData);
     } catch (err: any) {
       console.log('error' + err);
@@ -348,13 +379,28 @@ const ChartModal = function (props: ChartProps) {
   const [mValues, setMValues] = useState(null);
 
   const handleChangeSat = (event: any) => {
+    //console.log('Satobj');
+    //console.log(satObj);
+    //console.log(chartData);
+    //console.log('event: ' + event.value);
+    /*
+      Get values from Station Object(satObj) to the year 
+      selected returns array of precipitation values of 
+      the months of that year ex.:
+      [ 165.7, 338.1, 276.3, 242.8, 97.6, 35.1, 19.4, 75.8, 100.6, 188.2, 146.1, 201.3]
+    */
     const monthValues: number[] = [];
     if (satObj != undefined) {
       satObj.getYear(event.value).forEach((item) => {
         monthValues.push(item);
       });
-
-      //setMValues(satObj.getYear(event.value));
+      //console.log(monthValues);
+      /*
+        Change current chartData to add new property year
+        ex. { name "Jan", loc_1993-2018: "289.76" }
+        adding selected year value 2022(sat_2022:136)
+        { name "Jan", loc_1993-2018: "289.76", sat_2022: 136 }
+      */
       const chartValue = chartData;
       for (let i = 0; i < 12; i++) {
         Object.assign(chartValue[i], { ['sat_' + event.value]: monthValues[i] });
@@ -369,6 +415,10 @@ const ChartModal = function (props: ChartProps) {
       setSatValues(satValues);
 
       setChartData(chartValue);
+      /*  appDispatch({
+        type: 'setChart',
+        valueBarChart: cloneDeep(chartValue)
+      }); */
       setSelectedYear(event.value);
       setSelectedOption((prevValue: any) => ({
         ...prevValue
@@ -378,59 +428,88 @@ const ChartModal = function (props: ChartProps) {
         draft.barChart.yearSelectSatData = event.value;
         draft.barChart.chartData = JSON.parse(JSON.stringify(chartValue));
       });
+      console.log(event.value);
+      appDispatch({
+        type: 'setSatBarSelectedYear',
+        valueSelecetedSatBar: event.value
+      });
     }
   };
 
-  const handleChangeLoc = (event: any) => {
-    if (localObj != undefined) {
-      const firstYear = localObj._meanPerMonth.initialYear;
-      const lastYear = localObj._meanPerMonth.endYear;
-      const lObj = localObj;
-      const selectedYear = event.value;
+  function populateSelectOptions() {
+    /*
+      Populate Select Satellite and Local with Labels and Values 
+      from the Local Data Object and Sat Data Object calling 
+      the functions to get all precipitations year
+    */
+    const yearsLoc: number[] = locObj!.getAllYears().sort();
+    const selectOptionsLoc: AllYearsOptions[] = [];
 
-      if (event.value === `${firstYear}-${lastYear}`) {
-        // eslint-disable-next-line no-undef
-        console.log('frst');
-      } else {
-        const monthValues: number[] = [];
-        localObj.getYear(event.value).forEach((item) => {
-          monthValues.push(item);
-        });
-        monthValues.reverse();
-        //setMValues(localObj.getYear(event.value));
-        const chartValue = chartData;
-        for (let i = 0; i < 12; i++) {
-          Object.assign(chartValue[i], {
-            ['loc_' + event.value]: monthValues[i]
-          });
-        }
-        setChartData(chartValue);
-        setState((draft) => {
-          draft.barChart.chartData = cloneDeep(chartValue);
+    yearsLoc.forEach((item) => {
+      selectOptionsLoc.push({
+        value: `${item}`,
+        label: `${item}`
+      });
+    });
+
+    const yearsSat: number[] = satObj!.getAllYears().sort();
+    const selectOptionsSat: AllYearsOptions[] = [];
+
+    yearsSat.forEach((item) => {
+      selectOptionsSat.push({
+        value: `${item}`,
+        label: `${item}`
+      });
+    });
+
+    /* Add options values from Start Data - Last Date
+    const firstYear = appState.barChart.locFirstYear;
+    const lastYear = appState.barChart.locLastYear;
+    selectOptions.push({
+      value: `${firstYear + 1}-${lastYear - 1}`,
+      label: `${firstYear + 1}-${lastYear - 1}`
+    });
+    */
+    // Set Select Component Options for Local
+
+    setSelectLocal(selectOptionsLoc);
+    setSelectSat(selectOptionsSat);
+    console.log(selectLocal);
+  }
+
+  const handleChangeLoc = (event: any) => {
+    //console.log('Locobj');
+    //console.log(localObj);
+
+    const firstYear = appState.barChart.locFirstYear + 1;
+    const lastYear = appState.barChart.locLastYear - 1;
+    const eventString = firstYear + '-' + lastYear;
+    console.log(event.value + ' ' + eventString);
+    if (event.value == eventString) {
+      appDispatch({
+        type: 'setLocBarSelectedYear',
+        valueSelecetedLocBar: event.value
+      });
+    } else {
+      const selectedYear = event.value;
+      const precipitation = locObj!.getYear(selectedYear);
+      console.log(precipitation);
+      for (let i = 0; i < 12; i++) {
+        Object.assign(chartData[i], {
+          ['loc_' + selectedYear]: precipitation[i]
         });
       }
-      const locTest = localObj;
-      const locValues = localObj.getLocalYearValues(event.value);
-      setLocalValues((prevValue: any) => {
-        const faultDays = prevValue.faultDays;
-        const faultMonths = prevValue.faultMonths;
-        Object.assign(locValues, { faultDays: faultDays });
-        Object.assign(locValues, { faultMonths: faultMonths });
-        return locValues;
-      });
+      setChartData(chartData);
 
-      //let dailyValues = localObj.getLocalDailyValues(event.value);
+      const locValues = locObj!.getYearValues(event.value);
+      console.log(locValues);
       // adds the initial daily rain for the Tab Daily Precipitation
-      //setLocalDays(datesValues);
-      //setLocalDays(dailyValues);
-      setLocYear(event.value);
-      setSelectedYearLocal(event.value);
-      setSelectedOption((prevValue: any) => ({
-        ...prevValue
-      }));
+      setLocalValues(locValues);
 
-      setState((draft) => {
-        draft.barChart.yearSelectLocData = event.value;
+      console.log(event.value);
+      appDispatch({
+        type: 'setLocBarSelectedYear',
+        valueSelecetedLocBar: event.value
       });
     }
   };
@@ -491,11 +570,11 @@ const ChartModal = function (props: ChartProps) {
                 <Select
                   menuPlacement="top"
                   defaultValue={{
-                    label: String(selectedYearLocal),
-                    value: String(selectedYearLocal)
+                    label: `${appState.barChart.locBarSelectedYear}`,
+                    value: `${appState.barChart.locBarSelectedYear}`
                   }}
                   onChange={handleChangeLoc}
-                  options={optionsYearsLocal}
+                  options={selectLocal}
                 />
               ) : (
                 ''
@@ -508,11 +587,11 @@ const ChartModal = function (props: ChartProps) {
                 <Select
                   menuPlacement="top"
                   defaultValue={{
-                    label: String(selectedYear),
-                    value: String(selectedYear)
+                    label: `${appState.barChart.satBarSelectedYear}`,
+                    value: `${appState.barChart.satBarSelectedYear}`
                   }}
                   onChange={handleChangeSat}
-                  options={optionsYears}
+                  options={selectSat}
                 />
               ) : (
                 ''
