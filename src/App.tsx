@@ -29,8 +29,25 @@ export type Basin = {
   id: number;
   bName: string;
 };
-
+interface MonthNames {
+  name: string;
+}
 const App: React.FC = () => {
+  const { t } = useTranslation();
+  const monthNames: MonthNames[] = [
+    { name: t('Jan') },
+    { name: t('Fev') },
+    { name: t('Mar') },
+    { name: t('Apr') },
+    { name: t('May') },
+    { name: t('Jun') },
+    { name: t('Jul') },
+    { name: t('Aug') },
+    { name: t('Sep') },
+    { name: t('Oct') },
+    { name: t('Nov') },
+    { name: t('Dec') }
+  ];
   const initialState = {
     stationData: {},
     localData: {},
@@ -42,7 +59,8 @@ const App: React.FC = () => {
       yearSelectLocData: 0,
       locBar: {},
       satbar: {},
-      chartData: null,
+      chartData: monthNames,
+
       satFirsYear: '',
       satLastYear: '',
       satBarSelectedYear: '',
@@ -51,6 +69,8 @@ const App: React.FC = () => {
       locBarSelectedYear: ''
     },
     chartData: null,
+    satHeatmap: {},
+    locHeatmap: {},
     loggedIn: Boolean(localStorage.getItem('mapHidroToken')),
     flashMessages: [],
     user: {
@@ -126,6 +146,12 @@ we should probably do those types of things within a useEffect.
         break;
       case 'setChart':
         draft.barChart.chartData = action.valueChart;
+        break;
+      case 'satHeatmap':
+        draft.satHeatmap = action.valueSatHeatmap;
+        break;
+      case 'locHeatmap':
+        draft.locHeatmap = action.valueLocHeatmap;
         break;
       case 'setLocBarSelectedYear':
         draft.barChart.locBarSelectedYear = action.valueSelecetedLocBar;

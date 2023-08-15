@@ -33,7 +33,7 @@ import StateContext from '../../StateContext';
   dataLoad: boolean;
 } */
 
-const HidroData = function ({ chartData, localValues, satValues }) {
+const HidroData = function () {
   const appState = useContext(StateContext);
   const [key, setKey] = useState('home');
   const { t } = useTranslation();
@@ -102,7 +102,7 @@ const HidroData = function ({ chartData, localValues, satValues }) {
           /*
         // @ts-ignore */
           margin={{ left: 0 }}>
-          <BarChart data={chartData} margin={{ left: -60 }}>
+          <BarChart data={appState.barChart.chartData} margin={{ left: -60 }}>
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis dataKey="name" />
 
@@ -160,8 +160,7 @@ const HidroData = function ({ chartData, localValues, satValues }) {
       <Tab eventKey="profile" title={t('daily')}>
         <HeatCalendar
           //dailyPrec={dailyPrec}
-          localValues={localValues}
-          satValues={satValues}
+
           locload={appState.dataLocLoaded}
         />
       </Tab>

@@ -53,6 +53,7 @@ import { grey } from '@mui/material/colors';
 import RiverPopup from '../Popup/RiverPopup';
 import { Basin } from '../../App';
 import Page from '../pages/Page';
+import { useTranslation } from 'react-i18next';
 
 interface MaplibreMapProps {
   initialOptions?: Omit<maplibregl.MapOptions, 'container' | 'style'>;
