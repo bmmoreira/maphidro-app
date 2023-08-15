@@ -111,36 +111,59 @@ class RainData2 {
   getYearValues(year) {
     let totalValues = [];
     let maxValues = [];
+    let maxDates = [];
     this._precipitation.forEach((item) => {
       if (item._year === parseInt(year)) {
         totalValues.push(this.toNumber(item._total, 1));
         maxValues.push(this.toNumber(item._max, 1));
+        maxDates.push(this.findMaxValueIndex(item._rainData));
       }
     });
     return {
       year: year,
       max: maxValues,
       total: totalValues,
-      prec: this.getDailyValues(year)
+      prec: this.getDailyValues(year),
+      maxDates: maxDates
     };
+  }
+
+  findMaxValueIndex(arr) {
+    if (arr.length === 0) {
+      return -1; // Return -1 for an empty array
+    }
+
+    let maxIndex = 0;
+    for (let i = 1; i < arr.length; i++) {
+      if (arr[i] > arr[maxIndex]) {
+        maxIndex = i;
+      }
+    }
+
+    return maxIndex + 1;
   }
 
   getLocalYearValues(year) {
     let totalValues = [];
     let maxValues = [];
+    let maxDates = [];
     this._precipitation.forEach((item) => {
       if (item._year === parseInt(year)) {
         totalValues.push(this.toNumber(item._total, 1));
         maxValues.push(this.toNumber(item._max, 1));
+        maxDates.push(this.findMaxValueIndex(item._rainData));
       }
     });
+    // values come from month 12 to month 1 so reverse
     maxValues.reverse();
     totalValues.reverse();
+    maxDates.reverse();
     return {
       year: year,
       max: maxValues,
       total: totalValues,
-      prec: this.getLocalDailyValues(year)
+      prec: this.getLocalDailyValues(year),
+      maxDates: maxDates
     };
   }
 
@@ -182,11 +205,16 @@ class RainData2 {
       return acummulator;
     }, []);
     dailyData.reverse();
-    let datesValues = [];
-    var dateV = new Date(`${year}`);
+    var currentDate = new Date(year, 0, 1);
+
+    //const startDate = new Date(year, 0, 1); // January 1st of the current year
+    //const endDate = new Date(year, 11, 31); // December 31st of the current yea
+    const datesValues = [];
+    //const currentDate = new Date(startDate);
+
     dailyData.forEach((item) => {
       item._rainData.forEach((value) => {
-        let ndate = dateV.setDate(dateV.getDate() + 1);
+        let ndate = new Date(currentDate);
         let countValue;
         if (value === -1) countValue = 9;
         else if (value === 0) countValue = 0;
@@ -202,6 +230,7 @@ class RainData2 {
           count: countValue,
           prec: value.toFixed(1)
         });
+        currentDate.setDate(currentDate.getDate() + 1);
       });
     });
 

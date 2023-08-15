@@ -6,6 +6,7 @@ import ReactTooltip from 'react-tooltip';
 import { useState, useEffect, useContext } from 'react';
 import TableValues from '../TableValues/TableValues';
 import TableValuesSat from '../TableValues/TableValuesSat';
+import { Container } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import StateContext from '../../StateContext';
 
@@ -53,13 +54,13 @@ const HeatCalendar = (props) => {
   );
 
   return (
-    <div style={{ marginTop: '0px' }}>
+    <div style={{ marginTop: '0px', marginLeft: '10px' }}>
       {loaded && <TableValues localValues={appState.locHeatmap} />}
       {loaded && (
         <CalendarHeatmap
           id={654748912}
-          startDate={new Date(`${appState.locHeatmap.year}-01-01`)}
-          endDate={new Date(`${appState.locHeatmap.year}-12-30`)}
+          startDate={new Date(appState.locHeatmap.year, 0, 1)}
+          endDate={new Date(appState.locHeatmap.year, 11, 31)}
           monthLabels={[
             t('Jan'),
             t('Fev'),
@@ -87,9 +88,8 @@ const HeatCalendar = (props) => {
             };
           }}
         />
-      )}{' '}
-      <br />
-      <br />
+      )}
+
       {loaded && <TableValuesSat satValues={appState.satHeatmap} />}
       {loaded && (
         <CalendarHeatmap
