@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState, useReducer, useContext } from 'react';
 import * as ReactDOMClient from 'react-dom/client';
 import LoadingDotsIcon from '../pages/LoadingDotsIcon';
+import PanelModals from '../Modals/PanelModals';
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 //@ts-ignore
@@ -25,6 +26,7 @@ import SearchToast, { SearchData } from '../Toasts/SearchToast';
 import Legends from '../Toasts/Legends';
 import AnimToast from '../Toasts/AnimToast';
 import PlayerToast from '../Toasts/PlayerToast';
+
 import {
   toggleClustersLayer,
   toggleMapLayers,
@@ -69,6 +71,8 @@ interface MaplibreMapProps {
 function Map(props: MaplibreMapProps) {
   const rootRef = React.useRef(null);
   const appDispatch = useContext(DispatchContext);
+  const appState = useContext(StateContext);
+
   const [isLoading, setIsLoading] = useState(true);
 
   const BASE_URL = 'http://localhost:1337';
@@ -315,7 +319,7 @@ function Map(props: MaplibreMapProps) {
         // from 12/22/15 to 1/21/16 as logged by USGS' Earthquake hazards program.
         data: './data/geojson/rhn-CPRM.geojson',
         cluster: true,
-        clusterMaxZoom: 5, // Max zoom to cluster points on
+        clusterMaxZoom: 4, // Max zoom to cluster points on
         clusterRadius: 50 // Radius of each cluster when clustering points (defaults to 50)
       });
 
@@ -669,28 +673,31 @@ function Map(props: MaplibreMapProps) {
   };
 
   return (
-    <div ref={rootRef} className="map-wrap">
-      <div ref={mapContainerRef} className="map">
-        <SideBar
-          show={props.offCanvas}
-          onHide={() => props.setOffCanvas(false)}
-          //basin={basin}
-          onSearchChangeHandler={searchChangeHandler}
-          searchData={searchValue}
-          flyTo={flyToStation}
-          onToggleClusters={toggleClusters}
-          onToggleHMControls={toggleSat}
-        />
-        <LayersToast
-          showLc={true}
-          toggleLc={toggleLc}
-          layers={layers}
-          onLayersHandleChange={layersHandleChange}
-          position={'bottom-start'}
-        />
-        {showOverlay && <Overlay />}
+    <>
+      <div ref={rootRef} className="map-wrap">
+        <div ref={mapContainerRef} className="map">
+          <SideBar
+            show={props.offCanvas}
+            onHide={() => props.setOffCanvas(false)}
+            //basin={basin}
+            onSearchChangeHandler={searchChangeHandler}
+            searchData={searchValue}
+            flyTo={flyToStation}
+            onToggleClusters={toggleClusters}
+            onToggleHMControls={toggleSat}
+          />
+          <LayersToast
+            showLc={true}
+            toggleLc={toggleLc}
+            layers={layers}
+            onLayersHandleChange={layersHandleChange}
+            position={'bottom-start'}
+          />
+          {appState.modals.panelBox && <PanelModals />}
+        </div>
       </div>
-    </div>
+      {showOverlay && <Overlay />}
+    </>
   );
 }
 

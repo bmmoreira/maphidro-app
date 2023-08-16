@@ -24,6 +24,7 @@ import MapGuest from './components/pages/MapGuest';
 import { useTranslation } from 'react-i18next';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import ChartModal from './components/ChartModal/ChartModal';
+import axios from 'axios';
 
 export type Basin = {
   id: number;
@@ -80,7 +81,24 @@ const App: React.FC = () => {
     },
     isSearchOpen: false,
     isChatOpen: false,
-    unreadChatCount: 0
+    unreadChatCount: 0,
+    modals: {
+      panelBox: false,
+      projects: false,
+      timeline: false,
+      download: false,
+      where: false,
+      when: false,
+      how: false,
+      select: false,
+      filters: false,
+      results: false,
+      search: false,
+      centerModal: false
+    },
+    searchValue: '',
+    searchData: '',
+    searchResult: false
   };
 
   /*Goal that all of our loading and saving user related actions takes place in one place
@@ -159,6 +177,44 @@ we should probably do those types of things within a useEffect.
       case 'setSatBarSelectedYear':
         draft.barChart.satBarSelectedYear = action.valueSelecetedSatBar;
         break;
+      case 'togleTimeLineModal':
+        draft.modals.centerModal = true;
+        draft.modals.search = false;
+
+        draft.modals.timeline = true;
+        break;
+      case 'closeTimeLineModal':
+        draft.modals.timeline = false;
+        break;
+      case 'togleProjectsModal':
+        draft.modals.projects = true;
+        break;
+      case 'closeProjectsModal':
+        draft.modals.projects = false;
+        break;
+      case 'togleSelectModal':
+        draft.modals.select = true;
+        break;
+      case 'closeSelectModal':
+        draft.modals.select = false;
+        break;
+      case 'toglePanelModal':
+        draft.modals.panelBox = action.value;
+        break;
+      case 'togleSearchModal':
+        draft.modals.timeline = false;
+        draft.modals.search = true;
+        break;
+      case 'closeSearchModal':
+        draft.modals.search = false;
+        break;
+      case 'searchAction':
+        draft.searchValue = action.searchEventValue;
+        break;
+      case 'searchDataAction':
+        draft.searchData = action.searchDataValue;
+        draft.searchResult = true;
+        break;
     }
   }
   /*
@@ -191,6 +247,31 @@ we should probably do those types of things within a useEffect.
       localStorage.removeItem('mapHidroAvatar');
     }
   }, [state.loggedIn]);
+
+  useEffect(() => {
+    if (state.searchValue) {
+      search(state.searchValue);
+    }
+    /*
+    If that was just set and now it's true,
+    then this is where we would want to save data
+    into localStorage.
+    */
+  }, [state.searchValue]);
+
+  const search = async (val: string) => {
+    const res = await axios(
+      `http://localhost:1337/api/mhstations?filters[stName][$contains]=${val.toUpperCase()}`
+    );
+    console.log(res.data.data);
+
+    if (res.data.data.length > 0) {
+      dispatch({
+        type: 'searchDataAction',
+        searchDataValue: res.data.data
+      });
+    }
+  };
 
   const { height, width } = useWindowDimensions();
 
@@ -333,7 +414,7 @@ we should probably do those types of things within a useEffect.
               show={chartModal}
               onHide={() => setChartModal(false)}
             />
-          )}
+          )}{' '}
         </BrowserRouter>
       </DispatchContext.Provider>
     </StateContext.Provider>

@@ -69,6 +69,34 @@ function HeaderLoggedIn(props) {
     return `${count} notifications`;
   }
 
+  function toggleTimeline() {
+    if (!appState.modals.panelBox) {
+      appDispatch({ type: 'toglePanelModal', value: !appState.modals.panelBox });
+    }
+    appDispatch({ type: 'togleTimeLineModal' });
+  }
+
+  function toggleProjects() {
+    if (!appState.modals.panelBox) {
+      appDispatch({ type: 'toglePanelModal', value: !appState.modals.panelBox });
+    }
+    appDispatch({ type: 'togleProjectsModal' });
+  }
+
+  function toggleSelect() {
+    if (!appState.modals.panelBox) {
+      appDispatch({ type: 'toglePanelModal', value: !appState.modals.panelBox });
+    }
+    appDispatch({ type: 'togleSelectModal' });
+  }
+
+  function toggleDownload() {
+    if (!appState.modals.panelBox) {
+      appDispatch({ type: 'toglePanelModal', value: !appState.modals.panelBox });
+    }
+    appDispatch({ type: 'togleSearchModal' });
+  }
+
   function handleLogout() {
     appDispatch({ type: 'logout' });
     appDispatch({
@@ -76,6 +104,25 @@ function HeaderLoggedIn(props) {
       value: 'You have successfully logged out'
     });
   }
+  let timeoutId;
+  const onSearchChangeHandler = (event) => {
+    clearTimeout(timeoutId); // Clear any existing timeout
+    const inputValue = event.target.value;
+    if (!appState.modals.panelBox) {
+      appDispatch({ type: 'toglePanelModal', value: !appState.modals.panelBox });
+    }
+    // Set a new timeout to handle the event after a delay (e.g., 500 milliseconds)
+    timeoutId = setTimeout(() => {
+      appDispatch({ type: 'togleSearchModal' });
+      // Perform the desired action or function call here
+      appDispatch({
+        type: 'searchAction',
+        searchEventValue: inputValue
+      });
+
+      console.log('Input value:', inputValue);
+    }, 1000);
+  };
 
   return (
     <div style={{ width: '100%', margin: 0, padding: 0 }}>
@@ -102,7 +149,10 @@ function HeaderLoggedIn(props) {
               display: 'flex',
               gap: '10px'
             }}>
-            <IconButton aria-label={notificationsLabel(100)} sx={{ ...buttonStyle }}>
+            <IconButton
+              aria-label={notificationsLabel(100)}
+              sx={{ ...buttonStyle }}
+              onClick={toggleProjects}>
               <Badge
                 anchorOrigin={{
                   vertical: 'bottom',
@@ -114,7 +164,11 @@ function HeaderLoggedIn(props) {
               </Badge>
               <div>Projects</div>
             </IconButton>
-            <IconButton aria-label={notificationsLabel(100)} sx={{ ...buttonStyle }}>
+            <IconButton
+              aria-label={notificationsLabel(100)}
+              sx={{ ...buttonStyle }}
+              onClick={toggleTimeline}
+              disabled>
               <Badge
                 anchorOrigin={{
                   vertical: 'bottom',
@@ -126,7 +180,11 @@ function HeaderLoggedIn(props) {
               </Badge>
               <div>Timeline</div>
             </IconButton>
-            <IconButton aria-label={notificationsLabel(100)} sx={{ ...buttonStyle }}>
+            <IconButton
+              aria-label={notificationsLabel(100)}
+              sx={{ ...buttonStyle }}
+              onClick={toggleDownload}
+              disabled>
               <Badge
                 anchorOrigin={{
                   vertical: 'bottom',
@@ -158,6 +216,9 @@ function HeaderLoggedIn(props) {
                 width: '400px',
                 fontStyle: 'italic',
                 height: '20px'
+              }}
+              onChange={(e) => {
+                onSearchChangeHandler(e);
               }}
               InputProps={{
                 style: {
@@ -221,7 +282,10 @@ function HeaderLoggedIn(props) {
               gap: '10px',
               justifyContent: 'center'
             }}>
-            <IconButton aria-label={notificationsLabel(100)} sx={{ ...buttonStyle }}>
+            <IconButton
+              aria-label={notificationsLabel(100)}
+              sx={{ ...buttonStyle }}
+              onClick={toggleSelect}>
               <Badge
                 anchorOrigin={{
                   vertical: 'bottom',
