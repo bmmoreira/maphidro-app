@@ -33,6 +33,10 @@ export type Basin = {
 interface MonthNames {
   name: string;
 }
+
+const BASE_URL = 'http://localhost:1337';
+const COLLECTION = 'api/mhstations';
+
 const App: React.FC = () => {
   const { t } = useTranslation();
   const monthNames: MonthNames[] = [
@@ -89,7 +93,7 @@ const App: React.FC = () => {
       download: false,
       where: false,
       when: false,
-      how: false,
+      how: true,
       select: false,
       filters: false,
       results: false,
@@ -98,7 +102,13 @@ const App: React.FC = () => {
     },
     searchValue: '',
     searchData: '',
-    searchResult: false
+    searchResult: false,
+    searchType: '',
+    searchByName: true,
+    searchByBasin: false,
+    searchByUF: false,
+    searchByRiver: false,
+    searchBySat: false
   };
 
   /*Goal that all of our loading and saving user related actions takes place in one place
@@ -215,6 +225,21 @@ we should probably do those types of things within a useEffect.
         draft.searchData = action.searchDataValue;
         draft.searchResult = true;
         break;
+      case 'toggleSearchByName':
+        draft.searchByName = action.value;
+        break;
+      case 'toggleSearchByBasin':
+        draft.searchByBasin = action.value;
+        break;
+      case 'toggleSearchByUF':
+        draft.searchByUF = action.value;
+        break;
+      case 'toggleSearchByRiver':
+        draft.searchByRiver = action.value;
+        break;
+      case 'togleHowModal':
+        draft.modals.how = action.value;
+        break;
     }
   }
   /*
@@ -261,7 +286,7 @@ we should probably do those types of things within a useEffect.
 
   const search = async (val: string) => {
     const res = await axios(
-      `http://localhost:1337/api/mhstations?filters[stName][$contains]=${val.toUpperCase()}`
+      `${BASE_URL}/${COLLECTION}?filters[stName][$contains]=${val.toUpperCase()}`
     );
     console.log(res.data.data);
 

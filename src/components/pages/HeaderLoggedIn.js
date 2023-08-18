@@ -104,6 +104,17 @@ function HeaderLoggedIn(props) {
       value: 'You have successfully logged out'
     });
   }
+
+  const toggleHow = () => {
+    if (!appState.modals.panelBox) {
+      appDispatch({ type: 'toglePanelModal', value: !appState.modals.panelBox });
+    }
+    appDispatch({
+      type: 'togleHowModal',
+      value: !appState.modals.how
+    });
+  };
+
   let timeoutId;
   const onSearchChangeHandler = (event) => {
     clearTimeout(timeoutId); // Clear any existing timeout
@@ -270,6 +281,7 @@ function HeaderLoggedIn(props) {
                 color: styleWhite.colorButtonTitle,
                 backgroundColor: styleWhite.bgButton
               }}
+              onClick={toggleHow}
             />
           </Grid>
         </Grid>

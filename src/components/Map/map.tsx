@@ -693,7 +693,7 @@ function Map(props: MaplibreMapProps) {
             onLayersHandleChange={layersHandleChange}
             position={'bottom-start'}
           />
-          {appState.modals.panelBox && <PanelModals />}
+          {appState.modals.panelBox && <PanelModals flyTo={flyToStation} />}
         </div>
       </div>
       {showOverlay && <Overlay />}
