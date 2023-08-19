@@ -87,7 +87,12 @@ function HeaderLoggedIn(props) {
     if (!appState.modals.panelBox) {
       appDispatch({ type: 'toglePanelModal', value: !appState.modals.panelBox });
     }
-    appDispatch({ type: 'togleSelectModal' });
+    setTimeout(() => {
+      appDispatch({
+        type: 'togleSelectModal',
+        value: true
+      });
+    }, 200);
   }
 
   function toggleDownload() {
@@ -109,10 +114,12 @@ function HeaderLoggedIn(props) {
     if (!appState.modals.panelBox) {
       appDispatch({ type: 'toglePanelModal', value: !appState.modals.panelBox });
     }
-    appDispatch({
-      type: 'togleHowModal',
-      value: !appState.modals.how
-    });
+    setTimeout(() => {
+      appDispatch({
+        type: 'togleHowModal',
+        value: true
+      });
+    }, 200);
   };
 
   let timeoutId;
@@ -295,7 +302,7 @@ function HeaderLoggedIn(props) {
               justifyContent: 'center'
             }}>
             <IconButton
-              aria-label={notificationsLabel(100)}
+              aria-label={notificationsLabel(appState.header.counterSelect)}
               sx={{ ...buttonStyle }}
               onClick={toggleSelect}>
               <Badge
@@ -303,7 +310,7 @@ function HeaderLoggedIn(props) {
                   vertical: 'bottom',
                   horizontal: 'right'
                 }}
-                badgeContent={7}
+                badgeContent={appState.header.counterSelect}
                 color="secondary">
                 <AddLocationAltIcon sx={{ position: 'relative', top: '0px', left: '0px' }} />
               </Badge>

@@ -78,9 +78,9 @@ export const majorRivers: LayerSpecification = {
 };
 
 export const satLayer: LayerSpecification = {
-  id: 'radar-layer',
+  id: 'heatmapRain',
   type: 'raster',
-  source: 'radar',
+  source: 'heatmapRain',
   paint: {
     'raster-fade-duration': 0
   },
@@ -201,6 +201,8 @@ export const toggleMapLayers = (
       addMajorBasins(map, toggleSpinner, stopSpinner);
     } else if (!added && layerId === 'bacias') {
       addSubBasins(map, toggleSpinner, stopSpinner);
+    } else if (!added && layerId === 'heatmapRain') {
+      addRasterLayer(map);
     } else {
       if (layer.layerId === 'bacias2' || layer.layerId === 'bacias') {
         const basinVisibility = map.getLayoutProperty(layer.layerId + '-fills', 'visibility');
@@ -240,7 +242,7 @@ export const toggleClustersLayer = (map: maplibregl.Map) => {
 };
 
 export const addRasterLayer = (map: maplibregl.Map) => {
-  map.addSource('radar', {
+  map.addSource('heatmapRain', {
     type: 'image',
     url: '/images/prec/overall/precp0.png',
     coordinates: [

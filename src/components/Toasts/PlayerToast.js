@@ -9,8 +9,8 @@ const PlayerToast = ({ position, showAc, toggleAc, mapref }) => {
   const [imgDate, setImgDate] = useState(cday.setDate(cday.getDate() - 9));
 
   const togglePlay = () => {
-    const satVisibility = mapref.getLayoutProperty('radar-layer', 'visibility');
-
+    const satVisibility = mapref.getLayoutProperty('heatmapRain', 'visibility');
+    console.log(satVisibility);
     if (satVisibility === 'visible') {
       let date = new Date(cday.getTime());
 
@@ -18,10 +18,11 @@ const PlayerToast = ({ position, showAc, toggleAc, mapref }) => {
       // eslint-disable-next-line no-undef
       const timer = setInterval(() => {
         if (i < 9) {
-          mapref.getSource('radar').updateImage({
-            url: '/images/prec/overall/precp' + i + '.png'
+          mapref.getSource('heatmapRain').updateImage({
+            url: 'images/prec/overall/precp' + i + '.png'
           });
           i++;
+          console.log(i);
           setImgDate(date.setDate(date.getDate() + 1));
         } else {
           // eslint-disable-next-line no-undef
@@ -33,10 +34,10 @@ const PlayerToast = ({ position, showAc, toggleAc, mapref }) => {
   };
 
   const toggleRewind = () => {
-    const satVisibility = mapref.getLayoutProperty('radar-layer', 'visibility');
+    const satVisibility = mapref.getLayoutProperty('heatmapRain', 'visibility');
     if (satVisibility === 'visible' && imgIndex > 1) {
       //let currentIndex = imgIndex - 1;
-      mapref.getSource('radar').updateImage({
+      mapref.getSource('heatmapRain').updateImage({
         url: '/images/prec/overall/precp' + imgIndex + '.png'
       });
       setImgIndex(imgIndex - 1);
@@ -46,10 +47,10 @@ const PlayerToast = ({ position, showAc, toggleAc, mapref }) => {
   };
 
   const toggleForward = () => {
-    const satVisibility = mapref.getLayoutProperty('radar-layer', 'visibility');
+    const satVisibility = mapref.getLayoutProperty('heatmapRain', 'visibility');
     if (satVisibility === 'visible' && imgIndex < 8) {
       //let currentIndex = imgIndex + 1;
-      mapref.getSource('radar').updateImage({
+      mapref.getSource('heatmapRain').updateImage({
         url: '/images/prec/overall/precp' + imgIndex + '.png'
       });
       setImgIndex(imgIndex + 1);
@@ -76,7 +77,15 @@ const PlayerToast = ({ position, showAc, toggleAc, mapref }) => {
             <button id="a-rewind" onClick={toggleRewind} className="bar-buttons" type="button">
               <img src="./images/buttons/b-control-rewind.png" height="66" width="61" alt="Close" />
             </button>
-            <button id="a-play" onClick={togglePlay} className="bar-buttons" type="button">
+            <button
+              id="a-play"
+              onClick={() => {
+                const satVisibility = mapref.getLayoutProperty('heatmapRain', 'visibility');
+                console.log('teste');
+                togglePlay();
+              }}
+              className="bar-buttons"
+              type="button">
               <img src="./images/buttons/b-control-play.png" height="66" width="61" alt="Close" />
             </button>
             <button id="a-forward" onClick={toggleForward} className="bar-buttons" type="button">

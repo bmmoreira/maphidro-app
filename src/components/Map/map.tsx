@@ -26,6 +26,7 @@ import SearchToast, { SearchData } from '../Toasts/SearchToast';
 import Legends from '../Toasts/Legends';
 import AnimToast from '../Toasts/AnimToast';
 import PlayerToast from '../Toasts/PlayerToast';
+import { cloneDeep, groupBy } from 'lodash';
 
 import {
   toggleClustersLayer,
@@ -67,6 +68,13 @@ interface MaplibreMapProps {
   setOffCanvas(open: boolean): void;
   offCanvas: boolean;
 }
+
+type layerType = {
+  layerId: string;
+  name: string;
+  checked: boolean;
+  added: boolean;
+};
 
 function Map(props: MaplibreMapProps) {
   const rootRef = React.useRef(null);
@@ -139,20 +147,43 @@ function Map(props: MaplibreMapProps) {
     });
   };
 
-  const [layers, setLayers] = useState([
-    { layerId: 'bacias', name: 'Bacias Brasil', checked: false, added: false },
-    { layerId: 'rivers', name: 'Rios Principais', checked: false, added: false },
-    { layerId: 'bacias2', name: 'Bacias A. do Sul', checked: false, added: false }
-  ]);
-
   const layersHandleChange = (layerId: string) => {
     console.log(layerId);
 
-    const copyLayers = [...layers];
-    const modifiedLayers = copyLayers.map((layer) => {
+    /* If I fired a state setting function it would happen on re-render
+     (firing an onClick function), but not if I loaded the page directly 
+      or via refresh. Making a copy of the non editable, or in my case 
+      "frozen" object before modifying parameters fixed the problem
+    */
+    let counter = cloneDeep(appState.header.counterSelect);
+    const heatmapControls = cloneDeep(appState.modals.heatmapControls);
+    const layers = cloneDeep(appState.mapLayers);
+    const modifiedLayers = layers.map((layer: any) => {
       if (layerId === layer.layerId) {
         layer.checked = !layer.checked;
-        toggleMapLayers(layer, map as maplibregl.Map, toggleSpinner, stopSpinner);
+        if (!layer.checked) {
+          appDispatch({
+            type: 'counterSelect',
+            value: --counter
+          });
+        } else {
+          appDispatch({
+            type: 'counterSelect',
+            value: ++counter
+          });
+        }
+        if (layer.layerId == 'clusters') {
+          toggleClusters();
+        } else if (layer.layerId == 'heatmapRain') {
+          toggleSat();
+          appDispatch({
+            type: 'togleHeatmapControl',
+            value: !heatmapControls
+          });
+          console.log('teste');
+        } else {
+          toggleMapLayers(layer as layerType, map as maplibregl.Map, toggleSpinner, stopSpinner);
+        }
         if (!layer.added) {
           layer.added = true;
         }
@@ -160,7 +191,11 @@ function Map(props: MaplibreMapProps) {
       return layer;
     });
 
-    setLayers(modifiedLayers);
+    //setLayers(modifiedLayers);
+    appDispatch({
+      type: 'setMapLayers',
+      value: modifiedLayers
+    });
   };
 
   const [searchValue, setSearchValue] = useState<SearchData>({
@@ -233,21 +268,15 @@ function Map(props: MaplibreMapProps) {
     }
 
     if (map != undefined) {
-      const satVisibility = map.getLayoutProperty('radar-layer', 'visibility');
+      const satVisibility = map.getLayoutProperty('heatmapRain', 'visibility');
 
       if (satVisibility === 'visible') {
-        map.setLayoutProperty('radar-layer', 'visibility', 'none');
+        map.setLayoutProperty('heatmapRain', 'visibility', 'none');
         toggleSatToast(false);
       } else {
-        map.setLayoutProperty('radar-layer', 'visibility', 'visible');
+        map.setLayoutProperty('heatmapRain', 'visibility', 'visible');
 
-        const clusterVisibility = map.getLayoutProperty('cluster-count', 'visibility');
-
-        if (clusterVisibility === 'visible') {
-          map.setLayoutProperty('clusters', 'visibility', 'none');
-          map.setLayoutProperty('cluster-count', 'visibility', 'none');
-          map.setLayoutProperty('unclustered-point', 'visibility', 'none');
-        }
+        //toggleClustersLayer(map!);
         toggleSatToast(true);
       }
     }
@@ -676,27 +705,17 @@ function Map(props: MaplibreMapProps) {
     <>
       <div ref={rootRef} className="map-wrap">
         <div ref={mapContainerRef} className="map">
-          <SideBar
-            show={props.offCanvas}
-            onHide={() => props.setOffCanvas(false)}
-            //basin={basin}
-            onSearchChangeHandler={searchChangeHandler}
-            searchData={searchValue}
-            flyTo={flyToStation}
-            onToggleClusters={toggleClusters}
-            onToggleHMControls={toggleSat}
-          />
-          <LayersToast
-            showLc={true}
-            toggleLc={toggleLc}
-            layers={layers}
-            onLayersHandleChange={layersHandleChange}
+          <PlayerToast
+            mapref={map}
+            showAc={appState.heatmapControls}
+            toggleAc={toggleSat}
             position={'bottom-start'}
           />
-          {appState.modals.panelBox && <PanelModals flyTo={flyToStation} />}
+          {appState.modals.panelBox && (
+            <PanelModals flyTo={flyToStation} onLayersHandleChange={layersHandleChange} />
+          )}
         </div>
       </div>
-      {showOverlay && <Overlay />}
     </>
   );
 }

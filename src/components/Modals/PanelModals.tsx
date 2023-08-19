@@ -15,6 +15,11 @@ import Button from '@mui/material/Button';
 import Switch from '@mui/material/Switch';
 import SearchIcon from '@mui/icons-material/Search';
 import Checkbox from '@mui/material/Checkbox';
+import Slide from '@mui/material/Slide';
+import SendIcon from '@mui/icons-material/Send';
+
+import SkipPreviousIcon from '@mui/icons-material/SkipPrevious';
+import SkipNextIcon from '@mui/icons-material/SkipNext';
 
 import { SwitchTransition, CSSTransition } from 'react-transition-group';
 import './styles.css';
@@ -43,7 +48,7 @@ const Item3 = styled(Paper)(({ theme }) => ({
   ...theme.typography.body2,
   padding: theme.spacing(1),
   textAlign: 'center',
-  fontSize: '0.8rem',
+  fontSize: '1.0rem',
   color: theme.palette.text.secondary,
   alignItems: 'center',
   alignContent: 'start',
@@ -100,7 +105,15 @@ const BootstrapButton = styled(Button)({
   }
 });
 
+type layerType = {
+  layerId: string;
+  name: string;
+  checked: boolean;
+  added: boolean;
+};
+
 export default function PanelModals(props: any) {
+  const containerRef = React.useRef(null);
   const style = {
     position: 'relative',
     top: '0px',
@@ -116,6 +129,8 @@ export default function PanelModals(props: any) {
   const appState = useContext(StateContext);
   const appDispatch = useContext(DispatchContext);
 
+  const mapLayers: layerType[] = appState.mapLayers;
+
   const styleBox = {
     position: 'relative',
     top: '0px',
@@ -124,8 +139,11 @@ export default function PanelModals(props: any) {
     borderRadius: '3px',
     boxShadow: '0 0 5px 5px gray',
     p: 0,
-    height: appState.modals.how ? window.innerHeight - 400 : window.innerHeight - 200,
-    marginTop: appState.modals.how ? '15px !important' : '0px'
+    height:
+      appState.modals.how | appState.modals.heatmapControls
+        ? window.innerHeight - 400
+        : window.innerHeight - 200,
+    marginTop: appState.modals.how | appState.modals.heatmapControls ? '15px !important' : '0px'
   };
 
   const styleHow = {
@@ -147,7 +165,10 @@ export default function PanelModals(props: any) {
 
   const handleCloseSelect = () => {
     //setOpen(false);
-    appDispatch({ type: 'closeSelectModal' });
+    appDispatch({
+      type: 'togleSelectModal',
+      value: false
+    });
   };
 
   const handleCloseSearch = () => {
@@ -195,8 +216,346 @@ export default function PanelModals(props: any) {
     });
   };
 
+  const toggleHControl = () => {
+    appDispatch({
+      type: 'togleHeatmapControl',
+      value: !appState.modals.heatmapControls
+    });
+    appDispatch({
+      type: 'closeHeatmapControl'
+    });
+  };
+
+  const how = (
+    <Box sx={{ zIndex: 10, height: '180px', ...styleHow }}>
+      <Grid
+        container
+        spacing={0}
+        sx={{
+          padding: 0,
+          backgroundColor: '#0f9bd9'
+        }}>
+        <Grid item xs={8}>
+          <Typography
+            variant="h6"
+            component="h2"
+            sx={{ padding: '5px 0 5px 10px', color: 'white' }}>
+            How
+          </Typography>
+        </Grid>
+        <Grid item xs={4}>
+          <Stack direction="row" spacing={1} justifyContent="flex-end">
+            <IconButton aria-label="Select" onClick={toggleHow} sx={{ color: 'white' }}>
+              <CloseIcon />
+            </IconButton>
+          </Stack>
+        </Grid>
+      </Grid>
+
+      <Grid
+        container
+        spacing={1}
+        sx={{
+          marginTop: '5px',
+          padding: '2px'
+        }}>
+        <Grid item xs={12}>
+          <Item>Search by</Item>
+        </Grid>
+
+        <Grid item xs={3}>
+          <Item>
+            Name{' '}
+            <Switch
+              color="primary"
+              checked={appState.searchByName}
+              onChange={toggleByName}
+              inputProps={{ 'aria-label': 'controlled' }}
+            />
+          </Item>
+        </Grid>
+        <Grid item xs={3}>
+          <Item>
+            Basin{' '}
+            <Switch
+              color="primary"
+              checked={appState.searchByBasin}
+              onChange={toggleByBasin}
+              inputProps={{ 'aria-label': 'controlled' }}
+            />
+          </Item>
+        </Grid>
+        <Grid item xs={3}>
+          <Item>
+            UF{' '}
+            <Switch
+              color="primary"
+              checked={appState.searchByUF}
+              onChange={toggleByUF}
+              inputProps={{ 'aria-label': 'controlled' }}
+            />
+          </Item>
+        </Grid>
+        <Grid item xs={3}>
+          <Item>
+            River{' '}
+            <Switch
+              color="primary"
+              checked={appState.searchByRiver}
+              onChange={toggleByRiver}
+              inputProps={{ 'aria-label': 'controlled' }}
+              disabled
+            />
+          </Item>
+        </Grid>
+      </Grid>
+    </Box>
+  );
+
+  const heatmapcontrols = (
+    <Box sx={{ zIndex: 10, height: '120px', ...styleHow }}>
+      <Grid
+        container
+        spacing={0}
+        sx={{
+          padding: 0,
+          backgroundColor: '#0f9bd9'
+        }}>
+        <Grid item xs={8}>
+          <Typography
+            variant="h6"
+            component="h2"
+            sx={{ padding: '5px 0 5px 10px', color: 'white' }}>
+            Heatmap Controls
+          </Typography>
+        </Grid>
+        <Grid item xs={4}>
+          <Stack direction="row" spacing={1} justifyContent="flex-end">
+            <IconButton aria-label="Select" onClick={toggleHControl} sx={{ color: 'white' }}>
+              <CloseIcon />
+            </IconButton>
+          </Stack>
+        </Grid>
+      </Grid>
+
+      <Grid
+        container
+        spacing={1}
+        sx={{
+          display: 'flex',
+          justifyContent: 'start',
+          marginTop: '5px',
+          padding: '5px'
+        }}>
+        <Grid item xs={3}>
+          <Button variant="contained" endIcon={<SkipPreviousIcon />} size="large">
+            Previous
+          </Button>
+        </Grid>
+        <Grid item xs={2.3}>
+          <Button variant="contained" endIcon={<SendIcon />} size="large">
+            Play
+          </Button>
+        </Grid>
+        <Grid item xs={3}>
+          <Button variant="contained" endIcon={<SkipNextIcon />} size="large">
+            Next
+          </Button>
+        </Grid>
+        <Grid item xs={3}>
+          <Item3 sx={{ height: '42px', display: 'flex', justifyContent: 'center' }}>
+            10/08/2020
+          </Item3>
+        </Grid>
+      </Grid>
+    </Box>
+  );
+
+  const projects = (
+    <Box sx={{ zIndex: 10, ...style }}>
+      <Grid
+        container
+        spacing={0}
+        sx={{
+          padding: 0,
+          backgroundColor: '#0f9bd9'
+        }}>
+        <Grid item xs={8}>
+          <Typography
+            variant="h6"
+            component="h2"
+            sx={{ padding: '5px 0 5px 10px', color: 'white' }}>
+            Projects
+          </Typography>
+        </Grid>
+        <Grid item xs={4}>
+          <Stack direction="row" spacing={1} justifyContent="flex-end">
+            <IconButton aria-label="delete" onClick={handleCloseProject} sx={{ color: 'white' }}>
+              <CloseIcon />
+            </IconButton>
+          </Stack>
+        </Grid>
+      </Grid>
+
+      <Typography sx={{ mt: 2 }}></Typography>
+    </Box>
+  );
+
+  const search = (
+    <Box sx={{ overflow: 'auto', zIndex: 10, ...style }}>
+      {appState.modals.search && (
+        <div>
+          <Grid
+            container
+            spacing={0}
+            sx={{
+              padding: 0,
+              backgroundColor: '#0f9bd9',
+              overflow: 'auto'
+            }}>
+            <Grid item xs={8}>
+              <Typography
+                variant="h6"
+                component="h2"
+                sx={{ padding: '5px 0 5px 10px', color: 'white' }}>
+                <SearchIcon sx={{ color: 'white' }} />
+                Search
+              </Typography>
+            </Grid>
+            <Grid item xs={4}>
+              <Stack direction="row" spacing={1} justifyContent="flex-end">
+                <IconButton
+                  aria-label="timeline"
+                  onClick={handleCloseSearch}
+                  sx={{ color: 'white' }}>
+                  <CloseIcon />
+                </IconButton>
+              </Stack>
+            </Grid>
+          </Grid>
+
+          {appState.searchResult && (
+            <Grid
+              container
+              spacing={1}
+              sx={{
+                marginTop: '30px',
+                padding: '2px'
+              }}>
+              <Grid item xs={4}>
+                <Item2>STATION NAME</Item2>
+              </Grid>
+              <Grid item xs={4}>
+                <Item2>BASIN</Item2>
+              </Grid>
+              <Grid item xs={1}>
+                <Item2>UF</Item2>
+              </Grid>
+              <Grid item xs={1.5}>
+                <Item2>Longitude</Item2>
+              </Grid>
+              <Grid item xs={1.5}>
+                <Item2>Latitude</Item2>
+              </Grid>
+            </Grid>
+          )}
+          {appState.searchResult &&
+            appState.searchData.map((item: any, idx: number) => (
+              <Grid
+                key={idx}
+                container
+                spacing={1}
+                sx={{
+                  padding: '2px'
+                }}>
+                <Grid item xs={4}>
+                  <BootstrapButton
+                    variant="contained"
+                    aria-label="delete"
+                    color="primary"
+                    disableRipple
+                    onClick={() => {
+                      appDispatch({ type: 'closeSearchModal' });
+                      props.flyTo([item.attributes.stLongitude, item.attributes.stLatitude]);
+                      console.log('click button');
+                    }}>
+                    {item.attributes.stName.substring(0, 16)}...
+                  </BootstrapButton>
+                </Grid>
+                <Grid item xs={4}>
+                  <Item>{item.attributes.stBasin.substring(0, 21)}...</Item>
+                </Grid>
+                <Grid item xs={1}>
+                  <Item>{item.attributes.stUF}</Item>
+                </Grid>
+                <Grid item xs={1.5}>
+                  <Item>{item.attributes.stLongitude.toFixed(4)}</Item>
+                </Grid>
+                <Grid item xs={1.5}>
+                  <Item>{item.attributes.stLatitude.toFixed(4)}</Item>
+                </Grid>
+              </Grid>
+            ))}
+        </div>
+      )}
+    </Box>
+  );
+
+  const select = (
+    <Box sx={{ zIndex: 10, ...styleBox }}>
+      <Grid
+        container
+        spacing={0}
+        sx={{
+          padding: 0,
+          backgroundColor: '#0f9bd9'
+        }}>
+        <Grid item xs={8}>
+          <Typography
+            variant="h6"
+            component="h2"
+            sx={{ padding: '5px 0 5px 10px', color: 'white' }}>
+            Select
+          </Typography>
+        </Grid>
+        <Grid item xs={4}>
+          <Stack direction="row" spacing={1} justifyContent="flex-end">
+            <IconButton aria-label="Select" onClick={handleCloseSelect} sx={{ color: 'white' }}>
+              <CloseIcon />
+            </IconButton>
+          </Stack>
+        </Grid>
+      </Grid>
+
+      <Grid
+        container
+        spacing={1}
+        sx={{
+          marginTop: '5px',
+          padding: '5px'
+        }}>
+        <Grid item xs={12}>
+          <Item2 sx={{ fontSize: '1rem', fontWeight: '600' }}>Map Layers</Item2>
+        </Grid>
+        {mapLayers.map((layer, idx) => (
+          <Grid item xs={4} key={idx}>
+            <Item3>
+              <Checkbox
+                checked={layer.checked}
+                onChange={() => props.onLayersHandleChange(layer.layerId)}
+                sx={{ '& .MuiSvgIcon-root': { fontSize: 28 } }}
+              />
+              {layer.name}
+            </Item3>
+          </Grid>
+        ))}
+      </Grid>
+    </Box>
+  );
+
   return (
     <div
+      ref={containerRef}
       style={{
         width: '100%',
         justifyContent: 'center',
@@ -214,341 +573,25 @@ export default function PanelModals(props: any) {
           backgroundColor: '#44414d'
         }}>
         <Grid item xs={4}>
-          <CSSTransition
-            in={appState.modals.projects}
-            timeout={500}
-            classNames="slide-projects"
-            unmountOnExit>
-            <Box sx={{ zIndex: 10, ...style }}>
-              <Grid
-                container
-                spacing={0}
-                sx={{
-                  padding: 0,
-                  backgroundColor: '#0f9bd9'
-                }}>
-                <Grid item xs={8}>
-                  <Typography
-                    variant="h6"
-                    component="h2"
-                    sx={{ padding: '5px 0 5px 10px', color: 'white' }}>
-                    Projects
-                  </Typography>
-                </Grid>
-                <Grid item xs={4}>
-                  <Stack direction="row" spacing={1} justifyContent="flex-end">
-                    <IconButton
-                      aria-label="delete"
-                      onClick={handleCloseProject}
-                      sx={{ color: 'white' }}>
-                      <CloseIcon />
-                    </IconButton>
-                  </Stack>
-                </Grid>
-              </Grid>
-
-              <Typography sx={{ mt: 2 }}></Typography>
-            </Box>
-          </CSSTransition>
+          <Slide direction="right" in={appState.modals.projects} mountOnEnter unmountOnExit>
+            {projects}
+          </Slide>
         </Grid>
         <Grid item xs={4}>
-          <CSSTransition
-            in={appState.modals.search}
-            timeout={500}
-            classNames="slide-timeline"
-            unmountOnExit>
-            <Box sx={{ overflow: 'auto', zIndex: 10, ...style }}>
-              {appState.modals.timeline && (
-                <div>
-                  <Grid
-                    container
-                    spacing={0}
-                    sx={{
-                      padding: 0,
-                      backgroundColor: '#0f9bd9'
-                    }}>
-                    <Grid item xs={8}>
-                      <Typography
-                        variant="h6"
-                        component="h2"
-                        sx={{ padding: '5px 0 5px 10px', color: 'white' }}>
-                        Timeline
-                      </Typography>
-                    </Grid>
-                    <Grid item xs={4}>
-                      <Stack direction="row" spacing={1} justifyContent="flex-end">
-                        <IconButton
-                          aria-label="timeline"
-                          onClick={handleClose}
-                          sx={{ color: 'white' }}>
-                          <CloseIcon />
-                        </IconButton>
-                      </Stack>
-                    </Grid>
-                  </Grid>
-
-                  <Typography sx={{ mt: 2 }}></Typography>
-                </div>
-              )}
-              {appState.modals.search && (
-                <div>
-                  <Grid
-                    container
-                    spacing={0}
-                    sx={{
-                      padding: 0,
-                      backgroundColor: '#0f9bd9',
-                      overflow: 'auto'
-                    }}>
-                    <Grid item xs={8}>
-                      <Typography
-                        variant="h6"
-                        component="h2"
-                        sx={{ padding: '5px 0 5px 10px', color: 'white' }}>
-                        <SearchIcon sx={{ color: 'white' }} />
-                        Search
-                      </Typography>
-                    </Grid>
-                    <Grid item xs={4}>
-                      <Stack direction="row" spacing={1} justifyContent="flex-end">
-                        <IconButton
-                          aria-label="timeline"
-                          onClick={handleCloseSearch}
-                          sx={{ color: 'white' }}>
-                          <CloseIcon />
-                        </IconButton>
-                      </Stack>
-                    </Grid>
-                  </Grid>
-
-                  {appState.searchResult && (
-                    <Grid
-                      container
-                      spacing={1}
-                      sx={{
-                        marginTop: '30px',
-                        padding: '2px'
-                      }}>
-                      <Grid item xs={4}>
-                        <Item2>STATION NAME</Item2>
-                      </Grid>
-                      <Grid item xs={4}>
-                        <Item2>BASIN</Item2>
-                      </Grid>
-                      <Grid item xs={1}>
-                        <Item2>UF</Item2>
-                      </Grid>
-                      <Grid item xs={1.5}>
-                        <Item2>Longitude</Item2>
-                      </Grid>
-                      <Grid item xs={1.5}>
-                        <Item2>Latitude</Item2>
-                      </Grid>
-                    </Grid>
-                  )}
-                  {appState.searchResult &&
-                    appState.searchData.map((item: any) => (
-                      <Grid
-                        container
-                        spacing={1}
-                        sx={{
-                          padding: '2px'
-                        }}>
-                        <Grid item xs={4}>
-                          <BootstrapButton
-                            variant="contained"
-                            aria-label="delete"
-                            color="primary"
-                            disableRipple
-                            onClick={() => {
-                              appDispatch({ type: 'closeSearchModal' });
-                              props.flyTo([
-                                item.attributes.stLongitude,
-                                item.attributes.stLatitude
-                              ]);
-                              console.log('click button');
-                            }}>
-                            {item.attributes.stName.substring(0, 16)}...
-                          </BootstrapButton>
-                        </Grid>
-                        <Grid item xs={4}>
-                          <Item>{item.attributes.stBasin.substring(0, 21)}...</Item>
-                        </Grid>
-                        <Grid item xs={1}>
-                          <Item>{item.attributes.stUF}</Item>
-                        </Grid>
-                        <Grid item xs={1.5}>
-                          <Item>{item.attributes.stLongitude.toFixed(4)}</Item>
-                        </Grid>
-                        <Grid item xs={1.5}>
-                          <Item>{item.attributes.stLatitude.toFixed(4)}</Item>
-                        </Grid>
-                      </Grid>
-                    ))}
-                </div>
-              )}
-            </Box>
-          </CSSTransition>
+          <Slide direction="down" in={appState.modals.search} mountOnEnter unmountOnExit>
+            {search}
+          </Slide>
         </Grid>
         <Grid item xs={4}>
-          {appState.modals.how && (
-            <CSSTransition
-              in={appState.modals.how}
-              timeout={500}
-              classNames="slide-select"
-              unmountOnExit>
-              <Box sx={{ zIndex: 10, height: '180px', ...styleHow }}>
-                <Grid
-                  container
-                  spacing={0}
-                  sx={{
-                    padding: 0,
-                    backgroundColor: '#0f9bd9'
-                  }}>
-                  <Grid item xs={8}>
-                    <Typography
-                      variant="h6"
-                      component="h2"
-                      sx={{ padding: '5px 0 5px 10px', color: 'white' }}>
-                      How
-                    </Typography>
-                  </Grid>
-                  <Grid item xs={4}>
-                    <Stack direction="row" spacing={1} justifyContent="flex-end">
-                      <IconButton aria-label="Select" onClick={toggleHow} sx={{ color: 'white' }}>
-                        <CloseIcon />
-                      </IconButton>
-                    </Stack>
-                  </Grid>
-                </Grid>
-
-                <Grid
-                  container
-                  spacing={1}
-                  sx={{
-                    marginTop: '5px',
-                    padding: '2px'
-                  }}>
-                  <Grid item xs={12}>
-                    <Item>Search by</Item>
-                  </Grid>
-
-                  <Grid item xs={3}>
-                    <Item>
-                      Name{' '}
-                      <Switch
-                        color="primary"
-                        checked={appState.searchByName}
-                        onChange={toggleByName}
-                        inputProps={{ 'aria-label': 'controlled' }}
-                      />
-                    </Item>
-                  </Grid>
-                  <Grid item xs={3}>
-                    <Item>
-                      Basin{' '}
-                      <Switch
-                        color="primary"
-                        checked={appState.searchByBasin}
-                        onChange={toggleByBasin}
-                        inputProps={{ 'aria-label': 'controlled' }}
-                      />
-                    </Item>
-                  </Grid>
-                  <Grid item xs={3}>
-                    <Item>
-                      UF{' '}
-                      <Switch
-                        color="primary"
-                        checked={appState.searchByUF}
-                        onChange={toggleByUF}
-                        inputProps={{ 'aria-label': 'controlled' }}
-                      />
-                    </Item>
-                  </Grid>
-                  <Grid item xs={3}>
-                    <Item>
-                      River{' '}
-                      <Switch
-                        color="primary"
-                        checked={appState.searchByRiver}
-                        onChange={toggleByRiver}
-                        inputProps={{ 'aria-label': 'controlled' }}
-                        disabled
-                      />
-                    </Item>
-                  </Grid>
-                </Grid>
-              </Box>
-            </CSSTransition>
-          )}
-          {appState.modals.select && (
-            <CSSTransition
-              in={appState.modals.select}
-              timeout={500}
-              classNames="slide-select"
-              unmountOnExit>
-              <Box sx={{ zIndex: 10, ...styleBox }}>
-                <Grid
-                  container
-                  spacing={0}
-                  sx={{
-                    padding: 0,
-                    backgroundColor: '#0f9bd9'
-                  }}>
-                  <Grid item xs={8}>
-                    <Typography
-                      variant="h6"
-                      component="h2"
-                      sx={{ padding: '5px 0 5px 10px', color: 'white' }}>
-                      Select
-                    </Typography>
-                  </Grid>
-                  <Grid item xs={4}>
-                    <Stack direction="row" spacing={1} justifyContent="flex-end">
-                      <IconButton
-                        aria-label="Select"
-                        onClick={handleCloseSelect}
-                        sx={{ color: 'white' }}>
-                        <CloseIcon />
-                      </IconButton>
-                    </Stack>
-                  </Grid>
-                </Grid>
-
-                <Grid
-                  container
-                  spacing={1}
-                  sx={{
-                    marginTop: '5px',
-                    padding: '5px'
-                  }}>
-                  <Grid item xs={12}>
-                    <Item>Map Layers</Item>
-                  </Grid>
-
-                  <Grid item xs={4}>
-                    <Item3>
-                      <Checkbox defaultChecked sx={{ '& .MuiSvgIcon-root': { fontSize: 28 } }} />
-                      Brazil Basins
-                    </Item3>
-                  </Grid>
-                  <Grid item xs={4}>
-                    <Item3>
-                      <Checkbox defaultChecked sx={{ '& .MuiSvgIcon-root': { fontSize: 28 } }} />
-                      Main Rivers
-                    </Item3>
-                  </Grid>
-                  <Grid item xs={4}>
-                    <Item3>
-                      <Checkbox defaultChecked sx={{ '& .MuiSvgIcon-root': { fontSize: 28 } }} />
-                      S. America Basins
-                    </Item3>
-                  </Grid>
-                </Grid>
-              </Box>
-            </CSSTransition>
-          )}
+          <Slide direction="left" in={appState.modals.how} mountOnEnter unmountOnExit>
+            {how}
+          </Slide>
+          <Slide direction="left" in={appState.modals.heatmapControls} mountOnEnter unmountOnExit>
+            {heatmapcontrols}
+          </Slide>
+          <Slide direction="left" in={appState.modals.select} mountOnEnter unmountOnExit>
+            {select}
+          </Slide>
         </Grid>
       </Grid>
     </div>

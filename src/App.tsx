@@ -37,6 +37,21 @@ interface MonthNames {
 const BASE_URL = 'http://localhost:1337';
 const COLLECTION = 'api/mhstations';
 
+type layerType = {
+  layerId: string;
+  name: string;
+  checked: boolean;
+  added: boolean;
+};
+
+const mapLayers: layerType[] = [
+  { layerId: 'bacias', name: 'Brazil Basins', checked: false, added: false },
+  { layerId: 'rivers', name: 'Main Rivers', checked: false, added: false },
+  { layerId: 'bacias2', name: 'S. America Basins', checked: false, added: false },
+  { layerId: 'clusters', name: 'Clusters', checked: true, added: true },
+  { layerId: 'heatmapRain', name: 'Heatmap', checked: false, added: false }
+];
+
 const App: React.FC = () => {
   const { t } = useTranslation();
   const monthNames: MonthNames[] = [
@@ -93,12 +108,21 @@ const App: React.FC = () => {
       download: false,
       where: false,
       when: false,
-      how: true,
+      how: false,
       select: false,
       filters: false,
       results: false,
       search: false,
+      heatmapControls: false,
       centerModal: false
+    },
+    header: {
+      counterSelect: 1,
+      counterFilter: 0,
+      counterResults: 0,
+      counterProjects: 0,
+      counterTimeline: 0,
+      counterDownload: 0
     },
     searchValue: '',
     searchData: '',
@@ -108,7 +132,9 @@ const App: React.FC = () => {
     searchByBasin: false,
     searchByUF: false,
     searchByRiver: false,
-    searchBySat: false
+    searchBySat: false,
+    mapLayers: mapLayers,
+    heatmapControls: false
   };
 
   /*Goal that all of our loading and saving user related actions takes place in one place
@@ -203,7 +229,7 @@ we should probably do those types of things within a useEffect.
         draft.modals.projects = false;
         break;
       case 'togleSelectModal':
-        draft.modals.select = true;
+        draft.modals.select = action.value;
         break;
       case 'closeSelectModal':
         draft.modals.select = false;
@@ -239,6 +265,19 @@ we should probably do those types of things within a useEffect.
         break;
       case 'togleHowModal':
         draft.modals.how = action.value;
+        break;
+      case 'setMapLayers':
+        draft.mapLayers = action.value;
+        break;
+      case 'counterSelect':
+        draft.header.counterSelect = action.value;
+        break;
+      case 'togleHeatmapControl':
+        draft.modals.heatmapControls = action.value;
+        draft.modals.how = false;
+        break;
+      case 'closeHeatmapControl':
+        draft.mapLayers[4].checked = false;
         break;
     }
   }
