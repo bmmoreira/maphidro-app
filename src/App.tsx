@@ -69,6 +69,7 @@ const App: React.FC = () => {
     { name: t('Dec') }
   ];
   const initialState = {
+    mapRef: null,
     stationData: {},
     localData: {},
     satData: {},
@@ -156,6 +157,9 @@ we should probably do those types of things within a useEffect.
 
   function mapReducer(draft: any, action: any) {
     switch (action.type) {
+      case 'setMapref':
+        draft.mapRef = action.value;
+        break;
       case 'login':
         draft.loggedIn = true;
         draft.user = action.data;
@@ -443,8 +447,9 @@ we should probably do those types of things within a useEffect.
           <div className="App">
             {/*eslint-disable-next-line @typescript-eslint/ban-ts-comment*/}
             {/* @ts-ignore */}
-            <FlashMessages messages={state.flashMessages} />
+
             <Header />
+            <FlashMessages messages={state.flashMessages} />
             <Routes>
               <Route path="/" element={state.loggedIn ? <Home /> : <HomeGuest />} />
               <Route

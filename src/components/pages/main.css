@@ -450,6 +450,7 @@ textarea.tall-textarea {
 
 .floating-alerts .floating-alert:last-of-type {
   display: block;
+  position:absolute;
 }
 
 @keyframes floatingAlert {
@@ -589,7 +590,7 @@ textarea.tall-textarea {
 }
 
 .page {
-  height: calc(100vh - 130px) !important; /* calculate height of the screen minus the heading */
+  height: calc(100vh - 135px) !important; /* calculate height of the screen minus the heading */
 }
 
 .logo {

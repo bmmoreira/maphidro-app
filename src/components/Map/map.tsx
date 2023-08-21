@@ -521,6 +521,10 @@ function Map(props: MaplibreMapProps) {
 
     // save the map object to React.useState
     setMap(mapLibre);
+    appDispatch({
+      type: 'setMapref',
+      value: mapLibre
+    });
 
     if (props.onCreated) props.onCreated(mapLibre);
 

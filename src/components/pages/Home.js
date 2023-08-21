@@ -8,7 +8,7 @@ function Home() {
   return (
     <Page title="Your Feed">
       <h2 className="text-center">
-        Hello <strong>{appState.user.username}</strong>, this is your landing page.
+        <strong>{appState.user.username}</strong>, this is your landing page.
       </h2>
       <p className="lead text-muted text-center">
         We will customize this page with map statistics in the future.

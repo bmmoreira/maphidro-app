@@ -1,6 +1,6 @@
 /** @format */
 
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import StateContext from '../../StateContext';
@@ -17,11 +17,8 @@ import SearchIcon from '@mui/icons-material/Search';
 import Checkbox from '@mui/material/Checkbox';
 import Slide from '@mui/material/Slide';
 import SendIcon from '@mui/icons-material/Send';
-
 import SkipPreviousIcon from '@mui/icons-material/SkipPrevious';
 import SkipNextIcon from '@mui/icons-material/SkipNext';
-
-import { SwitchTransition, CSSTransition } from 'react-transition-group';
 import './styles.css';
 
 const Item = styled(Paper)(({ theme }) => ({
@@ -112,48 +109,85 @@ type layerType = {
   added: boolean;
 };
 
+const style = {
+  position: 'relative',
+  top: '0px',
+
+  height: window.innerHeight - 200,
+  bgcolor: '#c6eafa',
+  border: '1px solid #0f9bd9',
+  borderRadius: '3px',
+  boxShadow: '0 0 5px 5px gray',
+  p: 0
+};
+
+const styleHow = {
+  position: 'relative',
+  top: '0px',
+  bgcolor: '#c6eafa',
+  border: '1px solid #0f9bd9',
+  borderRadius: '3px',
+  boxShadow: '0 0 5px 5px gray',
+  p: 0
+};
+
 export default function PanelModals(props: any) {
   const containerRef = React.useRef(null);
-  const style = {
-    position: 'relative',
-    top: '0px',
-
-    height: window.innerHeight - 200,
-    bgcolor: '#c6eafa',
-    border: '1px solid #0f9bd9',
-    borderRadius: '3px',
-    boxShadow: '0 0 5px 5px gray',
-    p: 0
-  };
-
+  const cday = new Date();
+  const [imgDate, setImgDate] = useState(cday.setDate(cday.getDate() - 9));
+  const [imgIndex, setImgIndex] = useState(0);
   const appState = useContext(StateContext);
   const appDispatch = useContext(DispatchContext);
-
   const mapLayers: layerType[] = appState.mapLayers;
 
-  const styleBox = {
-    position: 'relative',
-    top: '0px',
-    bgcolor: '#c6eafa',
-    border: '1px solid #0f9bd9',
-    borderRadius: '3px',
-    boxShadow: '0 0 5px 5px gray',
-    p: 0,
-    height:
-      appState.modals.how | appState.modals.heatmapControls
-        ? window.innerHeight - 400
-        : window.innerHeight - 200,
-    marginTop: appState.modals.how | appState.modals.heatmapControls ? '15px !important' : '0px'
+  const togglePlay = () => {
+    const layer = appState.mapRef.getLayoutProperty('heatmapRain', 'visibility');
+    console.log(layer);
+    if (layer === 'visible') {
+      const date = new Date(cday.getTime());
+
+      let i = 1;
+
+      const timer = setInterval(() => {
+        if (i < 9) {
+          appState.mapRef.getSource('heatmapRain').updateImage({
+            url: 'images/prec/overall/precp' + i + '.png'
+          });
+          i++;
+          console.log(i);
+          setImgDate(date.setDate(date.getDate() + 1));
+        } else {
+          window.clearInterval(timer);
+          setImgIndex(8);
+        }
+      }, 1000);
+    }
   };
 
-  const styleHow = {
-    position: 'relative',
-    top: '0px',
-    bgcolor: '#c6eafa',
-    border: '1px solid #0f9bd9',
-    borderRadius: '3px',
-    boxShadow: '0 0 5px 5px gray',
-    p: 0
+  const toggleBackward = () => {
+    const layer = appState.mapRef.getLayoutProperty('heatmapRain', 'visibility');
+    if (layer === 'visible' && imgIndex > 1) {
+      //let currentIndex = imgIndex - 1;
+      appState.mapRef.getSource('heatmapRain').updateImage({
+        url: '/images/prec/overall/precp' + imgIndex + '.png'
+      });
+      setImgIndex(imgIndex - 1);
+      const date = new Date(imgDate);
+      setImgDate(date.setDate(date.getDate() - 1));
+    }
+  };
+
+  const toggleForward = () => {
+    const layer = appState.mapRef.getLayoutProperty('heatmapRain', 'visibility');
+    if (layer === 'visible' && imgIndex < 8) {
+      //let currentIndex = imgIndex + 1;
+      appState.mapRef.getSource('heatmapRain').updateImage({
+        url: '/images/prec/overall/precp' + imgIndex + '.png'
+      });
+      setImgIndex(imgIndex + 1);
+      const date = new Date(imgDate);
+      setImgDate(date.setDate(date.getDate() + 1));
+    }
   };
 
   //const [open, setOpen] = React.useState(appState.modals.timeline);
@@ -226,6 +260,21 @@ export default function PanelModals(props: any) {
     });
   };
 
+  const styleBox = {
+    position: 'relative',
+    top: '0px',
+    bgcolor: '#c6eafa',
+    border: '1px solid #0f9bd9',
+    borderRadius: '3px',
+    boxShadow: '0 0 5px 5px gray',
+    p: 0,
+    height:
+      appState.modals.how | appState.modals.heatmapControls
+        ? window.innerHeight - 400
+        : window.innerHeight - 200,
+    marginTop: appState.modals.how | appState.modals.heatmapControls ? '15px !important' : '0px'
+  };
+
   const how = (
     <Box sx={{ zIndex: 10, height: '180px', ...styleHow }}>
       <Grid
@@ -257,15 +306,15 @@ export default function PanelModals(props: any) {
         spacing={1}
         sx={{
           marginTop: '5px',
-          padding: '2px'
+          padding: '5px'
         }}>
         <Grid item xs={12}>
-          <Item>Search by</Item>
+          <Item2 sx={{ fontSize: '1rem', fontWeight: '600' }}>Search by</Item2>
         </Grid>
 
         <Grid item xs={3}>
           <Item>
-            Name{' '}
+            Name
             <Switch
               color="primary"
               checked={appState.searchByName}
@@ -276,7 +325,7 @@ export default function PanelModals(props: any) {
         </Grid>
         <Grid item xs={3}>
           <Item>
-            Basin{' '}
+            Basin
             <Switch
               color="primary"
               checked={appState.searchByBasin}
@@ -287,7 +336,7 @@ export default function PanelModals(props: any) {
         </Grid>
         <Grid item xs={3}>
           <Item>
-            UF{' '}
+            UF
             <Switch
               color="primary"
               checked={appState.searchByUF}
@@ -298,7 +347,7 @@ export default function PanelModals(props: any) {
         </Grid>
         <Grid item xs={3}>
           <Item>
-            River{' '}
+            River
             <Switch
               color="primary"
               checked={appState.searchByRiver}
@@ -313,7 +362,7 @@ export default function PanelModals(props: any) {
   );
 
   const heatmapcontrols = (
-    <Box sx={{ zIndex: 10, height: '120px', ...styleHow }}>
+    <Box sx={{ zIndex: 10, height: '150px', ...styleHow }}>
       <Grid
         container
         spacing={0}
@@ -348,24 +397,41 @@ export default function PanelModals(props: any) {
           padding: '5px'
         }}>
         <Grid item xs={3}>
-          <Button variant="contained" endIcon={<SkipPreviousIcon />} size="large">
+          <Button
+            onClick={toggleBackward}
+            variant="contained"
+            endIcon={<SkipPreviousIcon />}
+            size="large">
             Previous
           </Button>
         </Grid>
         <Grid item xs={2.3}>
-          <Button variant="contained" endIcon={<SendIcon />} size="large">
+          <Button variant="contained" onClick={togglePlay} endIcon={<SendIcon />} size="large">
             Play
           </Button>
         </Grid>
         <Grid item xs={3}>
-          <Button variant="contained" endIcon={<SkipNextIcon />} size="large">
+          <Button
+            onClick={toggleForward}
+            variant="contained"
+            endIcon={<SkipNextIcon />}
+            size="large">
             Next
           </Button>
         </Grid>
         <Grid item xs={3}>
           <Item3 sx={{ height: '42px', display: 'flex', justifyContent: 'center' }}>
-            10/08/2020
+            {new Date(imgDate).toISOString().split('T')[0]}
           </Item3>
+        </Grid>
+        <Grid
+          item
+          xs={12}
+          sx={{
+            display: 'flex',
+            justifyContent: 'center'
+          }}>
+          <img src="images/prec/legend4.png" />
         </Grid>
       </Grid>
     </Box>

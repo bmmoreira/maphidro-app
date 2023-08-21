@@ -159,7 +159,14 @@ function HeaderLoggedIn(props) {
           sx={{
             m: 0
           }}>
-          <Grid xs={4} sx={{ backgroundColor: styleWhite.bg }}></Grid>
+          <Grid xs={4} sx={{ 
+            backgroundColor: styleWhite.bg,
+            display: 'flex',
+            paddingRight: '20px',
+            justifyContent: 'right',
+          }}>
+            <img src="assets/mh_logo.png" alt="maphidro logo" />
+          </Grid>
           <Grid
             xs={8}
             sx={{
@@ -316,7 +323,7 @@ function HeaderLoggedIn(props) {
               </Badge>
               <div>Select</div>
             </IconButton>
-            <IconButton aria-label={notificationsLabel(100)} sx={{ ...buttonStyle }}>
+            <IconButton aria-label={notificationsLabel(100)} sx={{ ...buttonStyle }} disabled>
               <Badge
                 anchorOrigin={{
                   vertical: 'bottom',
@@ -329,7 +336,7 @@ function HeaderLoggedIn(props) {
               <div>Filters</div>
             </IconButton>
 
-            <IconButton aria-label={notificationsLabel(100)} sx={{ ...buttonStyle }}>
+            <IconButton aria-label={notificationsLabel(100)} sx={{ ...buttonStyle }} disabled>
               <Badge
                 anchorOrigin={{
                   vertical: 'bottom',

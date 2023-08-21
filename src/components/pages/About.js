@@ -14,7 +14,7 @@ function About() {
         This application uses open source libraries to collect and display calibrated satellite data
         and compare them with in situ rainfall stations operated by ANA (National Water and
         Sanitation Agency) in Brazil. Shows 20-year satellite precipitation measurements of more
-        than 4000 pluviometric and fluviometric points of interest in Brazil
+        than 1500 pluviometric points of interest in Brazil
       </p>
       <p className="lead text-muted">
         The Satellite precipitation data is provided by the Center for Weather Forecasting and
@@ -27,10 +27,14 @@ function About() {
         </a>
       </p>
       <p className="lead text-muted">
-        NASA's Global Precipitation Measurement Mission (GPM) uses satellites to measure Earth's
-        rain and snowfall for the benefit of humanity. Launched by NASA and JAXA on February 27,
-        2014, the GPM is an international mission that sets the standard for measurements of
-        precipitation in space. Using a network of satellites joined by the GPM Core Observatory.
+        NASA's Global Precipitation Measurement Mission (GPM) uses several satellites to measure
+        Earth's rain and snowfall for the benefit of humanity. GPM is an international mission
+        launched by NASA and JAXA(Japan) that sets the standard for measurements of precipitation in
+        space.
+      </p>
+
+      <p className="lead text-muted">
+        The pluviometric points of interest are stations operated by CPRM(Geolo)
       </p>
     </Page>
   );
