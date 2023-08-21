@@ -23,6 +23,7 @@ jobs:
 
       - name: Executing remote command
         uses: appleboy/ssh-action@master
+        working-directory: ./public_html
         with:
           host: ${{ secrets.HOST }}
           USERNAME: ${{ secrets.USERNAME }}
