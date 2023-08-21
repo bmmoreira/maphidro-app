@@ -23,10 +23,9 @@ jobs:
 
       - name: Executing remote command
         uses: appleboy/ssh-action@master
-        working-directory: ./public_html
         with:
           host: ${{ secrets.HOST }}
           USERNAME: ${{ secrets.USERNAME }}
           PORT: ${{ secrets.PORT }}
           KEY: ${{ secrets.SSHKEY }}
-          script: ls
+          script: cd ./public_html && ls
