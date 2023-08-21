@@ -4,7 +4,7 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-This application uses open source libraries to collect and display calibrated satellite data and compare them with in situ rainfall stations operated by CRPM(Geological Survey of Brazil) from the National Hydrometeorological Network (RHN)  coordinated by ANA (National Water and Sanitation Agency) in Brazil. Shows 20-year satellite precipitation measurements of more than 1500 pluviometric points of interest in Brazil
+This application uses open source libraries to collect and display calibrated satellite data and compare them with in situ rainfall stations operated by CRPM(Geological Survey of Brazil) from the National Hydrometeorological Network (RHN)  coordinated by ANA (National Water and Sanitation Agency) in Brazil. Shows 20-year satellite precipitation measurements of more than 1500 pluviometric points of interest in Brazil.
 
 
 ## Screenshot
