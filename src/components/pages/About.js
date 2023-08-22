@@ -33,9 +33,7 @@ function About() {
         space.
       </p>
 
-      <p className="lead text-muted">
-        The pluviometric points of interest are stations operated by CPRM(Geolo)
-      </p>
+      
     </Page>
   );
 }
