@@ -25,6 +25,8 @@ import { useTranslation } from 'react-i18next';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import ChartModal from './components/ChartModal/ChartModal';
 import axios from 'axios';
+import { BASE_URL, COLLECTION_NAME } from './components/Utils/constants';
+
 
 export type Basin = {
   id: number;
@@ -34,8 +36,6 @@ interface MonthNames {
   name: string;
 }
 
-const BASE_URL = 'https://api.maphidro.com';
-const COLLECTION = 'api/mhstations';
 
 type layerType = {
   layerId: string;
@@ -329,7 +329,7 @@ we should probably do those types of things within a useEffect.
 
   const search = async (val: string) => {
     const res = await axios(
-      `${BASE_URL}/${COLLECTION}?filters[stName][$contains]=${val.toUpperCase()}`
+      `${BASE_URL}/${COLLECTION_NAME}?filters[stName][$contains]=${val.toUpperCase()}`
     );
     console.log(res.data.data);
 

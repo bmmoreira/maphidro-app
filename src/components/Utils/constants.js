@@ -1,5 +1,8 @@
 /** @format */
 
+export const BASE_URL = 'https://api.maphidro.com';
+export const COLLECTION_NAME = 'api/mhstations';
+
 export const bgColor = '#312f38';
 export const bgColorButton = '#44414d';
 export const bgColorBox = '#615d6f';

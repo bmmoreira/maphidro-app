@@ -57,6 +57,8 @@ import RiverPopup from '../Popup/RiverPopup';
 import { Basin } from '../../App';
 import Page from '../pages/Page';
 import { useTranslation } from 'react-i18next';
+import { BASE_URL, COLLECTION_NAME } from '../Utils/constants';
+
 
 interface MaplibreMapProps {
   initialOptions?: Omit<maplibregl.MapOptions, 'container' | 'style'>;
@@ -83,8 +85,7 @@ function Map(props: MaplibreMapProps) {
 
   const [isLoading, setIsLoading] = useState(true);
 
-  const BASE_URL = 'https://api.maphidro.com';
-  const COLLECTION_NAME = 'api/mhstations';
+ 
 
   if (process.env.REACT_APP_API_KEY == null) {
     throw new Error('You have to configure env REACT_APP_API_KEY, see README');

@@ -331,7 +331,7 @@ function HomeGuest() {
       const fResult = async function fetchResults() {
         try {
           const response = await Axios.post(
-            '/register',
+            'https://mh-api.maphidro.com/register',
             {
               username: state.username.value,
               email: state.email.value,
