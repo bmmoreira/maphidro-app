@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Map from './components/Map/map';
 
 import Axios from 'axios';
-Axios.defaults.baseURL = 'http://localhost:3000';
+Axios.defaults.baseURL = 'https://maphidro.com';
 
 import { useImmerReducer } from 'use-immer';
 import StateContext from './StateContext';
@@ -34,7 +34,7 @@ interface MonthNames {
   name: string;
 }
 
-const BASE_URL = 'http://localhost:1337';
+const BASE_URL = 'https://api.maphidro.com';
 const COLLECTION = 'api/mhstations';
 
 type layerType = {
