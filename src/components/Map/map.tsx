@@ -83,7 +83,7 @@ function Map(props: MaplibreMapProps) {
 
   const [isLoading, setIsLoading] = useState(true);
 
-  const BASE_URL = 'http://api.maphidro.com';
+  const BASE_URL = 'https://api.maphidro.com';
   const COLLECTION_NAME = 'api/mhstations';
 
   if (process.env.REACT_APP_API_KEY == null) {
@@ -567,17 +567,13 @@ function Map(props: MaplibreMapProps) {
     try {
       const sId = String(id).padStart(8, '0');
 
-      const [stData, stLocData, stSatData, apiData] = await Promise.all([
+      const [stData, apiData] = await Promise.all([
         axios.get(`/data/stations/stations-${uf}.json`),
-        axios.get(`data/BR/${uf}/chuvas_L${sId}.json`),
-        axios.get(`data/BR/${uf}/chuvas_S${sId}.json`),
+        
         getFromAPI(id)
       ]);
 
-      console.log(apiData);
-      console.log(stLocData.data);
-      console.log(stSatData.data);
-      console.log(apiData.satdata._satData);
+      
       /*    const res = await axios({
         method: 'get',
         url: `/data/stations/stations-${uf}.json`
@@ -601,8 +597,7 @@ function Map(props: MaplibreMapProps) {
         infoValue: st,
         locValue: apiData.raindata,
         satValue: apiData.satdata._satData,
-        locDataloaded: stLocData.data != null,
-        satDataloaded: stSatData.data._satData != null,
+        
         valueLocLastYear: locLastYear,
         valueLocFirstYear: locFirstYear,
         valueSatLastYear: satLastYear,
