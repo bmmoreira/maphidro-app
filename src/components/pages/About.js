@@ -12,9 +12,10 @@ function About() {
       <h2>About MapHidro</h2>
       <p className="lead text-muted">
         This application uses open source libraries to collect and display calibrated satellite data
-        and compare them with in situ rainfall stations operated by ANA (National Water and
-        Sanitation Agency) in Brazil. Shows 20-year satellite precipitation measurements of more
-        than 1500 pluviometric points of interest in Brazil
+        and compare them with in situ rainfall stations operated by CRPM(Geological Survey of
+        Brazil) from the National Hydrometeorological Network (RHN) coordinated by ANA (National
+        Water and Sanitation Agency) in Brazil. Shows 20-year satellite precipitation measurements
+        of more than 1500 pluviometric points of interest in Brazil.
       </p>
       <p className="lead text-muted">
         The Satellite precipitation data is provided by the Center for Weather Forecasting and
@@ -32,8 +33,6 @@ function About() {
         launched by NASA and JAXA(Japan) that sets the standard for measurements of precipitation in
         space.
       </p>
-
-      
     </Page>
   );
 }

@@ -396,17 +396,17 @@ export default function PanelModals(props: any) {
           marginTop: '5px',
           padding: '5px'
         }}>
-        <Grid item xs={3}>
+        <Grid item xs={3.1}>
           <Button
             onClick={toggleBackward}
             variant="contained"
             endIcon={<SkipPreviousIcon />}
-            size="large">
+            size="medium">
             Previous
           </Button>
         </Grid>
         <Grid item xs={2.3}>
-          <Button variant="contained" onClick={togglePlay} endIcon={<SendIcon />} size="large">
+          <Button variant="contained" onClick={togglePlay} endIcon={<SendIcon />} size="medium">
             Play
           </Button>
         </Grid>
@@ -415,7 +415,7 @@ export default function PanelModals(props: any) {
             onClick={toggleForward}
             variant="contained"
             endIcon={<SkipNextIcon />}
-            size="large">
+            size="medium">
             Next
           </Button>
         </Grid>
@@ -518,10 +518,10 @@ export default function PanelModals(props: any) {
                 <Item2>UF</Item2>
               </Grid>
               <Grid item xs={1.5}>
-                <Item2>Longitude</Item2>
+                <Item2>Long.</Item2>
               </Grid>
               <Grid item xs={1.5}>
-                <Item2>Latitude</Item2>
+                <Item2>Lat.</Item2>
               </Grid>
             </Grid>
           )}
@@ -545,20 +545,20 @@ export default function PanelModals(props: any) {
                       props.flyTo([item.attributes.stLongitude, item.attributes.stLatitude]);
                       console.log('click button');
                     }}>
-                    {item.attributes.stName.substring(0, 16)}...
+                    {item.attributes.stName.substring(0, 12)}...
                   </BootstrapButton>
                 </Grid>
                 <Grid item xs={4}>
-                  <Item>{item.attributes.stBasin.substring(0, 21)}...</Item>
+                  <Item>{item.attributes.stBasin.substring(0, 17)}...</Item>
                 </Grid>
                 <Grid item xs={1}>
                   <Item>{item.attributes.stUF}</Item>
                 </Grid>
                 <Grid item xs={1.5}>
-                  <Item>{item.attributes.stLongitude.toFixed(4)}</Item>
+                  <Item>{item.attributes.stLongitude.toFixed(3)}</Item>
                 </Grid>
                 <Grid item xs={1.5}>
-                  <Item>{item.attributes.stLatitude.toFixed(4)}</Item>
+                  <Item>{item.attributes.stLatitude.toFixed(3)}</Item>
                 </Grid>
               </Grid>
             ))}
