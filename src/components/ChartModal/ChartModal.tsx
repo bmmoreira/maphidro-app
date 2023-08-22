@@ -234,7 +234,7 @@ const ChartModal = function (props: ChartProps) {
             }
           : { maxWidth: 480 }
       }>
-      {appState.dataLocLoaded ? (
+     
         <Modal.Header closeButton>
           <Modal.Title
             id="contained-modal-title-vcenter"
@@ -245,9 +245,7 @@ const ChartModal = function (props: ChartProps) {
             </span>
           </Modal.Title>
         </Modal.Header>
-      ) : (
-        ''
-      )}
+     
 
       <Modal.Body className="text-center">
         {debug ? <div className="debug">Debug screen width: {width}</div> : null}
@@ -259,9 +257,8 @@ const ChartModal = function (props: ChartProps) {
         <Container fluid>
           <Row className="justify-content-md-center">
             <Col>
-              {' '}
-              {appState.dataLocLoaded ? <div className="loc">IN SITU-(ANA): </div> : ''}
-              {appState.dataLocLoaded ? (
+             <div className="loc">IN SITU-(ANA): </div> 
+             
                 <Select
                   menuPlacement="top"
                   defaultValue={{
@@ -271,14 +268,12 @@ const ChartModal = function (props: ChartProps) {
                   onChange={handleChangeLoc}
                   options={selectLocal}
                 />
-              ) : (
-                ''
-              )}{' '}
+            
             </Col>
             <Col>
-              {' '}
-              {appState.dataLocLoaded ? <div className="sat">SAT-(IMERGE): </div> : ''}
-              {appState.dataLocLoaded ? (
+              
+              <div className="sat">SAT-(IMERGE): </div> 
+              
                 <Select
                   menuPlacement="top"
                   defaultValue={{
@@ -288,9 +283,7 @@ const ChartModal = function (props: ChartProps) {
                   onChange={handleChangeSat}
                   options={selectSat}
                 />
-              ) : (
-                ''
-              )}{' '}
+            
             </Col>
           </Row>
         </Container>
