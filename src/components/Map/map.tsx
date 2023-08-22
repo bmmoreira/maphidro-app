@@ -83,7 +83,7 @@ function Map(props: MaplibreMapProps) {
 
   const [isLoading, setIsLoading] = useState(true);
 
-  const BASE_URL = 'http://localhost:1337';
+  const BASE_URL = 'http://api.maphidro.com';
   const COLLECTION_NAME = 'api/mhstations';
 
   if (process.env.REACT_APP_API_KEY == null) {
