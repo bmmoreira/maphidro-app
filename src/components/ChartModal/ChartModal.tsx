@@ -234,18 +234,16 @@ const ChartModal = function (props: ChartProps) {
             }
           : { maxWidth: 480 }
       }>
-     
-        <Modal.Header closeButton>
-          <Modal.Title
-            id="contained-modal-title-vcenter"
-            className="text-center"
-            style={{ color: '#3887be' }}>
-            <span style={{ fontWeight: '700' }}>
-              {appState.stationData._stationName} &#40;{appState.stationData._stationOperator}&#41;
-            </span>
-          </Modal.Title>
-        </Modal.Header>
-     
+      <Modal.Header closeButton>
+        <Modal.Title
+          id="contained-modal-title-vcenter"
+          className="text-center"
+          style={{ color: '#3887be' }}>
+          <span style={{ fontWeight: '700' }}>
+            {appState.stationData.stName} &#40;{appState.stationData.stOperator}&#41;
+          </span>
+        </Modal.Title>
+      </Modal.Header>
 
       <Modal.Body className="text-center">
         {debug ? <div className="debug">Debug screen width: {width}</div> : null}
@@ -257,33 +255,30 @@ const ChartModal = function (props: ChartProps) {
         <Container fluid>
           <Row className="justify-content-md-center">
             <Col>
-             <div className="loc">IN SITU-(ANA): </div> 
-             
-                <Select
-                  menuPlacement="top"
-                  defaultValue={{
-                    label: `${appState.barChart.locBarSelectedYear}`,
-                    value: `${appState.barChart.locBarSelectedYear}`
-                  }}
-                  onChange={handleChangeLoc}
-                  options={selectLocal}
-                />
-            
+              <div className="loc">IN SITU-(ANA): </div>
+
+              <Select
+                menuPlacement="top"
+                defaultValue={{
+                  label: `${appState.barChart.locBarSelectedYear}`,
+                  value: `${appState.barChart.locBarSelectedYear}`
+                }}
+                onChange={handleChangeLoc}
+                options={selectLocal}
+              />
             </Col>
             <Col>
-              
-              <div className="sat">SAT-(IMERGE): </div> 
-              
-                <Select
-                  menuPlacement="top"
-                  defaultValue={{
-                    label: `${appState.barChart.satBarSelectedYear}`,
-                    value: `${appState.barChart.satBarSelectedYear}`
-                  }}
-                  onChange={handleChangeSat}
-                  options={selectSat}
-                />
-            
+              <div className="sat">SAT-(IMERGE): </div>
+
+              <Select
+                menuPlacement="top"
+                defaultValue={{
+                  label: `${appState.barChart.satBarSelectedYear}`,
+                  value: `${appState.barChart.satBarSelectedYear}`
+                }}
+                onChange={handleChangeSat}
+                options={selectSat}
+              />
             </Col>
           </Row>
         </Container>

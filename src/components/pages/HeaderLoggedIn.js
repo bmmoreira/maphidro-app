@@ -139,7 +139,7 @@ function HeaderLoggedIn(props) {
       });
 
       console.log('Input value:', inputValue);
-    }, 1000);
+    }, 1300);
   };
 
   return (
@@ -159,12 +159,14 @@ function HeaderLoggedIn(props) {
           sx={{
             m: 0
           }}>
-          <Grid xs={4} sx={{ 
-            backgroundColor: styleWhite.bg,
-            display: 'flex',
-            paddingRight: '20px',
-            justifyContent: 'right',
-          }}>
+          <Grid
+            xs={4}
+            sx={{
+              backgroundColor: styleWhite.bg,
+              display: 'flex',
+              paddingRight: '20px',
+              justifyContent: 'right'
+            }}>
             <img src="assets/mh_logo.png" alt="maphidro logo" />
           </Grid>
           <Grid

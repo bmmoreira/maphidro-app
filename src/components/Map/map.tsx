@@ -59,7 +59,6 @@ import Page from '../pages/Page';
 import { useTranslation } from 'react-i18next';
 import { BASE_URL, COLLECTION_NAME } from '../Utils/constants';
 
-
 interface MaplibreMapProps {
   initialOptions?: Omit<maplibregl.MapOptions, 'container' | 'style'>;
   onCreated?(map: maplibregl.Map): void;
@@ -84,8 +83,6 @@ function Map(props: MaplibreMapProps) {
   const appState = useContext(StateContext);
 
   const [isLoading, setIsLoading] = useState(true);
-
- 
 
   if (process.env.REACT_APP_API_KEY == null) {
     throw new Error('You have to configure env REACT_APP_API_KEY, see README');
@@ -568,25 +565,61 @@ function Map(props: MaplibreMapProps) {
     try {
       const sId = String(id).padStart(8, '0');
 
-      const [stData, apiData] = await Promise.all([
+      const [apiData] = await Promise.all([getFromAPI(id)]);
+      /*   const [stData, apiData] = await Promise.all([
         axios.get(`/data/stations/stations-${uf}.json`),
         
         getFromAPI(id)
-      ]);
+      ]); */
 
-      
       /*    const res = await axios({
         method: 'get',
         url: `/data/stations/stations-${uf}.json`
-      }); */
-      const ufStations = stData.data.stations;
-      let st: any;
+      });
+      const ufStations = stData.data.stations; */
+      const st = {
+        stCode: apiData.stCode,
+        stType: apiData.stType,
+        stName: apiData.stName,
+        stAccountable: apiData.stAccountable,
+        stOperator: apiData.stOperator,
+        stUF: apiData.stUF,
+        stCounty: apiData.stCounty,
+        stLatitude: apiData.stLatitude,
+        stLongitude: apiData.stLongitude,
+        stFaultDays: apiData.stFaultDays,
+        stFaultMonths: apiData.stFaultMonths,
+        stBasin: apiData.stBasin,
+        stRiver: apiData.stRiver,
+        stADren: apiData.stADren,
+        stEscale: apiData.stEscale,
+        stRegLevel: apiData.stRegLevel,
+        stLiqDischarge: apiData.stLiqDischarge,
+        stPluviometer: apiData.stPluviometer,
+        stEvaporimeter: apiData.stEvaporimeter,
+        stClimatological: apiData.stClimatological,
+        stTelemetry: apiData.stTelemetry,
+        stInitScale: apiData.stInitScale,
+        stInitRegLevel: apiData.stInitRegLevel,
+        stInitRegDesLiq: apiData.stInitRegDesLiq,
+        stInitRegSed: apiData.stInitRegSed,
+        stInitRegQual: apiData.stInitRegQual,
+        stInitRegPluv: apiData.stInitRegPluv,
+        stInitRegRain: apiData.stInitRegRain,
+        stInitRegEvap: apiData.stInitRegEvap,
+        stInitRegClim: apiData.stInitRegClim,
+        stInitRegTele: apiData.stInitRegTele,
+        stOperating: apiData.stOperating,
+        stRegINC_TEL: apiData.stRegINC_TEL,
+        stSediments: apiData.stSediments,
+        stWaterQuality: apiData.stWaterQuality
+      };
 
-      ufStations.forEach((item: any) => {
+      /*      ufStations.forEach((item: any) => {
         if (item._id == id) {
           st = item;
         }
-      });
+      }); */
 
       const locFirstYear = new Date(apiData.raindata._initRegisterTime).getFullYear();
       const locLastYear = new Date(apiData.raindata._lastRegisterTime).getFullYear();
@@ -598,7 +631,6 @@ function Map(props: MaplibreMapProps) {
         infoValue: st,
         locValue: apiData.raindata,
         satValue: apiData.satdata._satData,
-        
         valueLocLastYear: locLastYear,
         valueLocFirstYear: locFirstYear,
         valueSatLastYear: satLastYear,

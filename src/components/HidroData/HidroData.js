@@ -67,23 +67,6 @@ const HidroData = function () {
   return (
     <Tabs id="chart-main-tab" activeKey={key} onSelect={(k) => setKey(k)} className="mb-3">
       <Tab eventKey="home" title={t('monthly')}>
-        {appState.dataLocLoaded ? (
-          ''
-        ) : (
-          <div className="container" style={{ maxWidth: '460px', marginTop: '-12px' }}>
-            <div className="row">
-              <div
-                className="col-sm-14"
-                style={{
-                  backgroundColor: 'orange',
-                  color: 'white',
-                  fontSize: '0.8rem'
-                }}>
-                {t('prec_satOnly')}
-              </div>
-            </div>
-          </div>
-        )}
         <h5>{t('precipitation')}</h5>
 
         <Container fluid="md">
@@ -165,7 +148,7 @@ const HidroData = function () {
         />
       </Tab>
       <Tab eventKey="insitu" title={t('details')}>
-        <StationInfo sInfo={appState.stationData} dataLoad={appState.dataLocLoaded} />
+        <StationInfo />
       </Tab>
     </Tabs>
   );

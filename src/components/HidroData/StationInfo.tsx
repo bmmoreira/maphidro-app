@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import './hidrodata.css';
 import { useTranslation } from 'react-i18next';
 import Table from 'react-bootstrap/Table';
 import Station from '../DataModels/Station4';
+import StateContext from '../../StateContext';
 
 interface StationInfoProps {
   dataLoad: boolean;
@@ -10,6 +11,8 @@ interface StationInfoProps {
 }
 
 const StationInfo = function (props: StationInfoProps) {
+  const appState = useContext(StateContext);
+
   const { t } = useTranslation();
 
   return (
@@ -21,31 +24,31 @@ const StationInfo = function (props: StationInfoProps) {
               <td style={{ width: '20%' }}>
                 <span>{t('name')}:</span>
               </td>
-              <td colSpan={3}>{props.dataLoad && props.sInfo!._stationName}</td>
+              <td colSpan={3}>{appState.stationData.stName}</td>
             </tr>
             <tr>
               <td>
                 <span>{t('scope')}:</span>
               </td>
-              <td colSpan={3}>{props.dataLoad && props.sInfo!._stationBasin}</td>
+              <td colSpan={3}>{appState.stationData.stBasin}</td>
             </tr>
             <tr>
               <td colSpan={4}>
                 <span>{t('longitude_latitude')}: </span>{' '}
-                {props.dataLoad && props.sInfo!._longitude.toFixed(5)}/
-                {props.dataLoad && props.sInfo!._latitude.toFixed(5)}
+                {appState.stationData.stLongitude.toFixed(5)}/
+                {appState.stationData.stLatitude.toFixed(5)}
               </td>
             </tr>
             <tr>
               <td>
                 <span>{t('code')}:</span>
               </td>
-              <td>{props.dataLoad && props.sInfo!._id}</td>
+              <td>{appState.stationData.stCode}</td>
               <td style={{ width: '20%' }}>
                 <span>{t('type')}:</span>
               </td>
               <td>
-                {props.dataLoad && props.sInfo!._type === 'Pluviométrica'
+                {appState.stationData.stType === 'Pluviométrica'
                   ? t('pluviometric')
                   : t('fluviometric')}
               </td>
@@ -54,63 +57,51 @@ const StationInfo = function (props: StationInfoProps) {
               <td>
                 <span>{t('city')}:</span>
               </td>
-              <td>{props.dataLoad && props.sInfo!._stationCity}</td>
+              <td>{appState.stationData.stCounty}</td>
               <td>
                 <span>{t('country_state')}:</span>
               </td>
-              <td>{props.dataLoad && props.sInfo!._stationState}</td>
+              <td>{appState.stationData.stUF}</td>
             </tr>
             <tr>
               <td>
                 <span>{t('operator')}:</span>
               </td>
-              <td>{props.dataLoad && props.sInfo!._stationOperator}</td>
+              <td>{appState.stationData.stOperator}</td>
               <td>
                 <span>{t('responsible')}:</span>
               </td>
-              <td>{props.dataLoad && props.sInfo!._stationAccountable}</td>
+              <td>{appState.stationData.stAccountable}</td>
             </tr>
             <tr>
               <td>
                 <span>{t('escale')}:</span>
               </td>
-              <td>{props.dataLoad && props.sInfo!._stationEscale == 'Sim' ? t('yes') : t('no')}</td>
+              <td>{appState.stationData.stScale == true ? t('yes') : t('no')}</td>
               <td>
                 <span>{t('climatological')}:</span>
               </td>
-              <td>
-                {props.dataLoad && props.sInfo!._stationClimatological == 'Sim'
-                  ? t('yes')
-                  : t('no')}
-              </td>
+              <td>{appState.stationData.stClimatological == true ? t('yes') : t('no')}</td>
             </tr>
             <tr>
               <td>
                 <span>{t('evaporimeter')}:</span>
               </td>
-              <td>
-                {props.dataLoad && props.sInfo!._stationEvaporimeter == 'Sim' ? t('yes') : t('no')}
-              </td>
+              <td>{appState.stationData.stEvaporimeter == true ? t('yes') : t('no')}</td>
               <td>
                 <span>{t('telemetry')}:</span>
               </td>
-              <td>
-                {props.dataLoad && props.sInfo!._stationTelemetry == 'Sim' ? t('yes') : t('no')}
-              </td>
+              <td>{appState.stationData.stTelemetry == true ? t('yes') : t('no')}</td>
             </tr>
             <tr>
               <td>
                 <span>{t('water_quality')}:</span>
               </td>
-              <td>
-                {props.dataLoad && props.sInfo!._stationWaterQuality == 'Sim' ? t('yes') : t('no')}
-              </td>
+              <td>{appState.stationData.stWaterQuality == true ? t('yes') : t('no')}</td>
               <td>
                 <span>{t('sediments')}:</span>
               </td>
-              <td>
-                {props.dataLoad && props.sInfo!._stationSediments == 'Sim' ? t('yes') : t('no')}
-              </td>
+              <td>{appState.stationData.stSediments == 'Sim' ? t('yes') : t('no')}</td>
             </tr>
           </tbody>
         </Table>
