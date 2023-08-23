@@ -78,24 +78,12 @@ const HidroData = function () {
           </Row>
         </Container>
 
-        <ResponsiveContainer
-          width="100%"
-          height={250}
-          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-          /*
-        // @ts-ignore */
-          margin={{ left: 0 }}>
+        <ResponsiveContainer width="100%" height={250} margin={{ left: 0 }}>
           <BarChart data={appState.barChart.chartData} margin={{ left: -60 }}>
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis dataKey="name" />
 
-            <YAxis
-              // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-              /*
-            // @ts-ignore */
-              margin={{ left: 0 }}
-              tick={false}
-            />
+            <YAxis margin={{ left: 0 }} tick={false} />
             <Tooltip />
             <Legend />
             <Bar
