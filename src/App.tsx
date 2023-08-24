@@ -24,9 +24,10 @@ import MapGuest from './components/pages/MapGuest';
 import { useTranslation } from 'react-i18next';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import ChartModal from './components/ChartModal/ChartModal';
+import AppDrawer from './components/Drawer/AppDrawer';
 import axios from 'axios';
 import { BASE_URL, COLLECTION_NAME } from './components/Utils/constants';
-
+import './main.css';
 
 export type Basin = {
   id: number;
@@ -35,7 +36,6 @@ export type Basin = {
 interface MonthNames {
   name: string;
 }
-
 
 type layerType = {
   layerId: string;
@@ -52,8 +52,30 @@ const mapLayers: layerType[] = [
   { layerId: 'heatmapRain', name: 'Heatmap', checked: false, added: false }
 ];
 
+type Anchor = 'top' | 'left' | 'bottom' | 'right';
+
 const App: React.FC = () => {
   const { t } = useTranslation();
+
+  const [drawerState, setState] = useState({
+    top: false,
+    left: false,
+    bottom: false,
+    right: false
+  });
+  const toggleDrawer =
+    (anchor: Anchor, open: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => {
+      if (
+        event.type === 'keydown' &&
+        ((event as React.KeyboardEvent).key === 'Tab' ||
+          (event as React.KeyboardEvent).key === 'Shift')
+      ) {
+        return;
+      }
+
+      setState({ ...drawerState, [anchor]: open });
+    };
+
   const monthNames: MonthNames[] = [
     { name: t('Jan') },
     { name: t('Fev') },
@@ -135,7 +157,8 @@ const App: React.FC = () => {
     searchByRiver: false,
     searchBySat: false,
     mapLayers: mapLayers,
-    heatmapControls: false
+    heatmapControls: false,
+    drawer: false
   };
 
   /*Goal that all of our loading and saving user related actions takes place in one place
@@ -283,6 +306,9 @@ we should probably do those types of things within a useEffect.
       case 'closeHeatmapControl':
         draft.mapLayers[4].checked = false;
         break;
+      case 'toggleDrawer':
+        draft.drawer = action.value;
+        break;
     }
   }
   /*
@@ -380,7 +406,7 @@ we should probably do those types of things within a useEffect.
     });
   };
 
-  const toggleDrawer = (basin: Basin) => {
+  /*   const toggleDrawer = (basin: Basin) => {
     console.log('click');
     if (typeof basin !== 'undefined') {
       setBasin(basin);
@@ -391,7 +417,7 @@ we should probably do those types of things within a useEffect.
     setOffCanvas((prevState) => {
       return !prevState;
     });
-  };
+  }; */
 
   const [chartModal, setChartModal] = useState(false);
   const toggleChartModal = () => {
@@ -444,10 +470,7 @@ we should probably do those types of things within a useEffect.
     <StateContext.Provider value={state}>
       <DispatchContext.Provider value={dispatch}>
         <BrowserRouter>
-          <div className="App">
-            {/*eslint-disable-next-line @typescript-eslint/ban-ts-comment*/}
-            {/* @ts-ignore */}
-
+          <div className="main">
             <Header />
             <FlashMessages messages={state.flashMessages} />
             <Routes>
@@ -460,7 +483,6 @@ we should probably do those types of things within a useEffect.
                       initialOptions={{ center: [-55.59, -15.91], zoom: 4.1 }}
                       onLoaded={handleMapLoading}
                       showModalChart={toggleChartModal}
-                      drawerClickHandler={toggleDrawer}
                       offCanvas={offCanvas}
                       setOffCanvas={setOffCanvas}
                     />
@@ -475,15 +497,16 @@ we should probably do those types of things within a useEffect.
               <Route path="/terms" element={<Terms />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
+            <Footer />
+            <AppDrawer />
+            {chartModal && (
+              <ChartModal
+                //stationObj={stationObj}
+                show={chartModal}
+                onHide={() => setChartModal(false)}
+              />
+            )}
           </div>
-          <Footer />
-          {chartModal && (
-            <ChartModal
-              //stationObj={stationObj}
-              show={chartModal}
-              onHide={() => setChartModal(false)}
-            />
-          )}{' '}
         </BrowserRouter>
       </DispatchContext.Provider>
     </StateContext.Provider>

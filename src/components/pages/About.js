@@ -9,7 +9,7 @@ function About() {
 
   return (
     <Page title="About Maphidro">
-      <h2>About MapHidro</h2>
+      <h2 style={{ marginTop: '20px' }}>About MapHidro</h2>
       <p className="lead text-muted">
         This application uses open source libraries to collect and display calibrated satellite data
         and compare them with in situ rainfall stations operated by CRPM(Geological Survey of

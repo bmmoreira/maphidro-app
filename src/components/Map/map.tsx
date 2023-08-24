@@ -65,7 +65,7 @@ interface MaplibreMapProps {
   onLoaded(map: maplibregl.Map): void;
   onRemoved?(): void;
   showModalChart(sObj: Station): void;
-  drawerClickHandler(layerBasin: Basin): void;
+
   setOffCanvas(open: boolean): void;
   offCanvas: boolean;
 }
@@ -513,7 +513,7 @@ function Map(props: MaplibreMapProps) {
           { padding: 100 }
         );
         const layerState: Basin = { id: parseInt(bId), bName: bName };
-        props.drawerClickHandler(layerState);
+        //props.drawerClickHandler(layerState);
       }
     });
 

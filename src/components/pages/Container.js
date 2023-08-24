@@ -1,6 +1,6 @@
 /** @format */
 
-import React, { useEffect } from 'react';
+import React from 'react';
 
 function Container(props) {
   //container container--narrow py-md-5

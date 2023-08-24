@@ -28,10 +28,99 @@ import InputAdornment from '@mui/material/InputAdornment';
 import TextField from '@mui/material/TextField';
 import Chip from '@mui/material/Chip';
 import { roundedButton, loginButtom, styleWhite } from '../Utils/constants.js';
+import useWindowDimensions from '../Utils/useWindowDimensions.js';
+
+import { styled, alpha } from '@mui/material/styles';
+import AppBar from '@mui/material/AppBar';
+import Toolbar from '@mui/material/Toolbar';
+import Typography from '@mui/material/Typography';
+import InputBase from '@mui/material/InputBase';
+import MenuIcon from '@mui/icons-material/Menu';
+
+const Search = styled('div')(({ theme }) => ({
+  position: 'relative',
+  borderRadius: theme.shape.borderRadius,
+  backgroundColor: alpha(theme.palette.common.white, 0.15),
+  '&:hover': {
+    backgroundColor: alpha(theme.palette.common.white, 0.25)
+  },
+  marginLeft: 0,
+  width: '100%',
+  [theme.breakpoints.up('sm')]: {
+    marginLeft: theme.spacing(1),
+    width: 'auto'
+  }
+}));
+
+const SearchIconWrapper = styled('div')(({ theme }) => ({
+  padding: theme.spacing(0, 2),
+  height: '100%',
+  position: 'absolute',
+  pointerEvents: 'none',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center'
+}));
+
+const StyledInputBase = styled(InputBase)(({ theme }) => ({
+  color: 'inherit',
+  '& .MuiInputBase-input': {
+    padding: theme.spacing(1, 1, 1, 0),
+    // vertical padding + font size from searchIcon
+    paddingLeft: `calc(1em + ${theme.spacing(4)})`,
+    transition: theme.transitions.create('width'),
+    width: '100%',
+    [theme.breakpoints.up('sm')]: {
+      width: '12ch',
+      '&:focus': {
+        width: '20ch'
+      }
+    }
+  }
+}));
 
 function HeaderLoggedIn(props) {
   const appDispatch = useContext(DispatchContext);
   const appState = useContext(StateContext);
+  const { height, width } = useWindowDimensions();
+
+  function SearchAppBar() {
+    return (
+      <Box sx={{ flexGrow: 1 }}>
+        <AppBar position="static">
+          <Toolbar>
+            <IconButton
+              onClick={() => {
+                appDispatch({
+                  type: 'toggleDrawer',
+                  value: !appState.drawer
+                });
+              }}
+              size="large"
+              edge="start"
+              color="inherit"
+              aria-label="open drawer"
+              sx={{ mr: 2 }}>
+              <MenuIcon />
+            </IconButton>
+            <Typography
+              variant="h6"
+              noWrap
+              component="div"
+              sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}>
+              MapHidro
+            </Typography>
+            <Search>
+              <SearchIconWrapper>
+                <SearchIcon />
+              </SearchIconWrapper>
+              <StyledInputBase placeholder="Search…" inputProps={{ 'aria-label': 'search' }} />
+            </Search>
+          </Toolbar>
+        </AppBar>
+      </Box>
+    );
+  }
 
   const buttonStyle = {
     backgroundColor: styleWhite.bgButton,
@@ -144,255 +233,259 @@ function HeaderLoggedIn(props) {
 
   return (
     <div style={{ width: '100%', margin: 0, padding: 0 }}>
-      <Box
-        sx={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(3, 1fr)',
-          alignItems: { xs: 'center', md: 'center' },
-          backgroundColor: styleWhite.bgBox,
-          height: '90px',
-          m: 0
-        }}>
-        <Grid
-          container
-          spacing={0}
+      {width < 600 ? (
+        <SearchAppBar />
+      ) : (
+        <Box
           sx={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(3, 1fr)',
+            alignItems: { xs: 'center', md: 'center' },
+            backgroundColor: styleWhite.bgBox,
+            height: '90px',
             m: 0
           }}>
           <Grid
-            xs={4}
+            container
+            spacing={0}
             sx={{
-              backgroundColor: styleWhite.bg,
-              display: 'flex',
-              paddingRight: '20px',
-              justifyContent: 'right'
+              m: 0
             }}>
-            <img src="assets/mh_logo.png" alt="maphidro logo" />
-          </Grid>
-          <Grid
-            xs={8}
-            sx={{
-              backgroundColor: styleWhite.bg,
-              display: 'flex',
-              gap: '10px'
-            }}>
-            <IconButton
-              aria-label={notificationsLabel(100)}
-              sx={{ ...buttonStyle }}
-              onClick={toggleProjects}>
-              <Badge
-                anchorOrigin={{
-                  vertical: 'bottom',
-                  horizontal: 'right'
-                }}
-                badgeContent={1}
-                color="secondary">
-                <BookIcon sx={{ position: 'relative', top: '0px', left: '0px' }} />
-              </Badge>
-              <div>Projects</div>
-            </IconButton>
-            <IconButton
-              aria-label={notificationsLabel(100)}
-              sx={{ ...buttonStyle }}
-              onClick={toggleTimeline}
-              disabled>
-              <Badge
-                anchorOrigin={{
-                  vertical: 'bottom',
-                  horizontal: 'right'
-                }}
-                badgeContent={15}
-                color="secondary">
-                <HistoryIcon sx={{ position: 'relative', top: '0px', left: '0px' }} />
-              </Badge>
-              <div>Timeline</div>
-            </IconButton>
-            <IconButton
-              aria-label={notificationsLabel(100)}
-              sx={{ ...buttonStyle }}
-              onClick={toggleDownload}
-              disabled>
-              <Badge
-                anchorOrigin={{
-                  vertical: 'bottom',
-                  horizontal: 'right'
-                }}
-                badgeContent={23}
-                color="secondary">
-                <DownloadIcon sx={{ position: 'relative', top: '0px', left: '0px' }} />
-              </Badge>
-              <div>Download</div>
-            </IconButton>
-          </Grid>
-        </Grid>
-
-        <Grid container spacing={0} sx={{ backgroundColor: styleWhite.bg, display: 'flex' }}>
-          <Grid
-            xs={12}
-            sx={{
-              display: 'flex',
-              height: '40px',
-              justifyContent: 'center',
-              alignItems: 'center'
-            }}>
-            <TextField
-              hiddenLabel
-              size="small"
-              placeholder="search for stations"
+            <Grid
+              xs={4}
               sx={{
-                width: '400px',
-                fontStyle: 'italic',
-                height: '20px'
-              }}
-              onChange={(e) => {
-                onSearchChangeHandler(e);
-              }}
-              InputProps={{
-                style: {
-                  border: '1px solid #cccccc',
-
-                  height: '35px',
-                  padding: '0px 0px 0px 0px',
-                  backgroundColor: '#b3e5f7'
-                },
-                startAdornment: (
-                  <InputAdornment size="small">
-                    <IconButton>
-                      <SearchIcon />
-                    </IconButton>
-                  </InputAdornment>
-                )
-              }}
-            />
-          </Grid>
-          <Grid
-            xs={12}
-            sx={{
-              display: 'flex',
-              height: '40px',
-              gap: '10px',
-              justifyContent: 'center',
-              alignItems: 'center'
-            }}>
-            <Chip
-              icon={<PublicIcon />}
-              label="Where"
+                backgroundColor: styleWhite.bg,
+                display: 'flex',
+                paddingRight: '20px',
+                justifyContent: 'right'
+              }}>
+              <img src="assets/mh_logo.png" alt="maphidro logo" />
+            </Grid>
+            <Grid
+              xs={8}
               sx={{
-                color: styleWhite.colorButtonTitle,
-                backgroundColor: styleWhite.bgButton
-              }}
-            />
-            <Chip
-              icon={<WatchLaterIcon />}
-              label="When"
-              sx={{
-                color: styleWhite.colorButtonTitle,
-                backgroundColor: styleWhite.bgButton
-              }}
-            />
-            <Chip
-              icon={<TuneIcon />}
-              label="How"
-              sx={{
-                color: styleWhite.colorButtonTitle,
-                backgroundColor: styleWhite.bgButton
-              }}
-              onClick={toggleHow}
-            />
-          </Grid>
-        </Grid>
-
-        <Grid container spacing={0} sx={{ backgroundColor: styleWhite.bg, display: 'flex' }}>
-          <Grid
-            xs={8}
-            sx={{
-              display: 'flex',
-              gap: '10px',
-              justifyContent: 'center'
-            }}>
-            <IconButton
-              aria-label={notificationsLabel(appState.header.counterSelect)}
-              sx={{ ...buttonStyle }}
-              onClick={toggleSelect}>
-              <Badge
-                anchorOrigin={{
-                  vertical: 'bottom',
-                  horizontal: 'right'
-                }}
-                badgeContent={appState.header.counterSelect}
-                color="secondary">
-                <AddLocationAltIcon sx={{ position: 'relative', top: '0px', left: '0px' }} />
-              </Badge>
-              <div>Select</div>
-            </IconButton>
-            <IconButton aria-label={notificationsLabel(100)} sx={{ ...buttonStyle }} disabled>
-              <Badge
-                anchorOrigin={{
-                  vertical: 'bottom',
-                  horizontal: 'right'
-                }}
-                badgeContent={3}
-                color="secondary">
-                <FilterAltIcon sx={{ position: 'relative', top: '0px', left: '0px' }} />
-              </Badge>
-              <div>Filters</div>
-            </IconButton>
-
-            <IconButton aria-label={notificationsLabel(100)} sx={{ ...buttonStyle }} disabled>
-              <Badge
-                anchorOrigin={{
-                  vertical: 'bottom',
-                  horizontal: 'right'
-                }}
-                badgeContent={22}
-                color="secondary">
-                <AutoAwesomeMotionIcon sx={{ position: 'relative', top: '0px', left: '0px' }} />
-              </Badge>
-              <div>Results</div>
-            </IconButton>
-          </Grid>
-
-          <Grid
-            xs={4}
-            sx={{
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'flex-end',
-              paddingRight: '20px',
-              height: '80px'
-            }}>
-            <div>
-              <IconButton aria-label="settings" sx={{ ...roundedButton }}>
-                <SettingsIcon />
+                backgroundColor: styleWhite.bg,
+                display: 'flex',
+                gap: '10px'
+              }}>
+              <IconButton
+                aria-label={notificationsLabel(100)}
+                sx={{ ...buttonStyle }}
+                onClick={toggleProjects}>
+                <Badge
+                  anchorOrigin={{
+                    vertical: 'bottom',
+                    horizontal: 'right'
+                  }}
+                  badgeContent={1}
+                  color="secondary">
+                  <BookIcon sx={{ position: 'relative', top: '0px', left: '0px' }} />
+                </Badge>
+                <div>Projects</div>
               </IconButton>
-              <IconButton aria-label="mail" sx={{ ...roundedButton }}>
-                <MailIcon />
+              <IconButton
+                aria-label={notificationsLabel(100)}
+                sx={{ ...buttonStyle }}
+                onClick={toggleTimeline}
+                disabled>
+                <Badge
+                  anchorOrigin={{
+                    vertical: 'bottom',
+                    horizontal: 'right'
+                  }}
+                  badgeContent={15}
+                  color="secondary">
+                  <HistoryIcon sx={{ position: 'relative', top: '0px', left: '0px' }} />
+                </Badge>
+                <div>Timeline</div>
               </IconButton>
-              <IconButton aria-label="help" sx={{ ...roundedButton }}>
-                <HelpIcon />
+              <IconButton
+                aria-label={notificationsLabel(100)}
+                sx={{ ...buttonStyle }}
+                onClick={toggleDownload}
+                disabled>
+                <Badge
+                  anchorOrigin={{
+                    vertical: 'bottom',
+                    horizontal: 'right'
+                  }}
+                  badgeContent={23}
+                  color="secondary">
+                  <DownloadIcon sx={{ position: 'relative', top: '0px', left: '0px' }} />
+                </Badge>
+                <div>Download</div>
               </IconButton>
-            </div>
-            {appState.loggedIn ? (
-              <Button
-                aria-label="account"
-                onClick={handleLogout}
-                endIcon={<LogoutIcon />}
-                color="primary"
-                sx={{ ...loginButtom }}>
-                Log out
-              </Button>
-            ) : (
-              <Button
-                aria-label="logout"
-                endIcon={<PersonIcon />}
-                color="primary"
-                sx={{ ...loginButtom }}>
-                Log in
-              </Button>
-            )}
+            </Grid>
           </Grid>
-        </Grid>
-      </Box>
+
+          <Grid container spacing={0} sx={{ backgroundColor: styleWhite.bg, display: 'flex' }}>
+            <Grid
+              xs={12}
+              sx={{
+                display: 'flex',
+                height: '40px',
+                justifyContent: 'center',
+                alignItems: 'center'
+              }}>
+              <TextField
+                hiddenLabel
+                size="small"
+                placeholder="search for stations"
+                sx={{
+                  width: '400px',
+                  fontStyle: 'italic',
+                  height: '20px'
+                }}
+                onChange={(e) => {
+                  onSearchChangeHandler(e);
+                }}
+                InputProps={{
+                  style: {
+                    border: '1px solid #cccccc',
+
+                    height: '35px',
+                    padding: '0px 0px 0px 0px',
+                    backgroundColor: '#b3e5f7'
+                  },
+                  startAdornment: (
+                    <InputAdornment size="small">
+                      <IconButton>
+                        <SearchIcon />
+                      </IconButton>
+                    </InputAdornment>
+                  )
+                }}
+              />
+            </Grid>
+            <Grid
+              xs={12}
+              sx={{
+                display: 'flex',
+                height: '40px',
+                gap: '10px',
+                justifyContent: 'center',
+                alignItems: 'center'
+              }}>
+              <Chip
+                icon={<PublicIcon />}
+                label="Where"
+                sx={{
+                  color: styleWhite.colorButtonTitle,
+                  backgroundColor: styleWhite.bgButton
+                }}
+              />
+              <Chip
+                icon={<WatchLaterIcon />}
+                label="When"
+                sx={{
+                  color: styleWhite.colorButtonTitle,
+                  backgroundColor: styleWhite.bgButton
+                }}
+              />
+              <Chip
+                icon={<TuneIcon />}
+                label="How"
+                sx={{
+                  color: styleWhite.colorButtonTitle,
+                  backgroundColor: styleWhite.bgButton
+                }}
+                onClick={toggleHow}
+              />
+            </Grid>
+          </Grid>
+
+          <Grid container spacing={0} sx={{ backgroundColor: styleWhite.bg, display: 'flex' }}>
+            <Grid
+              xs={8}
+              sx={{
+                display: 'flex',
+                gap: '10px',
+                justifyContent: 'center'
+              }}>
+              <IconButton
+                aria-label={notificationsLabel(appState.header.counterSelect)}
+                sx={{ ...buttonStyle }}
+                onClick={toggleSelect}>
+                <Badge
+                  anchorOrigin={{
+                    vertical: 'bottom',
+                    horizontal: 'right'
+                  }}
+                  badgeContent={appState.header.counterSelect}
+                  color="secondary">
+                  <AddLocationAltIcon sx={{ position: 'relative', top: '0px', left: '0px' }} />
+                </Badge>
+                <div>Select</div>
+              </IconButton>
+              <IconButton aria-label={notificationsLabel(100)} sx={{ ...buttonStyle }} disabled>
+                <Badge
+                  anchorOrigin={{
+                    vertical: 'bottom',
+                    horizontal: 'right'
+                  }}
+                  badgeContent={3}
+                  color="secondary">
+                  <FilterAltIcon sx={{ position: 'relative', top: '0px', left: '0px' }} />
+                </Badge>
+                <div>Filters</div>
+              </IconButton>
+
+              <IconButton aria-label={notificationsLabel(100)} sx={{ ...buttonStyle }} disabled>
+                <Badge
+                  anchorOrigin={{
+                    vertical: 'bottom',
+                    horizontal: 'right'
+                  }}
+                  badgeContent={22}
+                  color="secondary">
+                  <AutoAwesomeMotionIcon sx={{ position: 'relative', top: '0px', left: '0px' }} />
+                </Badge>
+                <div>Results</div>
+              </IconButton>
+            </Grid>
+
+            <Grid
+              xs={4}
+              sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'flex-end',
+                paddingRight: '20px',
+                height: '80px'
+              }}>
+              <div>
+                <IconButton aria-label="settings" sx={{ ...roundedButton }}>
+                  <SettingsIcon />
+                </IconButton>
+                <IconButton aria-label="mail" sx={{ ...roundedButton }}>
+                  <MailIcon />
+                </IconButton>
+                <IconButton aria-label="help" sx={{ ...roundedButton }}>
+                  <HelpIcon />
+                </IconButton>
+              </div>
+              {appState.loggedIn ? (
+                <Button
+                  aria-label="account"
+                  onClick={handleLogout}
+                  endIcon={<LogoutIcon />}
+                  color="primary"
+                  sx={{ ...loginButtom }}>
+                  Log out
+                </Button>
+              ) : (
+                <Button
+                  aria-label="logout"
+                  endIcon={<PersonIcon />}
+                  color="primary"
+                  sx={{ ...loginButtom }}>
+                  Log in
+                </Button>
+              )}
+            </Grid>
+          </Grid>
+        </Box>
+      )}
     </div>
   );
 }

@@ -2,6 +2,11 @@
 
 body {
   font-family: 'Public Sans', sans-serif;
+  min-height: 100vh;
+  margin: 0;
+
+  display: grid;
+  grid-template-rows: auto 1fr auto;
 }
 
 .header-bar {
@@ -450,7 +455,7 @@ textarea.tall-textarea {
 
 .floating-alerts .floating-alert:last-of-type {
   display: block;
-  position:absolute;
+  position: absolute;
 }
 
 @keyframes floatingAlert {
@@ -590,11 +595,26 @@ textarea.tall-textarea {
 }
 
 .page {
-  height: calc(100vh - 135px) !important; /* calculate height of the screen minus the heading */
+  //height: calc(100vh - 135px) !important; /* calculate height of the screen minus the heading */
+  flex: 1;
 }
 
 .logo {
   color: white !important;
   text-decoration: none !important;
   padding-right: 20px;
+}
+
+.footer {
+  //background-color: 'red' !important;
+}
+
+.main {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+Page {
+  flex: 1;
 }

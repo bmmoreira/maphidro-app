@@ -6,8 +6,8 @@ function Home() {
   const appState = useContext(StateContext);
 
   return (
-    <Page title="Your Feed">
-      <h2 className="text-center">
+    <Page title="Your Map Statistics">
+      <h2 className="text-center" style={{ marginTop: '20px' }}>
         <strong>{appState.user.username}</strong>, this is your landing page.
       </h2>
       <p className="lead text-muted text-center">
