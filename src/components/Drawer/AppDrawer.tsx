@@ -120,6 +120,9 @@ export default function TemporaryDrawer() {
             <ListItemText primary={'Download'} />
           </ListItemButton>
         </ListItem>
+      </List>
+      <Divider />
+      <List>
         <ListItem key={'Select'} disablePadding>
           <ListItemButton>
             <ListItemIcon>
