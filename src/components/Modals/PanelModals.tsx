@@ -537,7 +537,7 @@ export default function PanelModals(props: any) {
                 <Grid item xs={4}>
                   <BootstrapButton
                     variant="contained"
-                    aria-label="delete"
+                    aria-label="station name"
                     color="primary"
                     disableRipple
                     onClick={() => {

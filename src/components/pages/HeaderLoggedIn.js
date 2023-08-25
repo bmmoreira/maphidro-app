@@ -114,7 +114,18 @@ function HeaderLoggedIn(props) {
               <SearchIconWrapper>
                 <SearchIcon />
               </SearchIconWrapper>
-              <StyledInputBase placeholder="Search…" inputProps={{ 'aria-label': 'search' }} />
+              <StyledInputBase
+                sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 2 }}
+                placeholder="Search…"
+                onChange={(e) => {
+                  /*  appDispatch({
+                    type: 'toggleOverlay',
+                    value: !appState.overlay
+                  }); */
+                  onSearchChangeHandler2(e);
+                }}
+                inputProps={{ 'aria-label': 'search' }}
+              />
             </Search>
           </Toolbar>
         </AppBar>
@@ -213,22 +224,51 @@ function HeaderLoggedIn(props) {
 
   let timeoutId;
   const onSearchChangeHandler = (event) => {
-    clearTimeout(timeoutId); // Clear any existing timeout
     const inputValue = event.target.value;
+
+    clearTimeout(timeoutId); // Clear any existing timeout
+
     if (!appState.modals.panelBox) {
       appDispatch({ type: 'toglePanelModal', value: !appState.modals.panelBox });
     }
     // Set a new timeout to handle the event after a delay (e.g., 500 milliseconds)
-    timeoutId = setTimeout(() => {
-      appDispatch({ type: 'togleSearchModal' });
-      // Perform the desired action or function call here
-      appDispatch({
-        type: 'searchAction',
-        searchEventValue: inputValue
-      });
+    if (inputValue != '') {
+      timeoutId = setTimeout(() => {
+        // Perform the desired action or function call here
+        appDispatch({ type: 'closeSearchModal' });
+        appDispatch({
+          type: 'searchAction',
+          searchEventValue: inputValue
+        });
+        appDispatch({
+          type: 'toggleBackdrop',
+          value: !appState.backdrop
+        });
+        console.log('Input value:', inputValue);
+      }, 1300);
+    }
+  };
 
-      console.log('Input value:', inputValue);
-    }, 1300);
+  const onSearchChangeHandler2 = (event) => {
+    clearTimeout(timeoutId); // Clear any existing timeout
+    const inputValue = event.target.value;
+
+    // Set a new timeout to handle the event after a delay (e.g., 500 milliseconds)
+    if (inputValue != '') {
+      timeoutId = setTimeout(() => {
+        // appDispatch({ type: 'togleSearchModal' });
+        // Perform the desired action or function call here
+        appDispatch({
+          type: 'searchAction',
+          searchEventValue: inputValue
+        });
+        appDispatch({
+          type: 'toggleBackdrop',
+          value: !appState.backdrop
+        });
+        console.log('Input value:', inputValue);
+      }, 1300);
+    }
   };
 
   return (

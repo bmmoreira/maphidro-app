@@ -52,29 +52,9 @@ const mapLayers: layerType[] = [
   { layerId: 'heatmapRain', name: 'Heatmap', checked: false, added: false }
 ];
 
-type Anchor = 'top' | 'left' | 'bottom' | 'right';
-
 const App: React.FC = () => {
   const { t } = useTranslation();
-
-  const [drawerState, setState] = useState({
-    top: false,
-    left: false,
-    bottom: false,
-    right: false
-  });
-  const toggleDrawer =
-    (anchor: Anchor, open: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => {
-      if (
-        event.type === 'keydown' &&
-        ((event as React.KeyboardEvent).key === 'Tab' ||
-          (event as React.KeyboardEvent).key === 'Shift')
-      ) {
-        return;
-      }
-
-      setState({ ...drawerState, [anchor]: open });
-    };
+  const { height, width } = useWindowDimensions();
 
   const monthNames: MonthNames[] = [
     { name: t('Jan') },
@@ -103,7 +83,6 @@ const App: React.FC = () => {
       locBar: {},
       satbar: {},
       chartData: monthNames,
-
       satFirsYear: '',
       satLastYear: '',
       satBarSelectedYear: '',
@@ -137,7 +116,8 @@ const App: React.FC = () => {
       results: false,
       search: false,
       heatmapControls: false,
-      centerModal: false
+      centerModal: false,
+      mobile: false
     },
     header: {
       counterSelect: 1,
@@ -158,7 +138,9 @@ const App: React.FC = () => {
     searchBySat: false,
     mapLayers: mapLayers,
     heatmapControls: false,
-    drawer: false
+    drawer: false,
+    backdrop: false,
+    overlay: false
   };
 
   /*Goal that all of our loading and saving user related actions takes place in one place
@@ -264,7 +246,7 @@ we should probably do those types of things within a useEffect.
       case 'toglePanelModal':
         draft.modals.panelBox = action.value;
         break;
-      case 'togleSearchModal':
+      case 'toggleSearchModal':
         draft.modals.timeline = false;
         draft.modals.search = true;
         break;
@@ -308,6 +290,15 @@ we should probably do those types of things within a useEffect.
         break;
       case 'toggleDrawer':
         draft.drawer = action.value;
+        break;
+      case 'toggleBackdrop':
+        draft.backdrop = action.value;
+        break;
+      case 'toggleOverlay':
+        draft.overlay = action.value;
+        break;
+      case 'toggleMobileModal':
+        draft.modals.mobile = action.value;
         break;
     }
   }
@@ -358,53 +349,34 @@ we should probably do those types of things within a useEffect.
       `${BASE_URL}/${COLLECTION_NAME}?filters[stName][$contains]=${val.toUpperCase()}`
     );
     console.log(res.data.data);
-
+    dispatch({
+      type: 'toggleBackdrop',
+      value: !state.backdrop
+    });
     if (res.data.data.length > 0) {
       dispatch({
         type: 'searchDataAction',
         searchDataValue: res.data.data
       });
+      if (width < 600) {
+        dispatch({
+          type: 'toggleMobileModal',
+          value: true
+        });
+        console.log('search');
+      } else {
+        dispatch({ type: 'toggleSearchModal' });
+      }
     }
   };
 
-  const { height, width } = useWindowDimensions();
-
   const [loading, setLoading] = useState(true);
   const [offCanvas, setOffCanvas] = useState(false);
-  const [radarModal, setRadarModal] = useState(false);
-  const [satModal, setSatModal] = useState(false);
-  const [localModal, setLocalModal] = useState(false);
-  const [initModal, setInitModal] = useState(true);
-  const [initScreen, setInitScreen] = useState(true);
+
   const [stationObj, setStationObj] = useState<Station>();
   const [basin, setBasin] = useState<Basin>({ id: 0, bName: 'none' } as Basin);
 
   const handleMapLoading = () => setLoading(false);
-
-  const toggleRadarModal = () => {
-    setRadarModal((prevState) => {
-      return !prevState;
-    });
-  };
-
-  const toggleSatModal = () => {
-    setSatModal((prevState) => {
-      return !prevState;
-    });
-  };
-
-  const toggleLocalModal = () => {
-    console.log('test');
-    setLocalModal((prevState) => {
-      return !prevState;
-    });
-  };
-
-  const toggleInitModal = () => {
-    setLocalModal((prevState) => {
-      return !prevState;
-    });
-  };
 
   /*   const toggleDrawer = (basin: Basin) => {
     console.log('click');

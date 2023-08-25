@@ -47,6 +47,8 @@ import SideBar from '../../components/OffCanvas/OffCanvas2';
 
 import BottomNavigation from '@mui/material/BottomNavigation';
 import BottomNavigationAction from '@mui/material/BottomNavigationAction';
+import Backdrop from '@mui/material/Backdrop';
+import CircularProgress from '@mui/material/CircularProgress';
 
 import LayersIcon from '@mui/icons-material/Layers';
 import SatelliteIcon from '@mui/icons-material/Satellite';
@@ -58,6 +60,7 @@ import { Basin } from '../../App';
 import Page from '../pages/Page';
 import { useTranslation } from 'react-i18next';
 import { BASE_URL, COLLECTION_NAME } from '../Utils/constants';
+import MobileResults from '../Modals/MobileResults';
 
 interface MaplibreMapProps {
   initialOptions?: Omit<maplibregl.MapOptions, 'container' | 'style'>;
@@ -737,15 +740,15 @@ function Map(props: MaplibreMapProps) {
     <>
       <div ref={rootRef} className="map-wrap">
         <div ref={mapContainerRef} className="map">
-          <PlayerToast
-            mapref={map}
-            showAc={appState.heatmapControls}
-            toggleAc={toggleSat}
-            position={'bottom-start'}
-          />
           {appState.modals.panelBox && (
             <PanelModals flyTo={flyToStation} onLayersHandleChange={layersHandleChange} />
           )}
+          <MobileResults flyTo={flyToStation} />
+          <Backdrop
+            sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+            open={appState.backdrop}>
+            <CircularProgress color="inherit" />
+          </Backdrop>
         </div>
       </div>
     </>
