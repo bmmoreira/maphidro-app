@@ -28,6 +28,8 @@ import AppDrawer from './components/Drawer/AppDrawer';
 import axios from 'axios';
 import { BASE_URL, COLLECTION_NAME } from './components/Utils/constants';
 import './main.css';
+import UX from './components/pages/Ux';
+import UXGuest from './components/pages/UXGuest';
 
 export type Basin = {
   id: number;
@@ -467,6 +469,7 @@ we should probably do those types of things within a useEffect.
               <Route path="/create-post" element={<CreatePost />} />
               <Route path="/about-maphidro" element={<About />} />
               <Route path="/terms" element={<Terms />} />
+              <Route path="/ux" element={state.loggedIn ? <UX /> : <UXGuest />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
             <Footer />
@@ -486,11 +489,3 @@ we should probably do those types of things within a useEffect.
 };
 
 export default App;
-
-/*
-<Map
-            initialOptions={{ center: [-58.59, -13.91], zoom: 4.1 }}
-            onLoaded={handleMapLoading}
-          />
-          {loading && <MapLoadingHolder className="loading-holder" />}
-*/

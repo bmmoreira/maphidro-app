@@ -109,6 +109,13 @@ function Footer() {
               style={{ textDecoration: 'none', fontWeight: '600', color: '#595f88' }}>
               About MapHidro
             </Link>{' '}
+            |{' '}
+            <Link
+              className="mx-1"
+              to="/ux"
+              style={{ textDecoration: 'none', fontWeight: '600', color: '#595f88' }}>
+              UX
+            </Link>{' '}
             <span>
               {' '}
               - Copyright &copy; {new Date().getFullYear()} MapHidro . All rights reserved.

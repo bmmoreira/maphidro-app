@@ -83,6 +83,7 @@ function HeaderLoggedIn(props) {
   const appDispatch = useContext(DispatchContext);
   const appState = useContext(StateContext);
   const { height, width } = useWindowDimensions();
+  const searchInputRef = React.useRef(null);
 
   function SearchAppBar() {
     return (
@@ -115,6 +116,7 @@ function HeaderLoggedIn(props) {
                 <SearchIcon />
               </SearchIconWrapper>
               <StyledInputBase
+                ref={searchInputRef}
                 sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 2 }}
                 placeholder="Search…"
                 onChange={(e) => {
@@ -250,6 +252,7 @@ function HeaderLoggedIn(props) {
   };
 
   const onSearchChangeHandler2 = (event) => {
+    searchInputRef.current.focus();
     clearTimeout(timeoutId); // Clear any existing timeout
     const inputValue = event.target.value;
 
@@ -274,7 +277,51 @@ function HeaderLoggedIn(props) {
   return (
     <div style={{ width: '100%', margin: 0, padding: 0 }}>
       {width < 600 ? (
-        <SearchAppBar />
+        <Box sx={{ flexGrow: 1 }}>
+        <AppBar position="static">
+          <Toolbar>
+            <IconButton
+              onClick={() => {
+                appDispatch({
+                  type: 'toggleDrawer',
+                  value: !appState.drawer
+                });
+              }}
+              size="large"
+              edge="start"
+              color="inherit"
+              aria-label="open drawer"
+              sx={{ mr: 2 }}>
+              <MenuIcon />
+            </IconButton>
+            <Typography
+              variant="h6"
+              noWrap
+              component="div"
+              sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}>
+              MapHidro
+            </Typography>
+            <Search>
+              <SearchIconWrapper>
+                <SearchIcon />
+              </SearchIconWrapper>
+              <StyledInputBase
+                ref={searchInputRef}
+                sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 2 }}
+                placeholder="Search…"
+                onChange={(e) => {
+                  /*  appDispatch({
+                    type: 'toggleOverlay',
+                    value: !appState.overlay
+                  }); */
+                  onSearchChangeHandler2(e);
+                }}
+                inputProps={{ 'aria-label': 'search' }}
+              />
+            </Search>
+          </Toolbar>
+        </AppBar>
+      </Box>
       ) : (
         <Box
           sx={{

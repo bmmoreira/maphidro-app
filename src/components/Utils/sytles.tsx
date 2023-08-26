@@ -60,3 +60,47 @@ export const Item = styled(Paper)(({ theme }) => ({
   fontSize: '0.8rem',
   color: theme.palette.text.secondary
 }));
+
+export const Item2 = styled(Paper)(({ theme }) => ({
+  backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#0f9bd9',
+  ...theme.typography.body2,
+  padding: theme.spacing(1),
+  textAlign: 'center',
+  fontSize: '0.8rem',
+  fontWeight: '600',
+  color: '#fff'
+}));
+
+export const Item3 = styled(Paper)(({ theme }) => ({
+  backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
+  ...theme.typography.body2,
+  padding: theme.spacing(1),
+  textAlign: 'center',
+  fontSize: '1.0rem',
+  color: theme.palette.text.secondary,
+  alignItems: 'center',
+  alignContent: 'start',
+  display: 'flex'
+}));
+
+export const style = {
+  position: 'relative',
+  top: '0px',
+
+  height: window.innerHeight - 200,
+  bgcolor: '#c6eafa',
+  border: '1px solid #0f9bd9',
+  borderRadius: '3px',
+  boxShadow: '0 0 5px 5px gray',
+  p: 0
+};
+
+export const styleHow = {
+  position: 'relative',
+  top: '0px',
+  bgcolor: '#c6eafa',
+  border: '1px solid #0f9bd9',
+  borderRadius: '3px',
+  boxShadow: '0 0 5px 5px gray',
+  p: 0
+};
