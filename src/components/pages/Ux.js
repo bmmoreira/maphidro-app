@@ -102,9 +102,9 @@ export default function UX(props) {
           User Experience Questionary
         </Typography>
         <Typography variant="h6" component="h2" sx={{ padding: '25px 0 0px 10px', color: 'gray' }}>
-          Por favor dê-nos a sua opinião, a fim de avaliar o portal maphidro.com, por favor preencha
-          o seguinte questionário. É constituído por pares de opostos relativos às propriedades que
-          o produto possa ter. As graduações entre os opostos são representadas por círculos. Ao
+          Por favor dê-nos a sua opinião, a fim de avaliar o portal maphidro.com, preenchendo o
+          seguinte questionário abaixo. É constituído por pares de opostos relativos às propriedades
+          que o produto possa ter. As graduações entre os opostos são representadas por círculos. Ao
           marcar um dos círculos, você pode expressar sua opinião sobre um conceito. O questionário
           é anômimo, não existem respostas "certas" ou "erradas". Só a sua opinião pessoal conta!
         </Typography>

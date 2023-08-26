@@ -156,7 +156,8 @@ function HomeGuest() {
         if (action.value) {
           draft.email.hasErrors = true;
           draft.email.isUnique = false;
-          draft.email.message = 'That email is already being used';
+          draft.email.message = 'Email is already used !';
+          console.log('That email is already being used');
         } else {
           draft.email.isUnique = true;
         }
@@ -265,10 +266,11 @@ function HomeGuest() {
       const fResults = async function fetchResults() {
         try {
           const response = await Axios.post(
-            'https://mh-api.maphidro.com/doesEmailExist',
-            { username: state.email.value },
+            'https://mh-api.maphidro.com/doesUsernameExist',
+            { email: state.email.value },
             { cancelToken: ourRequest.token }
           );
+          console.log(response);
           //server will respond with a value of true or false aand we will pass to dispatch
           dispatch({
             type: 'emailUniqueResults',
