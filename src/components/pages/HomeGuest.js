@@ -223,7 +223,7 @@ function HomeGuest() {
       const fResults = async function fetchResults() {
         try {
           const response = await Axios.post(
-            'https://mh-api.maphidro.com/doesEmailExist',
+            'https://mh-api.maphidro.com/doesUsernameExist',
             { username: state.username.value },
             { cancelToken: ourRequest.token }
           );
