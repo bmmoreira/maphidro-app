@@ -100,7 +100,8 @@ const App: React.FC = () => {
     user: {
       token: localStorage.getItem('mapHidroToken'),
       username: localStorage.getItem('mapHidroUsername'),
-      avatar: localStorage.getItem('mapHidroAvatar')
+      avatar: localStorage.getItem('mapHidroAvatar'),
+      email: localStorage.getItem('mapHidroEmail')
     },
     isSearchOpen: false,
     isChatOpen: false,
@@ -322,6 +323,7 @@ we should probably do those types of things within a useEffect.
       localStorage.setItem('mapHidroToken', state.user.token!);
       localStorage.setItem('mapHidroUsername', state.user.username!);
       localStorage.setItem('mapHidroAvatar', state.user.avatar!);
+      localStorage.setItem('mapHidroEmail', state.user.email!);
     } else {
       /*
       Else otherwise, well, if it just got set to false
@@ -332,6 +334,7 @@ we should probably do those types of things within a useEffect.
       localStorage.removeItem('mapHidroToken');
       localStorage.removeItem('mapHidroUsername');
       localStorage.removeItem('mapHidroAvatar');
+      localStorage.removeItem('mapHidroEmail');
     }
   }, [state.loggedIn]);
 

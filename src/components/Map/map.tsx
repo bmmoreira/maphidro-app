@@ -215,9 +215,7 @@ function Map(props: MaplibreMapProps) {
 
   const search = async (val: string) => {
     setSearchValue({ loading: true });
-    /*  const res = await axios(
-      `http://localhost:1337/api/stations?filters[stName][$contains]=${val.toUpperCase()}`
-    ); */
+
     const res = await axios(
       `https://api.maphidro.info/api/stations?filters[stName][$contains]=${val.toUpperCase()}`
     );
