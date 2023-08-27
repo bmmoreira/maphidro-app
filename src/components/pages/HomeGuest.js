@@ -223,7 +223,7 @@ function HomeGuest() {
       const fResults = async function fetchResults() {
         try {
           const response = await Axios.post(
-            'https://mh-api.maphidro.com/doesUsernameExist',
+            'https://mh-api.maphidro.com/doesEmailExist',
             { username: state.username.value },
             { cancelToken: ourRequest.token }
           );
@@ -266,18 +266,13 @@ function HomeGuest() {
       const fResults = async function fetchResults() {
         try {
           const response = await Axios.post(
-            'https://mh-api.maphidro.com/doesUsernameExist',
+            'https://mh-api.maphidro.com/doesEmailExist',
             { email: state.email.value },
             { cancelToken: ourRequest.token }
           );
-          console.log(response);
-          //server will respond with a value of true or false aand we will pass to dispatch
-          dispatch({
-            type: 'emailUniqueResults',
-            value: response.data
-          });
-        } catch (error) {
-          console.log('There was a problem or the request was cancel');
+          dispatch({ type: 'emailUniqueResults', value: response.data });
+        } catch (e) {
+          console.log('There was a problem or the request was cancelled.');
         }
       };
       fResults();
