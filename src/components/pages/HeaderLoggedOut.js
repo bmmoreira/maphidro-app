@@ -24,12 +24,12 @@ function HeaderLoggedOut(props) {
     e.preventDefault();
     try {
       // get token from db if succefully logged
-      const response = await Axios.post('https://mh-api.maphidro.com/login', {
+      const response = await Axios.post('http://localhost:8080/login', {
         username,
         password
       });
       if (response.data) {
-        console.log(response.data);
+        console.log(response);
         // save values from response to local storage to remember user in the web browser's local storage, so that way they persist, or we can access them later
         appDispatch({ type: 'login', data: response.data });
         appDispatch({
