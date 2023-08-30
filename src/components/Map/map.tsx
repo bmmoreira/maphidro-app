@@ -13,19 +13,15 @@ import maplibreglWorker from 'maplibre-gl/dist/maplibre-gl-csp-worker';
 //@ts-ignore
 maplibregl.workerClass = maplibreglWorker;
 
-import { useImmerReducer } from 'use-immer';
 import StateContext from '../../StateContext';
 import DispatchContext from '../../DispatchContext';
 import './map.css';
 import 'maplibre-gl/dist/maplibre-gl.css';
 import waterIcon from '../../images/waterdrop.png';
-import riverIcon from '../../images/river-station.png';
-import LayersToast from '../Toasts/LayersToast';
-import Spinner from 'react-bootstrap/Spinner';
+//import riverIcon from '../../images/river-station.png';
+
 import SearchToast, { SearchData } from '../Toasts/SearchToast';
-import Legends from '../Toasts/Legends';
-import AnimToast from '../Toasts/AnimToast';
-import PlayerToast from '../Toasts/PlayerToast';
+
 import { cloneDeep, groupBy } from 'lodash';
 
 import {
@@ -43,22 +39,9 @@ import StationPopup, { StationObject } from '../Popup/StationPopup';
 import Station from '../DataModels/Station4';
 import { API_URL_STATIONS } from '../../utils/constants';
 import * as turf from '@turf/turf';
-import SideBar from '../../components/OffCanvas/OffCanvas2';
-
-import BottomNavigation from '@mui/material/BottomNavigation';
-import BottomNavigationAction from '@mui/material/BottomNavigationAction';
 import Backdrop from '@mui/material/Backdrop';
 import CircularProgress from '@mui/material/CircularProgress';
-
-import LayersIcon from '@mui/icons-material/Layers';
-import SatelliteIcon from '@mui/icons-material/Satellite';
-import ImageSearchIcon from '@mui/icons-material/ImageSearch';
-import RoomIcon from '@mui/icons-material/Room';
-import { grey } from '@mui/material/colors';
-import RiverPopup from '../Popup/RiverPopup';
-import { Basin } from '../../App';
-import Page from '../pages/Page';
-import { useTranslation } from 'react-i18next';
+import { Basin, layerType } from '../Utils/types';
 import { BASE_URL, COLLECTION_NAME } from '../Utils/constants';
 import MobileResults from '../Modals/MobileResults';
 
@@ -72,13 +55,6 @@ interface MaplibreMapProps {
   setOffCanvas(open: boolean): void;
   offCanvas: boolean;
 }
-
-type layerType = {
-  layerId: string;
-  name: string;
-  checked: boolean;
-  added: boolean;
-};
 
 function Map(props: MaplibreMapProps) {
   const rootRef = React.useRef(null);
@@ -121,24 +97,9 @@ function Map(props: MaplibreMapProps) {
 
   const [hoveredStateId, setHoveredStateId] = useState(0);
 
-  // turn off bottom bar
-  const [bottomBar, setBottomBar] = useState(true);
-  const toggleBottomBar = () => {
-    setBottomBar((prevState) => {
-      return !prevState;
-    });
-  };
-
   // toggle on/off cluster icons
   const toggleClusters = () => {
     toggleClustersLayer(map!);
-  };
-
-  const [showLayerToast, toggleLayerToast] = useState(false);
-  const toggleLc = () => {
-    toggleLayerToast((prevState) => {
-      return !prevState;
-    });
   };
 
   const [spinner, setSpinner] = useState(false);
@@ -206,13 +167,6 @@ function Map(props: MaplibreMapProps) {
     content: false
   });
 
-  const [showSearchToast, toggleSearch] = useState(false);
-  const toggleSearchToast = () => {
-    toggleSearch((prevState) => {
-      return !prevState;
-    });
-  };
-
   const search = async (val: string) => {
     setSearchValue({ loading: true });
 
@@ -252,31 +206,16 @@ function Map(props: MaplibreMapProps) {
 
   // Satellite HeatMap Toast
 
-  const [showSatMsg, toggleShowAn] = useState(false);
-  const toggleSatMsg = () => {
-    toggleShowAn((prevState) => {
-      return !prevState;
-    });
-  };
-
-  const [showSatToasts, toggleSatToast] = useState(false);
-
   const toggleSat = () => {
-    if (!showSatToasts && !showSatMsg) {
-      toggleSatMsg();
-    }
-
     if (map != undefined) {
       const satVisibility = map.getLayoutProperty('heatmapRain', 'visibility');
 
       if (satVisibility === 'visible') {
         map.setLayoutProperty('heatmapRain', 'visibility', 'none');
-        toggleSatToast(false);
       } else {
         map.setLayoutProperty('heatmapRain', 'visibility', 'visible');
 
         //toggleClustersLayer(map!);
-        toggleSatToast(true);
       }
     }
   };
@@ -313,10 +252,10 @@ function Map(props: MaplibreMapProps) {
         if (error) throw error;
         mapLibre.addImage('pluv', image as HTMLImageElement);
       });
-      mapLibre.loadImage(riverIcon, (error: any, image: HTMLImageElement) => {
+      /*       mapLibre.loadImage(riverIcon, (error: any, image: HTMLImageElement) => {
         if (error) throw error;
         mapLibre.addImage('fluv', image as HTMLImageElement);
-      });
+      }); */
 
       mapLibre.addSource('empty', {
         type: 'geojson',
@@ -675,63 +614,10 @@ function Map(props: MaplibreMapProps) {
     }
   }
 
-  const getLocData = async (id: string, uf: string) => {
-    try {
-      const sId = String(id).padStart(8, '0');
-
-      console.log(id + ' ' + uf);
-      const response = await axios.get(`data/BR/${uf}/chuvas_L${sId}.json`).then((response) => {
-        appDispatch({
-          type: 'loadLocal',
-          value: response.data,
-          loaded: true
-        });
-      });
-    } catch (error: any) {
-      console.log('Map-getLocData-error: ' + error.message);
-    }
-  };
-
-  const getSatData = async (id: string, uf: string) => {
-    try {
-      const sId = String(id).padStart(8, '0');
-
-      console.log(id + ' ' + uf);
-      const response = await axios.get(`data/BR/${uf}/chuvas_S${sId}.json`).then((response) => {
-        appDispatch({
-          type: 'loadSat',
-          value: response.data._satData,
-          loaded: true
-        });
-      });
-    } catch (error: any) {
-      console.log('Map-getLocData-error: ' + error.message);
-    }
-  };
   const [showOverlay, setShowOverlay] = useState(true);
-
   const toggleOverlay = () => {
     setShowOverlay(!showOverlay);
     console.log('overlay');
-  };
-
-  const Overlay = () => {
-    return (
-      <div className="overlay">
-        <div className="spinner"></div>
-        {/* Optionally, you can add a loading message */}
-        <p
-          style={{
-            marginLeft: '80px',
-            marginBottom: '40px',
-            fontWeight: '600',
-            fontSize: '1.5rem',
-            color: '#0f9bd9'
-          }}>
-          Loading MapHidro...
-        </p>
-      </div>
-    );
   };
 
   return (

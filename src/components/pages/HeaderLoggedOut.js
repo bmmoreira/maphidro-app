@@ -24,7 +24,7 @@ function HeaderLoggedOut(props) {
     e.preventDefault();
     try {
       // get token from db if succefully logged
-      const response = await Axios.post('http://localhost:8080/login', {
+      const response = await Axios.post('https://mh-api.maphidro.com/login', {
         username,
         password
       });

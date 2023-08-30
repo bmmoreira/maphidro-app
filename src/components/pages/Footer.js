@@ -7,6 +7,8 @@ import BottomNavigationAction from '@mui/material/BottomNavigationAction';
 import HomeIcon from '@mui/icons-material/Home';
 import MapIcon from '@mui/icons-material/Map';
 import InfoIcon from '@mui/icons-material/Info';
+import QuestionAnswerIcon from '@mui/icons-material/QuestionAnswer';
+
 import { styled, alpha } from '@mui/material/styles';
 
 function Footer() {
@@ -68,6 +70,23 @@ function Footer() {
               />
             }
             onClick={() => navigate('/about-maphidro')}
+            sx={{
+              color: '#ccc',
+              '&& .Mui-selected': {
+                color: 'white'
+              }
+            }}
+          />
+          <BottomNavigationAction
+            label="UX"
+            icon={
+              <QuestionAnswerIcon
+                sx={{
+                  color: 'white'
+                }}
+              />
+            }
+            onClick={() => navigate('/ux')}
             sx={{
               color: '#ccc',
               '&& .Mui-selected': {

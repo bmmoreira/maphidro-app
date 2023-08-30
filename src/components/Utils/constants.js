@@ -77,3 +77,29 @@ export const roundedButton = {
     boxShadow: styleWhite.boxShadowFocus
   }
 };
+
+export const buttonStyle = {
+  backgroundColor: styleWhite.bgButton,
+  display: 'flex',
+  flexDirection: 'column',
+  gap: '20px',
+  justifyContent: 'center',
+  fontSize: '0.9rem',
+  height: '80px',
+  width: '80px',
+  borderRadius: '5px',
+  color: styleWhite.colorButtonTitle,
+  '&:hover': {
+    backgroundColor: styleWhite.bgButtonHover,
+    borderColor: styleWhite.borderColorHover,
+    boxShadow: 'none'
+  },
+  '&:active': {
+    boxShadow: 'none',
+    backgroundColor: styleWhite.bgButtonActive,
+    borderColor: styleWhite.borderColorActive
+  },
+  '&:focus': {
+    boxShadow: styleWhite.boxShadowFocus
+  }
+};

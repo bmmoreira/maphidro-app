@@ -63,7 +63,18 @@ const Questions = () => {
               }}>
               {field.label}
             </Typography>
-            {questionInput}
+            <Typography
+              variant="h6"
+              component="h2"
+              sx={{
+                padding: '0px 0 0px 10px',
+                color: 'gray',
+                display: 'flex',
+                justifyContent: 'center',
+                fontSize: '0.875rem'
+              }}>
+              {questionInput}
+            </Typography>
           </QuestionContainer>
         );
       })}
@@ -75,13 +86,9 @@ export default function UX(props) {
   const [sent, setSent] = useState(false);
   const methods = useGoogleForm({ form });
   const onSubmit = async (data) => {
-    console.log('>>> Here is the data', data);
     setSent(true);
     await methods.submitToGoogleForms(data);
-    alert('Form submitted with success!');
   };
-
-  console.log('>>> Here are the errors!!!', methods.formState.errors);
 
   return (
     <Page title="UX Questionary">
@@ -97,11 +104,15 @@ export default function UX(props) {
             padding: '25px 0 0px 10px',
             color: 'gray',
             display: 'flex',
-            justifyContent: 'center'
+            justifyContent: 'center',
+            fontSize: '0.875rem'
           }}>
           User Experience Questionary
         </Typography>
-        <Typography variant="h6" component="h2" sx={{ padding: '25px 0 0px 10px', color: 'gray' }}>
+        <Typography
+          variant="h6"
+          component="h2"
+          sx={{ padding: '25px 0 0px 10px', color: 'gray', fontSize: '0.875rem' }}>
           Por favor dê-nos a sua opinião, a fim de avaliar o portal maphidro.com, preenchendo o
           seguinte questionário abaixo. É constituído por pares de opostos relativos às propriedades
           que o produto possa ter. As graduações entre os opostos são representadas por círculos. Ao

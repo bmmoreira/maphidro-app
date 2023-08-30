@@ -1,7 +1,7 @@
-import React from "react";
-import styled from "styled-components";
+import React from 'react';
+import styled from 'styled-components';
 
-import { useLinearInput } from "react-google-forms-hooks";
+import { useLinearInput } from 'react-google-forms-hooks';
 
 const Container = styled.div`
   display: flex;
@@ -11,6 +11,11 @@ const Container = styled.div`
     margin: 0 10px;
   }
   margin-bottom 10px;
+  input[type="radio"] {
+    -ms-transform: scale(0.8); /* IE 9 */
+    -webkit-transform: scale(0.8); /* Chrome, Safari, Opera */
+    transform: scale(0.8);
+  }
 `;
 
 const ErrorLabel = styled.span`
@@ -29,7 +34,7 @@ export default function ShortAnswerInput({ id }) {
         })}
         <div>{legend.labelLast}</div>
       </Container>
-      <ErrorLabel>{error && "This field is required"}</ErrorLabel>
+      <ErrorLabel>{error && 'This field is required'}</ErrorLabel>
     </>
   );
 }

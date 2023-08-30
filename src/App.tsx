@@ -7,7 +7,6 @@ Axios.defaults.baseURL = 'https://maphidro.com';
 import { useImmerReducer } from 'use-immer';
 import StateContext from './StateContext';
 import DispatchContext from './DispatchContext';
-import Station from './components/DataModels/Station4';
 import useWindowDimensions from './utils/useWindowDimensions';
 import Header from './components/pages/Header';
 import Footer from './components/pages/Footer';
@@ -30,21 +29,11 @@ import { BASE_URL, COLLECTION_NAME } from './components/Utils/constants';
 import './main.css';
 import UX from './components/pages/Ux';
 import UXGuest from './components/pages/UXGuest';
+import { layerType } from './components/Utils/types';
 
-export type Basin = {
-  id: number;
-  bName: string;
-};
 interface MonthNames {
   name: string;
 }
-
-type layerType = {
-  layerId: string;
-  name: string;
-  checked: boolean;
-  added: boolean;
-};
 
 const mapLayers: layerType[] = [
   { layerId: 'bacias', name: 'Brazil Basins', checked: false, added: false },
@@ -378,23 +367,7 @@ we should probably do those types of things within a useEffect.
   const [loading, setLoading] = useState(true);
   const [offCanvas, setOffCanvas] = useState(false);
 
-  const [stationObj, setStationObj] = useState<Station>();
-  const [basin, setBasin] = useState<Basin>({ id: 0, bName: 'none' } as Basin);
-
   const handleMapLoading = () => setLoading(false);
-
-  /*   const toggleDrawer = (basin: Basin) => {
-    console.log('click');
-    if (typeof basin !== 'undefined') {
-      setBasin(basin);
-    } else {
-      setBasin({ id: 0, bName: 'x' });
-    }
-
-    setOffCanvas((prevState) => {
-      return !prevState;
-    });
-  }; */
 
   const [chartModal, setChartModal] = useState(false);
   const toggleChartModal = () => {
@@ -403,13 +376,6 @@ we should probably do those types of things within a useEffect.
       return !prevState;
     });
   };
-
-  /*   const toggleChartModal = (stationObj: Station) => {
-    setStationObj(stationObj);
-    setChartModal((prevState) => {
-      return !prevState;
-    });
-  }; */
 
   /*
   Well, when our main component first renders we would just immediately wanna send an Axios request
