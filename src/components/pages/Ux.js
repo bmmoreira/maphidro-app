@@ -105,7 +105,7 @@ export default function UX(props) {
             color: 'gray',
             display: 'flex',
             justifyContent: 'center',
-            fontSize: '0.875rem'
+            fontSize: '1rem'
           }}>
           User Experience Questionary
         </Typography>

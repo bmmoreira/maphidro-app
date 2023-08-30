@@ -8,13 +8,14 @@ const Container = styled.div`
   align-items: center;
 
   & * {
-    margin: 0 10px;
+    margin: 0 3px;
   }
   margin-bottom 10px;
   input[type="radio"] {
     -ms-transform: scale(0.8); /* IE 9 */
     -webkit-transform: scale(0.8); /* Chrome, Safari, Opera */
     transform: scale(0.8);
+    
   }
 `;
 
