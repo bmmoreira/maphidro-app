@@ -2,6 +2,7 @@
 
 import React, { useEffect } from 'react';
 import Container from './Container';
+import Footer from './Footer';
 
 function Page(props) {
   useEffect(() => {

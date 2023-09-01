@@ -18,9 +18,14 @@ function Footer() {
 
   function BottomNav() {
     return (
-      <Box sx={{ width: '100%' }}>
+      <Box sx={{ width: '100%', zIndex: 9999, bottom: '0px', position: 'absolute' }}>
         <BottomNavigation
-          sx={{ backgroundColor: '#1976d2', height: '70px', color: 'white' }}
+          sx={{
+            backgroundColor: '#1976d2',
+            height: '70px',
+            color: 'white',
+            zIndex: 9999
+          }}
           showLabels
           value={value}
           onChange={(event, newValue) => {

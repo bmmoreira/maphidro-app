@@ -44,6 +44,7 @@ import CircularProgress from '@mui/material/CircularProgress';
 import { Basin, layerType } from '../Utils/types';
 import { BASE_URL, COLLECTION_NAME } from '../Utils/constants';
 import MobileResults from '../Modals/MobileResults';
+import Footer from '../pages/Footer';
 
 interface MaplibreMapProps {
   initialOptions?: Omit<maplibregl.MapOptions, 'container' | 'style'>;
