@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import DispatchContext from '../../DispatchContext';
 import StateContext from '../../StateContext';
-import { roundedButton, loginButtom, styleWhite, buttonStyle } from '../Utils/constants.js';
+import { roundedButton, loginButtom, styleWhite } from '../Utils/constants.js';
 
 import SettingsIcon from '@mui/icons-material/Settings';
 import MailIcon from '@mui/icons-material/Mail';
@@ -65,16 +65,7 @@ function DefaultHeader() {
           xs={12}
           sx={{
             display: 'flex',
-            height: '40px',
-            justifyContent: 'center',
-            alignItems: 'center'
-          }}></Grid>
-        <Grid
-          xs={12}
-          sx={{
-            display: 'flex',
-            height: '40px',
-            gap: '10px',
+            height: '80px',
             justifyContent: 'center',
             alignItems: 'center'
           }}></Grid>

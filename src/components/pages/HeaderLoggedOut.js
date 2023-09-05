@@ -1,7 +1,6 @@
 import React, { useContext, useState } from 'react';
 import Axios from 'axios';
 import DispatchContext from '../../DispatchContext';
-import StateContext from '../../StateContext';
 
 import PersonIcon from '@mui/icons-material/Person';
 import Button from '@mui/material/Button';
@@ -9,12 +8,11 @@ import { loginButtom } from '../Utils/constants.js';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 
-import Input, { InputProps } from '@mui/base/Input';
+import Input from '@mui/base/Input';
 import { styled } from '@mui/system';
 
-function HeaderLoggedOut(props) {
+function HeaderLoggedOut() {
   const appDispatch = useContext(DispatchContext);
-  const appState = useContext(StateContext);
   const [username, setUsername] = useState();
   const [password, setPassword] = useState();
   const navigate = useNavigate();
