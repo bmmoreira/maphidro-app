@@ -117,8 +117,7 @@ export default function UX(props) {
           seguinte questionário abaixo. É constituído por pares de opostos relativos às propriedades
           que o produto possa ter. As graduações entre os opostos são representadas por círculos. Ao
           marcar um dos círculos, você pode expressar sua opinião sobre um conceito. O questionário
-          é anômimo, não existem respostas "certas" ou "erradas". <br />
-          Só a sua opinião pessoal conta!
+          é anômimo, não existem respostas "certas" ou "erradas". Só a sua opinião pessoal conta!
         </Typography>
         {!sent && (
           <GoogleFormProvider {...methods}>
