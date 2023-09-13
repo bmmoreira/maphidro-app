@@ -409,6 +409,12 @@ we should probably do those types of things within a useEffect.
     }
   }, []);
 
+  useEffect(() => {
+    if (state.modals.projects == false && state.modals.select == false) {
+      dispatch({ type: 'toglePanelModal', value: false });
+    }
+  }, [state.modals.projects, state.modals.select]);
+
   return (
     <StateContext.Provider value={state}>
       <DispatchContext.Provider value={dispatch}>
