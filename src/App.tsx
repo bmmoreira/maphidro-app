@@ -409,6 +409,9 @@ we should probably do those types of things within a useEffect.
     }
   }, []);
 
+  /*
+    remove modalPanel after click on close
+  */
   useEffect(() => {
     if (state.modals.projects == false && state.modals.select == false) {
       dispatch({ type: 'toglePanelModal', value: false });
