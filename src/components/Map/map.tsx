@@ -580,22 +580,6 @@ function Map(props: MaplibreMapProps) {
         valueSelecetedSatBar: satLastYear - 1
       });
 
-      /*       appDispatch({
-        type: 'loadStation',
-        value: st
-      });
-
-      appDispatch({
-        type: 'loadLocal',
-        value: stLocData.data,
-        loaded: true
-      });
-
-      appDispatch({
-        type: 'loadSat',
-        value: stSatData.data._satData,
-        loaded: true
-      }); */
       //const sObj = new Station(res.data.data.attributes);
       //show Station Modal;
       props.showModalChart(new Station(st));
