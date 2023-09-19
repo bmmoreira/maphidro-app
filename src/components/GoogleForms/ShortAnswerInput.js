@@ -7,7 +7,7 @@ export default function ShortAnswerInput({ id }) {
 
   return (
     <div>
-      <input type="text" {...register()} value={'teste@email.com'} disabled />
+      <input type="text" {...register()} />
     </div>
   );
 }
