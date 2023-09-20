@@ -333,7 +333,7 @@ function Map(props: MaplibreMapProps) {
         name: e.features[0].properties.name,
         code: e.features[0].properties.code,
         id: e.features[0].properties.id,
-        type: e.features[0].properties.stType,
+        type: e.features[0].properties.type,
         longitude: parseFloat(e.features[0].geometry.coordinates[0]),
         latitude: parseFloat(e.features[0].geometry.coordinates[1]),
         operator: e.features[0].properties.operator,

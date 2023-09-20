@@ -49,7 +49,7 @@ const StationPopup = (props: StPopupProp) => {
             </tr>
             <tr>
               <th scope="row">{t('type')}</th>
-              <td>{props.stationObj.type === 'pluv' ? t('pluviometric') : t('fluviometric')}</td>
+              <td>{props.stationObj.type == 'pluv' ? t('pluviometric') : t('fluviometric')}</td>
             </tr>
             <tr>
               <th scope="row">{t('latitude')}</th>
