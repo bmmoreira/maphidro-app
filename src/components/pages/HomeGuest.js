@@ -5,6 +5,7 @@ import Image from 'react-bootstrap/Image';
 import { useImmerReducer } from 'use-immer';
 import DispatchContext from '../../DispatchContext';
 import { CSSTransition } from 'react-transition-group';
+import { LOGIN_URL, PASSMINLENGHT } from '../Utils/constants';
 
 /*
 Adding validation and automatically log in a successfully registered user
@@ -171,9 +172,9 @@ function HomeGuest() {
         }
         break;
       case 'passwordAfterDelay':
-        if (draft.password.value.length < 12) {
+        if (draft.password.value.length < PASSMINLENGHT) {
           draft.password.hasErrors = true;
-          draft.password.message = 'Password must be at least 12 characters.';
+          draft.password.message = `Password must be at least ${PASSMINLENGHT} characters.`;
         }
         break;
       case 'submitForm':
@@ -223,7 +224,7 @@ function HomeGuest() {
       const fResults = async function fetchResults() {
         try {
           const response = await Axios.post(
-            'https://mh-api.maphidro.com/doesUsernameExist',
+            `${LOGIN_URL}/doesUsernameExist`,
             { username: state.username.value },
             { cancelToken: ourRequest.token }
           );
@@ -266,7 +267,7 @@ function HomeGuest() {
       const fResults = async function fetchResults() {
         try {
           const response = await Axios.post(
-            'https://mh-api.maphidro.com/doesEmailExist',
+            `${LOGIN_URL}/doesEmailExist`,
             { email: state.email.value },
             { cancelToken: ourRequest.token }
           );
@@ -328,7 +329,7 @@ function HomeGuest() {
       const fResult = async function fetchResults() {
         try {
           const response = await Axios.post(
-            'https://mh-api.maphidro.com/register',
+            `${LOGIN_URL}/register`,
             {
               username: state.username.value,
               email: state.email.value,

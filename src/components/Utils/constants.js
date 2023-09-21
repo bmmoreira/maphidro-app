@@ -1,7 +1,10 @@
 /** @format */
 
 export const BASE_URL = 'https://api.maphidro.com';
+//export const LOGIN_URL = 'http://localhost:8080';
+export const LOGIN_URL = 'https://mh-api.maphidro.com';
 export const COLLECTION_NAME = 'api/mhstations';
+export const PASSMINLENGHT = 5;
 
 export const bgColor = '#312f38';
 export const bgColorButton = '#44414d';
