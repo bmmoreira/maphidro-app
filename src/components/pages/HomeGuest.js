@@ -6,6 +6,7 @@ import { useImmerReducer } from 'use-immer';
 import DispatchContext from '../../DispatchContext';
 import { CSSTransition } from 'react-transition-group';
 import { LOGIN_URL, PASSMINLENGHT } from '../Utils/constants';
+import { useNavigate } from 'react-router-dom';
 
 /*
 Adding validation and automatically log in a successfully registered user
@@ -13,6 +14,7 @@ Adding validation and automatically log in a successfully registered user
 
 function HomeGuest() {
   const appDispatch = useContext(DispatchContext);
+  const navigate = useNavigate();
 
   /*
   Essentially, before we let the user actually submit and send a request to the server
@@ -342,8 +344,9 @@ function HomeGuest() {
             type: 'flashMessages',
             value: 'Congrats! Welcome to your new account'
           });
+          navigate(`/map`);
         } catch (error) {
-          console.log('There was a problem or the request was cancel');
+          console.log(error);
         }
       };
       fResult();

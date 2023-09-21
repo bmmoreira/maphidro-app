@@ -7,6 +7,7 @@ import Button from '@mui/material/Button';
 import { loginButtom } from '../Utils/constants.js';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
+import { LOGIN_URL } from '../Utils/constants';
 
 import Input from '@mui/base/Input';
 import { styled } from '@mui/system';
@@ -21,7 +22,7 @@ function HeaderLoggedOut() {
     e.preventDefault();
     try {
       // get token from db if succefully logged
-      const response = await Axios.post('https://mh-api.maphidro.com/login', {
+      const response = await Axios.post(`${LOGIN_URL}/login`, {
         username,
         password
       });
