@@ -18,7 +18,7 @@ function Footer() {
 
   function BottomNav() {
     return (
-      <Box sx={{ width: '100%', zIndex: 9999, bottom: '0px', position: 'absolute' }}>
+      <Box sx={{ width: '100%', zIndex: 9999, bottom: '0px', position: 'relative' }}>
         <BottomNavigation
           sx={{
             backgroundColor: '#1976d2',
