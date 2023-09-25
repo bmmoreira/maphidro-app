@@ -26,10 +26,12 @@ import FilterAltIcon from '@mui/icons-material/FilterAlt';
 import AutoAwesomeMotionIcon from '@mui/icons-material/AutoAwesomeMotion';
 import AddLocationAltIcon from '@mui/icons-material/AddLocationAlt';
 import PublicIcon from '@mui/icons-material/Public';
+import useWindowDimensions from '../Utils/useWindowDimensions.js';
 
 function DefaultHeader() {
   const appDispatch = useContext(DispatchContext);
   const appState = useContext(StateContext);
+  const { height, width } = useWindowDimensions();
 
   function handleLogout() {
     appDispatch({ type: 'logout' });
@@ -121,6 +123,248 @@ function DefaultHeader() {
     }
   };
 
+  const gridRightButtons = (
+    <Grid
+      xs={8}
+      sx={{
+        display: 'flex',
+        gap: '10px',
+        justifyContent: 'center'
+      }}>
+      <IconButton
+        aria-label={notificationsLabel(appState.header.counterSelect)}
+        sx={{ ...buttonStyle }}
+        onClick={toggleSelect}>
+        <Badge
+          anchorOrigin={{
+            vertical: 'bottom',
+            horizontal: 'right'
+          }}
+          badgeContent={appState.header.counterSelect}
+          color="secondary">
+          <AddLocationAltIcon sx={{ position: 'relative', top: '0px', left: '0px' }} />
+        </Badge>
+        <div>Select</div>
+      </IconButton>
+      <IconButton aria-label={notificationsLabel(100)} sx={{ ...buttonStyle }} disabled>
+        <Badge
+          anchorOrigin={{
+            vertical: 'bottom',
+            horizontal: 'right'
+          }}
+          badgeContent={3}
+          color="secondary">
+          <FilterAltIcon sx={{ position: 'relative', top: '0px', left: '0px' }} />
+        </Badge>
+        <div>Filters</div>
+      </IconButton>
+
+      <IconButton aria-label={notificationsLabel(100)} sx={{ ...buttonStyle }} disabled>
+        <Badge
+          anchorOrigin={{
+            vertical: 'bottom',
+            horizontal: 'right'
+          }}
+          badgeContent={22}
+          color="secondary">
+          <AutoAwesomeMotionIcon sx={{ position: 'relative', top: '0px', left: '0px' }} />
+        </Badge>
+        <div>Results</div>
+      </IconButton>
+    </Grid>
+  );
+
+  const gridRightCompact = (
+    <Grid
+      xs={8}
+      sx={{
+        display: 'flex',
+        gap: '10px',
+        justifyContent: 'center'
+      }}>
+      <IconButton
+        aria-label={notificationsLabel(appState.header.counterSelect)}
+        sx={{ ...buttonStyle }}
+        onClick={toggleSelect}>
+        <Badge
+          anchorOrigin={{
+            vertical: 'bottom',
+            horizontal: 'right'
+          }}
+          badgeContent={appState.header.counterSelect}
+          color="secondary">
+          <AddLocationAltIcon sx={{ position: 'relative', top: '0px', left: '0px' }} />
+        </Badge>
+        <div>Select</div>
+      </IconButton>
+    </Grid>
+  );
+
+  const gridLeftButtons = (
+    <Grid
+      xs={8}
+      sx={{
+        backgroundColor: styleWhite.bg,
+        display: 'flex',
+        gap: '10px'
+      }}>
+      <IconButton
+        aria-label={notificationsLabel(100)}
+        sx={{ ...buttonStyle }}
+        onClick={toggleProjects}>
+        <Badge
+          anchorOrigin={{
+            vertical: 'bottom',
+            horizontal: 'right'
+          }}
+          badgeContent={1}
+          color="secondary">
+          <BookIcon sx={{ position: 'relative', top: '0px', left: '0px' }} />
+        </Badge>
+        <div>Projects</div>
+      </IconButton>
+      <IconButton
+        aria-label={notificationsLabel(100)}
+        sx={{ ...buttonStyle }}
+        onClick={toggleTimeline}
+        disabled>
+        <Badge
+          anchorOrigin={{
+            vertical: 'bottom',
+            horizontal: 'right'
+          }}
+          badgeContent={15}
+          color="secondary">
+          <HistoryIcon sx={{ position: 'relative', top: '0px', left: '0px' }} />
+        </Badge>
+        <div>Timeline</div>
+      </IconButton>
+      <IconButton
+        aria-label={notificationsLabel(100)}
+        sx={{ ...buttonStyle }}
+        onClick={toggleDownload}
+        disabled>
+        <Badge
+          anchorOrigin={{
+            vertical: 'bottom',
+            horizontal: 'right'
+          }}
+          badgeContent={23}
+          color="secondary">
+          <DownloadIcon sx={{ position: 'relative', top: '0px', left: '0px' }} />
+        </Badge>
+        <div>Download</div>
+      </IconButton>
+    </Grid>
+  );
+
+  const gridLeftCompact = (
+    <Grid
+      xs={8}
+      sx={{
+        backgroundColor: styleWhite.bg,
+        display: 'flex',
+        gap: '10px'
+      }}>
+      <IconButton
+        aria-label={notificationsLabel(100)}
+        sx={{ ...buttonStyle }}
+        onClick={toggleProjects}>
+        <Badge
+          anchorOrigin={{
+            vertical: 'bottom',
+            horizontal: 'right'
+          }}
+          badgeContent={1}
+          color="secondary">
+          <BookIcon sx={{ position: 'relative', top: '0px', left: '0px' }} />
+        </Badge>
+        <div>Projects</div>
+      </IconButton>
+    </Grid>
+  );
+
+  const gridProfile = (
+    <Grid
+      xs={4}
+      sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'flex-end',
+        paddingRight: '20px',
+        height: '80px'
+      }}>
+      <div>
+        <IconButton aria-label="settings" sx={{ ...roundedButton }}>
+          <SettingsIcon />
+        </IconButton>
+        <IconButton aria-label="mail" sx={{ ...roundedButton }}>
+          <MailIcon />
+        </IconButton>
+        <IconButton aria-label="help" sx={{ ...roundedButton }}>
+          <HelpIcon />
+        </IconButton>
+      </div>
+      {appState.loggedIn ? (
+        <Button
+          aria-label="account"
+          onClick={handleLogout}
+          endIcon={<LogoutIcon />}
+          color="primary"
+          sx={{ ...loginButtom }}>
+          Log out
+        </Button>
+      ) : (
+        <Button
+          aria-label="logout"
+          endIcon={<PersonIcon />}
+          color="primary"
+          sx={{ ...loginButtom }}>
+          Log in
+        </Button>
+      )}
+    </Grid>
+  );
+
+  const gridProfileCompact = (
+    <Grid
+      xs={4}
+      sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'flex-end',
+        paddingRight: '10px',
+        height: '80px'
+      }}>
+      <div style={{ padding: '5px', margin: '0px', left: '0px' }}>
+        <IconButton aria-label="settings" sx={{ ...roundedButton, width: '25px', height: '25px' }}>
+          <SettingsIcon />
+        </IconButton>
+
+        <IconButton aria-label="help" sx={{ ...roundedButton, width: '25px', height: '25px' }}>
+          <HelpIcon />
+        </IconButton>
+      </div>
+      {appState.loggedIn ? (
+        <Button
+          aria-label="account"
+          onClick={handleLogout}
+          color="primary"
+          sx={{ ...loginButtom, width: '60px', fontSize: '0.7rem' }}>
+          Log out
+        </Button>
+      ) : (
+        <Button
+          aria-label="logout"
+          endIcon={<PersonIcon />}
+          color="primary"
+          sx={{ ...loginButtom }}>
+          Log in
+        </Button>
+      )}
+    </Grid>
+  );
+
   return (
     <Box
       sx={{
@@ -147,61 +391,7 @@ function DefaultHeader() {
           }}>
           <img src="assets/mh_logo.png" alt="maphidro logo" />
         </Grid>
-        <Grid
-          xs={8}
-          sx={{
-            backgroundColor: styleWhite.bg,
-            display: 'flex',
-            gap: '10px'
-          }}>
-          <IconButton
-            aria-label={notificationsLabel(100)}
-            sx={{ ...buttonStyle }}
-            onClick={toggleProjects}>
-            <Badge
-              anchorOrigin={{
-                vertical: 'bottom',
-                horizontal: 'right'
-              }}
-              badgeContent={1}
-              color="secondary">
-              <BookIcon sx={{ position: 'relative', top: '0px', left: '0px' }} />
-            </Badge>
-            <div>Projects</div>
-          </IconButton>
-          <IconButton
-            aria-label={notificationsLabel(100)}
-            sx={{ ...buttonStyle }}
-            onClick={toggleTimeline}
-            disabled>
-            <Badge
-              anchorOrigin={{
-                vertical: 'bottom',
-                horizontal: 'right'
-              }}
-              badgeContent={15}
-              color="secondary">
-              <HistoryIcon sx={{ position: 'relative', top: '0px', left: '0px' }} />
-            </Badge>
-            <div>Timeline</div>
-          </IconButton>
-          <IconButton
-            aria-label={notificationsLabel(100)}
-            sx={{ ...buttonStyle }}
-            onClick={toggleDownload}
-            disabled>
-            <Badge
-              anchorOrigin={{
-                vertical: 'bottom',
-                horizontal: 'right'
-              }}
-              badgeContent={23}
-              color="secondary">
-              <DownloadIcon sx={{ position: 'relative', top: '0px', left: '0px' }} />
-            </Badge>
-            <div>Download</div>
-          </IconButton>
-        </Grid>
+        {width < 1280 ? gridLeftCompact : gridLeftButtons}
       </Grid>
 
       <Grid container spacing={0} sx={{ backgroundColor: styleWhite.bg, display: 'flex' }}>
@@ -257,7 +447,8 @@ function DefaultHeader() {
             label="Where"
             sx={{
               color: styleWhite.colorButtonTitle,
-              backgroundColor: styleWhite.bgButton
+              backgroundColor: styleWhite.bgButton,
+              height: '20px'
             }}
           />
           <Chip
@@ -265,7 +456,8 @@ function DefaultHeader() {
             label="When"
             sx={{
               color: styleWhite.colorButtonTitle,
-              backgroundColor: styleWhite.bgButton
+              backgroundColor: styleWhite.bgButton,
+              height: '20px'
             }}
           />
           <Chip
@@ -273,7 +465,8 @@ function DefaultHeader() {
             label="How"
             sx={{
               color: styleWhite.colorButtonTitle,
-              backgroundColor: styleWhite.bgButton
+              backgroundColor: styleWhite.bgButton,
+              height: '20px'
             }}
             onClick={toggleHow}
           />
@@ -281,94 +474,8 @@ function DefaultHeader() {
       </Grid>
 
       <Grid container spacing={0} sx={{ backgroundColor: styleWhite.bg, display: 'flex' }}>
-        <Grid
-          xs={8}
-          sx={{
-            display: 'flex',
-            gap: '10px',
-            justifyContent: 'center'
-          }}>
-          <IconButton
-            aria-label={notificationsLabel(appState.header.counterSelect)}
-            sx={{ ...buttonStyle }}
-            onClick={toggleSelect}>
-            <Badge
-              anchorOrigin={{
-                vertical: 'bottom',
-                horizontal: 'right'
-              }}
-              badgeContent={appState.header.counterSelect}
-              color="secondary">
-              <AddLocationAltIcon sx={{ position: 'relative', top: '0px', left: '0px' }} />
-            </Badge>
-            <div>Select</div>
-          </IconButton>
-          <IconButton aria-label={notificationsLabel(100)} sx={{ ...buttonStyle }} disabled>
-            <Badge
-              anchorOrigin={{
-                vertical: 'bottom',
-                horizontal: 'right'
-              }}
-              badgeContent={3}
-              color="secondary">
-              <FilterAltIcon sx={{ position: 'relative', top: '0px', left: '0px' }} />
-            </Badge>
-            <div>Filters</div>
-          </IconButton>
-
-          <IconButton aria-label={notificationsLabel(100)} sx={{ ...buttonStyle }} disabled>
-            <Badge
-              anchorOrigin={{
-                vertical: 'bottom',
-                horizontal: 'right'
-              }}
-              badgeContent={22}
-              color="secondary">
-              <AutoAwesomeMotionIcon sx={{ position: 'relative', top: '0px', left: '0px' }} />
-            </Badge>
-            <div>Results</div>
-          </IconButton>
-        </Grid>
-
-        <Grid
-          xs={4}
-          sx={{
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'flex-end',
-            paddingRight: '20px',
-            height: '80px'
-          }}>
-          <div>
-            <IconButton aria-label="settings" sx={{ ...roundedButton }}>
-              <SettingsIcon />
-            </IconButton>
-            <IconButton aria-label="mail" sx={{ ...roundedButton }}>
-              <MailIcon />
-            </IconButton>
-            <IconButton aria-label="help" sx={{ ...roundedButton }}>
-              <HelpIcon />
-            </IconButton>
-          </div>
-          {appState.loggedIn ? (
-            <Button
-              aria-label="account"
-              onClick={handleLogout}
-              endIcon={<LogoutIcon />}
-              color="primary"
-              sx={{ ...loginButtom }}>
-              Log out
-            </Button>
-          ) : (
-            <Button
-              aria-label="logout"
-              endIcon={<PersonIcon />}
-              color="primary"
-              sx={{ ...loginButtom }}>
-              Log in
-            </Button>
-          )}
-        </Grid>
+        {width < 1280 ? gridRightCompact : gridRightButtons}
+        {width < 1280 ? gridProfileCompact : gridProfile}
       </Grid>
     </Box>
   );

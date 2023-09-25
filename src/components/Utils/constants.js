@@ -66,6 +66,7 @@ export const loginButtom = {
 export const roundedButton = {
   backgroundColor: styleWhite.bgButton,
   color: styleWhite.colorButtonTitle,
+
   '&:hover': {
     backgroundColor: styleWhite.bgButtonHover,
     borderColor: styleWhite.borderColorHover,

@@ -36,6 +36,8 @@ import axios from 'axios';
 import ReactDOM from 'react-dom';
 
 import StationPopup, { StationObject } from '../Popup/StationPopup';
+import StationPopupCompact from '../Popup/StationPopupCompact';
+
 import Station from '../DataModels/Station4';
 import { API_URL_STATIONS } from '../../utils/constants';
 import * as turf from '@turf/turf';
@@ -45,6 +47,7 @@ import { Basin, layerType } from '../Utils/types';
 import { BASE_URL, COLLECTION_NAME } from '../Utils/constants';
 import MobileResults from '../Modals/MobileResults';
 import Footer from '../pages/Footer';
+import useWindowDimensions from '../Utils/useWindowDimensions.js';
 
 interface MaplibreMapProps {
   initialOptions?: Omit<maplibregl.MapOptions, 'container' | 'style'>;
@@ -58,6 +61,7 @@ interface MaplibreMapProps {
 }
 
 function Map(props: MaplibreMapProps) {
+  const { height, width } = useWindowDimensions();
   const rootRef = React.useRef(null);
   const appDispatch = useContext(DispatchContext);
   const appState = useContext(StateContext);
@@ -357,10 +361,18 @@ function Map(props: MaplibreMapProps) {
       ); */
 
       const popupNode = document.createElement('div');
-      ReactDOM.render(
-        <StationPopup stationObj={stationJSON} getData={getStationData} />,
-        popupNode
-      );
+      if (height < 800) {
+        ReactDOM.render(
+          <StationPopupCompact stationObj={stationJSON} getData={getStationData} />,
+          popupNode
+        );
+      } else {
+        ReactDOM.render(
+          <StationPopup stationObj={stationJSON} getData={getStationData} />,
+          popupNode
+        );
+      }
+
       popUpRef.current.setLngLat(coordinates).setDOMContent(popupNode).addTo(mapLibre);
       //popUpRef.current.setLngLat(coordinates).setHTML('<div>'+ teste +'</div>').addTo(mapLibre);
     }); // map on click
