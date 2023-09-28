@@ -619,7 +619,7 @@ function Map(props: MaplibreMapProps) {
 
   return (
     <>
-      <div ref={rootRef} className="map-wrap">
+      <div ref={rootRef} className={width < 600 ? 'map-wrap-mobile' : 'map-wrap'}>
         <div ref={mapContainerRef} className="map">
           {appState.modals.panelBox && (
             <PanelModals flyTo={flyToStation} onLayersHandleChange={layersHandleChange} />

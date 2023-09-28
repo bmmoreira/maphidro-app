@@ -4,6 +4,8 @@ import Table from 'react-bootstrap/Table';
 import Tabs from 'react-bootstrap/Tabs';
 import Tab from 'react-bootstrap/Tab';
 import Container from 'react-bootstrap/Container';
+import Box from '@mui/material/Box';
+import Grid from '@mui/material/Grid';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import { Image } from 'react-bootstrap';
@@ -64,20 +66,25 @@ const HidroData = function () {
     }
   };
 
+  const renderLegend = (props) => {
+    const { payload } = props;
+
+    return (
+      <Box sx={{ flexGrow: 1, paddingLeft: '60px' }}>
+        <Grid container spacing={1}>
+          {payload.map((entry, index) => (
+            <Grid item key={`item-${index}`} xs={6} sx={{ backgroundColor: entry.color }}>
+              {entry.value} {entry.dataKey.includes('sat') ? 'Sat. (mm)' : 'In Situ (mm)'}
+            </Grid>
+          ))}
+        </Grid>
+      </Box>
+    );
+  };
+
   return (
     <Tabs id="chart-main-tab" activeKey={key} onSelect={(k) => setKey(k)} className="mb-3">
       <Tab eventKey="home" title={t('monthly')}>
-        <h5>{t('precipitation')}</h5>
-
-        <Container fluid="md">
-          <Row>
-            <Col style={{ backgroundColor: '#8884d8', color: 'white' }}>
-              {appState.dataLocLoaded ? t('prec_details') : t('prec_overall')}
-            </Col>
-            <Col style={{ backgroundColor: '#82ca9d', color: 'white' }}> {t('prec_details2')}</Col>
-          </Row>
-        </Container>
-
         <ResponsiveContainer width="100%" height={250} margin={{ left: 0 }}>
           <BarChart data={appState.barChart.chartData} margin={{ left: -60 }}>
             <CartesianGrid strokeDasharray="3 3" />
@@ -85,7 +92,7 @@ const HidroData = function () {
 
             <YAxis margin={{ left: 0 }} tick={false} />
             <Tooltip />
-            <Legend />
+            <Legend content={renderLegend} margin={{ left: 60 }} />
             <Bar
               dataKey={'loc_' + String(appState.barChart.locBarSelectedYear)}
               fill="#8884d8"

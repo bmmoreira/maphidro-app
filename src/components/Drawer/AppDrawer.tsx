@@ -20,12 +20,18 @@ import HistoryIcon from '@mui/icons-material/History';
 import DownloadIcon from '@mui/icons-material/Download';
 import AddLocationAltIcon from '@mui/icons-material/AddLocationAlt';
 import FilterAltIcon from '@mui/icons-material/FilterAlt';
+import HomeIcon from '@mui/icons-material/Home';
+import MapIcon from '@mui/icons-material/Map';
+import InfoIcon from '@mui/icons-material/Info';
+import QuestionAnswerIcon from '@mui/icons-material/QuestionAnswer';
+import { Link, useNavigate } from 'react-router-dom';
 
 type Anchor = 'top' | 'left' | 'bottom' | 'right';
 
 export default function TemporaryDrawer() {
   const appState = useContext(StateContext);
   const appDispatch = useContext(DispatchContext);
+  const navigate = useNavigate();
 
   const [state, setState] = React.useState(false);
 
@@ -54,6 +60,66 @@ export default function TemporaryDrawer() {
     });
   }
 
+  const itemsList = [
+    {
+      text: 'Logout',
+      icon: <LogoutIcon />,
+      onClick: () => handleLogout()
+    },
+    {
+      text: 'Help',
+      icon: <HelpIcon />
+    },
+    {
+      text: 'Settings',
+      icon: <SettingsIcon />
+    },
+    {
+      text: 'Projects',
+      icon: <BookIcon />
+    },
+    {
+      text: 'Timeline',
+      icon: <HistoryIcon />
+    },
+    {
+      text: 'Download',
+      icon: <DownloadIcon />
+    },
+    {
+      text: 'Select',
+      icon: <AddLocationAltIcon />
+    },
+    {
+      text: 'Filters',
+      icon: <FilterAltIcon />
+    },
+    {
+      text: 'Results',
+      icon: <AutoAwesomeMotionIcon />
+    },
+    {
+      text: 'Home',
+      icon: <HomeIcon />,
+      onClick: () => navigate('/')
+    },
+    {
+      text: 'Map',
+      icon: <MapIcon />,
+      onClick: () => navigate('/map')
+    },
+    {
+      text: 'About',
+      icon: <InfoIcon />,
+      onClick: () => navigate('/about-maphidro')
+    },
+    {
+      text: 'UX',
+      icon: <QuestionAnswerIcon />,
+      onClick: () => navigate('/ux')
+    }
+  ];
+
   const list = (anchor: Anchor) => (
     <Box
       sx={{ width: 250 }}
@@ -66,7 +132,7 @@ export default function TemporaryDrawer() {
             <ListItemIcon>
               <LogoutIcon />
             </ListItemIcon>
-            <ListItemText primary={'Logout'} />
+            <ListItemText primary={'Logout'} onClick={handleLogout} />
           </ListItemButton>
         </ListItem>
         <ListItem key={'Starred'} disablePadding>
@@ -154,7 +220,23 @@ export default function TemporaryDrawer() {
   return (
     <div>
       <Drawer anchor={'left'} open={appState.drawer} onClose={toggleDrawer('left', false)}>
-        {list('left')}
+        <Box
+          sx={{ width: 250 }}
+          role="presentation"
+          onClick={toggleDrawer('left', false)}
+          onKeyDown={toggleDrawer('left', false)}>
+          <List>
+            {itemsList.map((item, index) => {
+              const { text, icon, onClick } = item;
+              return (
+                <ListItem button key={text} onClick={onClick}>
+                  {icon && <ListItemIcon>{icon}</ListItemIcon>}
+                  <ListItemText primary={text} />
+                </ListItem>
+              );
+            })}
+          </List>
+        </Box>
       </Drawer>
     </div>
   );

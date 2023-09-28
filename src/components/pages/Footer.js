@@ -4,6 +4,8 @@ import Box from '@mui/material/Box';
 import useWindowDimensions from '../Utils/useWindowDimensions.js';
 import BottomNavigation from '@mui/material/BottomNavigation';
 import BottomNavigationAction from '@mui/material/BottomNavigationAction';
+import { useLocation } from 'react-router-dom';
+
 import HomeIcon from '@mui/icons-material/Home';
 import MapIcon from '@mui/icons-material/Map';
 import InfoIcon from '@mui/icons-material/Info';
@@ -14,6 +16,8 @@ import { styled, alpha } from '@mui/material/styles';
 function Footer() {
   const [value, setValue] = React.useState(0);
   const { height, width } = useWindowDimensions();
+  const location = useLocation();
+
   const navigate = useNavigate();
 
   function BottomNav() {
@@ -107,7 +111,13 @@ function Footer() {
   return (
     <>
       {width < 600 ? (
-        <BottomNav />
+        location.pathname === '/' ||
+        location.pathname === '/about-maphidro' ||
+        location.pathname === '/ux' ? (
+          <BottomNav />
+        ) : (
+          ''
+        )
       ) : (
         <footer
           className="footer border-top text-center small text-muted p-2 my-0"

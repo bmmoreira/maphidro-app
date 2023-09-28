@@ -45,7 +45,7 @@ const StationPopupCompact = (props: StPopupProp) => {
             </tr>
 
             <tr>
-              <th scope="row">Lat/Lon</th>
+              <th scope="row">Lat/Long</th>
               <td>
                 {props.stationObj.latitude.toFixed(4)}/{props.stationObj.longitude.toFixed(4)}
               </td>
