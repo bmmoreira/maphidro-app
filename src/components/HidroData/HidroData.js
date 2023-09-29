@@ -1,10 +1,10 @@
 import React from 'react';
 import './hidrodata.css';
-import Table from 'react-bootstrap/Table';
-import Tabs from 'react-bootstrap/Tabs';
-import Tab from 'react-bootstrap/Tab';
-import Container from 'react-bootstrap/Container';
 import Box from '@mui/material/Box';
+import Tabs, { tabsClasses } from '@mui/material/Tabs';
+import Tab from '@mui/material/Tab';
+import { useTheme } from '@mui/material/styles';
+import Container from 'react-bootstrap/Container';
 import Grid from '@mui/material/Grid';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
@@ -26,6 +26,12 @@ import { useTranslation } from 'react-i18next';
 import { Parser } from 'json2csv';
 import { CVS_FIELDS } from '../../utils/constants';
 import StateContext from '../../StateContext';
+import SatelliteAltIcon from '@mui/icons-material/SatelliteAlt';
+import RadarIcon from '@mui/icons-material/Radar';
+import CellTowerIcon from '@mui/icons-material/CellTower';
+import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
+import DateRangeIcon from '@mui/icons-material/DateRange';
+import InfoIcon from '@mui/icons-material/Info';
 
 /* interface HidroProps {
   sInfo: Station;
@@ -36,6 +42,7 @@ import StateContext from '../../StateContext';
 } */
 
 const HidroData = function () {
+  const [value, setValue] = React.useState(0);
   const appState = useContext(StateContext);
   const [key, setKey] = useState('home');
   const { t } = useTranslation();
@@ -70,8 +77,8 @@ const HidroData = function () {
     const { payload } = props;
 
     return (
-      <Box sx={{ flexGrow: 1, paddingLeft: '60px' }}>
-        <Grid container spacing={1}>
+      <Box sx={{ flexGrow: 1, paddingLeft: '60px', height: '20px' }}>
+        <Grid container spacing={0} sx={{ height: '20px' }}>
           {payload.map((entry, index) => (
             <Grid item key={`item-${index}`} xs={6} sx={{ backgroundColor: entry.color }}>
               {entry.value} {entry.dataKey.includes('sat') ? 'Sat. (mm)' : 'In Situ (mm)'}
@@ -82,9 +89,66 @@ const HidroData = function () {
     );
   };
 
+  const theme = useTheme();
+
+  function TabPanel(props) {
+    const { children, value, index, ...other } = props;
+
+    return (
+      <div
+        role="tabpanel"
+        hidden={value !== index}
+        id={`full-width-tabpanel-${index}`}
+        aria-labelledby={`full-width-tab-${index}`}
+        {...other}>
+        {value === index && children}
+      </div>
+    );
+  }
+
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+  };
+
+  function a11yProps(index) {
+    return {
+      id: `simple-tab-${index}`,
+      'aria-controls': `simple-tabpanel-${index}`
+    };
+  }
+
   return (
-    <Tabs id="chart-main-tab" activeKey={key} onSelect={(k) => setKey(k)} className="mb-3">
-      <Tab eventKey="home" title={t('monthly')}>
+    <Box sx={{ width: '100%' }}>
+      <Box
+        sx={{
+          flexGrow: 1,
+          maxWidth: { xs: 320, sm: 480 },
+          bgcolor: 'background.paper',
+          marginTop: '-15px'
+        }}>
+        <Tabs
+          value={value}
+          onChange={handleChange}
+          variant="scrollable"
+          scrollButtons
+          aria-label="visible arrows tabs example"
+          sx={{
+            [`& .${tabsClasses.scrollButtons}`]: {
+              '&.Mui-disabled': { opacity: 0.3 }
+            }
+          }}>
+          <Tab
+            icon={<CalendarMonthIcon />}
+            iconPosition="start"
+            label={t('monthly')}
+            {...a11yProps(0)}
+          />
+          <Tab icon={<DateRangeIcon />} iconPosition="start" label={t('daily')} {...a11yProps(1)} />
+          <Tab icon={<InfoIcon />} iconPosition="start" label={t('details')} {...a11yProps(2)} />
+          <Tab icon={<RadarIcon />} iconPosition="start" label="Downloads" {...a11yProps(2)} />
+        </Tabs>
+      </Box>
+      <TabPanel value={value} index={0} dir={theme.direction}>
         <ResponsiveContainer width="100%" height={250} margin={{ left: 0 }}>
           <BarChart data={appState.barChart.chartData} margin={{ left: -60 }}>
             <CartesianGrid strokeDasharray="3 3" />
@@ -105,47 +169,18 @@ const HidroData = function () {
             />
           </BarChart>
         </ResponsiveContainer>
-
-        <Container fluid>
-          <Row className="justify-content-md-center">
-            <Col>
-              {appState.dataLocLoaded ? (
-                <a
-                  href={`http://www.snirh.gov.br/hidroweb/rest/api/documento/convencionais?tipo=3&documentos=0${appState.stationData._id}`}
-                  download>
-                  <Image fluid src="./images/buttons/download_ana_csv.png" alt="downloadANA" />
-                </a>
-              ) : (
-                ''
-              )}
-            </Col>
-            <Col>
-              {' '}
-              <button className="d-button" type="button" onClick={exportJsonData}>
-                <Image fluid src="./images/buttons/download_gpm_json.png" alt="downloadJSON" />
-              </button>
-            </Col>
-
-            <Col>
-              {' '}
-              <button className="d-button" type="button" onClick={exportCsvData}>
-                <Image fluid src="./images/buttons/download_gpm_csv.png" alt="downloadCSV" />
-              </button>
-            </Col>
-          </Row>
-        </Container>
-      </Tab>
-      <Tab eventKey="profile" title={t('daily')}>
+      </TabPanel>
+      <TabPanel value={value} index={1} dir={theme.direction}>
         <HeatCalendar
           //dailyPrec={dailyPrec}
 
           locload={appState.dataLocLoaded}
         />
-      </Tab>
-      <Tab eventKey="insitu" title={t('details')}>
+      </TabPanel>
+      <TabPanel value={value} index={2} dir={theme.direction}>
         <StationInfo />
-      </Tab>
-    </Tabs>
+      </TabPanel>
+    </Box>
   );
 };
 

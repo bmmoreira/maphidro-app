@@ -21,10 +21,25 @@ import SkipPreviousIcon from '@mui/icons-material/SkipPrevious';
 import SkipNextIcon from '@mui/icons-material/SkipNext';
 import { BootstrapButton, Item, Item2, Item3, styleGray, style, styleHow } from '../Utils/sytles';
 import { layerType } from '../Utils/types';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+import useWindowDimensions from '../Utils/useWindowDimensions.js';
+
 import './styles.css';
 
+const theme = createTheme();
+
+theme.typography.h3 = {
+  fontSize: '0.8rem',
+  '@media (min-width:600px)': {
+    fontSize: '0.875rem'
+  },
+  [theme.breakpoints.up('md')]: {
+    fontSize: '1rem'
+  }
+};
 
 export default function PanelModals(props: any) {
+  const { height, width } = useWindowDimensions();
   const containerRef = React.useRef(null);
   const cday = new Date();
   const [imgDate, setImgDate] = useState(cday.setDate(cday.getDate() - 9));
@@ -82,7 +97,6 @@ export default function PanelModals(props: any) {
       setImgDate(date.setDate(date.getDate() + 1));
     }
   };
-
 
   const handleCloseProject = () => {
     //setOpen(false);
@@ -462,6 +476,90 @@ export default function PanelModals(props: any) {
     </Box>
   );
 
+  const searchCompact = (
+    <Box sx={{ overflow: 'auto', zIndex: 10, ...style }}>
+      {appState.modals.search && (
+        <div>
+          <Grid
+            container
+            spacing={0}
+            sx={{
+              padding: 0,
+              backgroundColor: '#0f9bd9',
+              overflow: 'auto'
+            }}>
+            <Grid item xs={8}>
+              <Typography
+                variant="h6"
+                component="h2"
+                sx={{ padding: '5px 0 5px 10px', color: 'white' }}>
+                <SearchIcon sx={{ color: 'white' }} />
+                Search
+              </Typography>
+            </Grid>
+            <Grid item xs={4}>
+              <Stack direction="row" spacing={1} justifyContent="flex-end">
+                <IconButton
+                  aria-label="timeline"
+                  onClick={handleCloseSearch}
+                  sx={{ color: 'white' }}>
+                  <CloseIcon />
+                </IconButton>
+              </Stack>
+            </Grid>
+          </Grid>
+
+          {appState.searchResult && (
+            <Grid
+              container
+              spacing={1}
+              sx={{
+                marginTop: '30px',
+                padding: '2px'
+              }}>
+              <Grid item xs={6}>
+                <Item2>STATION NAME</Item2>
+              </Grid>
+              <Grid item xs={6}>
+                <Item2>BASIN</Item2>
+              </Grid>
+            </Grid>
+          )}
+          {appState.searchResult &&
+            appState.searchData.map((item: any, idx: number) => (
+              <Grid
+                key={idx}
+                container
+                spacing={1}
+                sx={{
+                  padding: '2px'
+                }}>
+                <Grid item xs={6}>
+                  <BootstrapButton
+                    variant="contained"
+                    aria-label="station name"
+                    color="primary"
+                    disableRipple
+                    onClick={() => {
+                      appDispatch({ type: 'closeSearchModal' });
+                      appDispatch({ type: 'toglePanelModal', value: false });
+
+                      props.flyTo([item.attributes.stLongitude, item.attributes.stLatitude]);
+                      console.log('click button');
+                    }}>
+                    {item.attributes.stName.substring(0, 12)}...
+                  </BootstrapButton>
+                </Grid>
+                <Grid item xs={6}>
+                  <Item>{item.attributes.stBasin.substring(0, 17)}...</Item>
+                </Grid>
+              </Grid>
+            ))}
+        </div>
+      )}
+    </Box>
+  );
+
   const select = (
     <Box sx={{ zIndex: 10, ...styleBox }}>
       <Grid
@@ -499,14 +597,16 @@ export default function PanelModals(props: any) {
           <Item2 sx={{ fontSize: '1rem', fontWeight: '600' }}>Map Layers</Item2>
         </Grid>
         {mapLayers.map((layer, idx) => (
-          <Grid item xs={4} key={idx}>
+          <Grid item lg={6} xl={4} md={6} sm={6} key={idx}>
             <Item3>
               <Checkbox
                 checked={layer.checked}
                 onChange={() => props.onLayersHandleChange(layer.layerId)}
                 sx={{ '& .MuiSvgIcon-root': { fontSize: 28 } }}
               />
-              {layer.name}
+              <ThemeProvider theme={theme}>
+                <Typography variant="h3">{layer.name}</Typography>
+              </ThemeProvider>
             </Item3>
           </Grid>
         ))}
@@ -540,7 +640,7 @@ export default function PanelModals(props: any) {
         </Grid>
         <Grid item xs={4}>
           <Slide direction="down" in={appState.modals.search} mountOnEnter unmountOnExit>
-            {search}
+            {width < 1500 ? searchCompact : search}
           </Slide>
         </Grid>
         <Grid item xs={4}>

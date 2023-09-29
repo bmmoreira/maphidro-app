@@ -76,7 +76,7 @@ export const Item3 = styled(Paper)(({ theme }) => ({
   ...theme.typography.body2,
   padding: theme.spacing(1),
   textAlign: 'center',
-  fontSize: '1.0rem',
+  fontSize: '0.875rem',
   color: theme.palette.text.secondary,
   alignItems: 'center',
   alignContent: 'start',
