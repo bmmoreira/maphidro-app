@@ -48,6 +48,10 @@ import { BASE_URL, COLLECTION_NAME } from '../Utils/constants';
 import MobileResults from '../Modals/MobileResults';
 import Footer from '../pages/Footer';
 import useWindowDimensions from '../Utils/useWindowDimensions.js';
+import FullScreenDialog from '../Modals/FullScreenDialog';
+import HelpDialog from '../Modals/HelpDialog';
+import SettingsDialog from '../Modals/SettingsDialog';
+import SelectDialog from '../Modals/SelectDialog';
 
 interface MaplibreMapProps {
   initialOptions?: Omit<maplibregl.MapOptions, 'container' | 'style'>;
@@ -630,6 +634,9 @@ function Map(props: MaplibreMapProps) {
             open={appState.backdrop}>
             <CircularProgress color="inherit" />
           </Backdrop>
+          <HelpDialog />
+          <SettingsDialog />
+          <SelectDialog onLayersHandleChange={layersHandleChange} />
         </div>
       </div>
     </>

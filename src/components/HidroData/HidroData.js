@@ -122,7 +122,7 @@ const HidroData = function () {
       <Box
         sx={{
           flexGrow: 1,
-          maxWidth: { xs: 320, sm: 480 },
+
           bgcolor: 'background.paper',
           marginTop: '-15px'
         }}>

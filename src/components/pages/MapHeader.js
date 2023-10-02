@@ -77,6 +77,22 @@ function DefaultHeader() {
     }, 200);
   }
 
+  function showHelpDialog() {
+    appDispatch({
+      type: 'toggleHelpDialog',
+      value: true
+    });
+    console.log('HELP CLICKED!');
+  }
+
+  function showSettingsDialog() {
+    appDispatch({
+      type: 'toggleSettingsDialog',
+      value: true
+    });
+    console.log('HELP CLICKED!');
+  }
+
   function toggleDownload() {
     if (!appState.modals.panelBox) {
       appDispatch({ type: 'toglePanelModal', value: !appState.modals.panelBox });
@@ -295,13 +311,11 @@ function DefaultHeader() {
         height: '80px'
       }}>
       <div>
-        <IconButton aria-label="settings" sx={{ ...roundedButton }}>
+        <IconButton aria-label="settings" sx={{ ...roundedButton }} onClick={showSettingsDialog}>
           <SettingsIcon />
         </IconButton>
-        <IconButton aria-label="mail" sx={{ ...roundedButton }}>
-          <MailIcon />
-        </IconButton>
-        <IconButton aria-label="help" sx={{ ...roundedButton }}>
+
+        <IconButton aria-label="help" sx={{ ...roundedButton }} onClick={showHelpDialog}>
           <HelpIcon />
         </IconButton>
       </div>
@@ -337,11 +351,17 @@ function DefaultHeader() {
         height: '80px'
       }}>
       <div style={{ padding: '5px', margin: '0px', left: '0px' }}>
-        <IconButton aria-label="settings" sx={{ ...roundedButton, width: '25px', height: '25px' }}>
+        <IconButton
+          aria-label="settings"
+          sx={{ ...roundedButton, width: '25px', height: '25px' }}
+          onClick={showSettingsDialog}>
           <SettingsIcon />
         </IconButton>
 
-        <IconButton aria-label="help" sx={{ ...roundedButton, width: '25px', height: '25px' }}>
+        <IconButton
+          aria-label="help"
+          sx={{ ...roundedButton, width: '25px', height: '25px' }}
+          onClick={showHelpDialog}>
           <HelpIcon />
         </IconButton>
       </div>

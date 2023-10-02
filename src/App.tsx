@@ -30,6 +30,8 @@ import './main.css';
 import UX from './components/pages/Ux';
 import UXGuest from './components/pages/UXGuest';
 import { layerType } from './components/Utils/types';
+import FullScreenDialog from './components/Modals/FullScreenDialog';
+import ScrollModal from './components/Modals/ScrollModal';
 
 interface MonthNames {
   name: string;
@@ -109,7 +111,11 @@ const App: React.FC = () => {
       search: false,
       heatmapControls: false,
       centerModal: false,
-      mobile: false
+      mobile: false,
+      helpdialog: false,
+      settingsdialog: false,
+      selectdialog: false,
+      scrollModal: false
     },
     header: {
       counterSelect: 1,
@@ -292,6 +298,18 @@ we should probably do those types of things within a useEffect.
       case 'toggleMobileModal':
         draft.modals.mobile = action.value;
         break;
+      case 'toggleHelpDialog':
+        draft.modals.helpdialog = action.value;
+        break;
+      case 'toggleSettingsDialog':
+        draft.modals.settingsdialog = action.value;
+        break;
+      case 'toggleSelectDialog':
+        draft.modals.selectdialog = action.value;
+        break;
+      case 'toggleScrollModal':
+        draft.modals.scrollModal = action.value;
+        break;
     }
   }
   /*
@@ -450,6 +468,7 @@ we should probably do those types of things within a useEffect.
               <Route path="/ux" element={state.loggedIn ? <UX /> : <UXGuest />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
+
             <Footer />
             <AppDrawer />
             {chartModal && (

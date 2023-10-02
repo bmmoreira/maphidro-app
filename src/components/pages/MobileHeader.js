@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import DispatchContext from '../../DispatchContext';
 import StateContext from '../../StateContext';
 import { useLocation } from 'react-router-dom';
+import HelpIcon from '@mui/icons-material/Help';
 
 import { styled, alpha } from '@mui/material/styles';
 import AppBar from '@mui/material/AppBar';
@@ -12,6 +13,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import Typography from '@mui/material/Typography';
 import InputBase from '@mui/material/InputBase';
 import MenuIcon from '@mui/icons-material/Menu';
+import { roundedButton } from '../Utils/constants.js';
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -60,6 +62,14 @@ function MobileHeader() {
   const appState = useContext(StateContext);
   const searchInputRef = React.useRef(null);
   const location = useLocation();
+
+  function showHelpDialog() {
+    appDispatch({
+      type: 'toggleHelpDialog',
+      value: true
+    });
+    console.log('HELP CLICKED!');
+  }
 
   let timeoutId;
   const onSearchChangeHandler2 = (event) => {
@@ -114,20 +124,28 @@ function MobileHeader() {
           (location.pathname === '/ux') ? (
             ''
           ) : (
-            <Search>
-              <SearchIconWrapper>
-                <SearchIcon />
-              </SearchIconWrapper>
-              <StyledInputBase
-                ref={searchInputRef}
-                sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 2 }}
-                placeholder="Search…"
-                onChange={(e) => {
-                  onSearchChangeHandler2(e);
-                }}
-                inputProps={{ 'aria-label': 'search' }}
-              />
-            </Search>
+            <>
+              <Search>
+                <SearchIconWrapper>
+                  <SearchIcon />
+                </SearchIconWrapper>
+                <StyledInputBase
+                  ref={searchInputRef}
+                  sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 2 }}
+                  placeholder="Search…"
+                  onChange={(e) => {
+                    onSearchChangeHandler2(e);
+                  }}
+                  inputProps={{ 'aria-label': 'search' }}
+                />
+              </Search>
+              <IconButton
+                aria-label="help"
+                sx={{ ...roundedButton, marginLeft: '5px' }}
+                onClick={showHelpDialog}>
+                <HelpIcon />
+              </IconButton>
+            </>
           )}
         </Toolbar>
       </AppBar>

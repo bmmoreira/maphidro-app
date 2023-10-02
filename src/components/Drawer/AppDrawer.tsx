@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import StateContext from '../../StateContext';
 import DispatchContext from '../../DispatchContext';
+import { useLocation } from 'react-router-dom';
 
 import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
@@ -32,6 +33,7 @@ export default function TemporaryDrawer() {
   const appState = useContext(StateContext);
   const appDispatch = useContext(DispatchContext);
   const navigate = useNavigate();
+  const location = useLocation();
 
   const [state, setState] = React.useState(false);
 
@@ -60,72 +62,156 @@ export default function TemporaryDrawer() {
     });
   }
 
-  const itemsList = [
-    {
-      text: 'Logout',
-      icon: <LogoutIcon />,
-      onClick: () => handleLogout()
-    },
-    {
-      text: 'Help',
-      icon: <HelpIcon />
-    },
-    {
-      text: 'Settings',
-      icon: <SettingsIcon />
-    },
-    {
-      text: 'Projects',
-      icon: <BookIcon />
-    },
-    {
-      text: 'Timeline',
-      icon: <HistoryIcon />
-    },
-    {
-      text: 'Download',
-      icon: <DownloadIcon />
-    },
-    {
-      text: 'Select',
-      icon: <AddLocationAltIcon />
-    },
-    {
-      text: 'Filters',
-      icon: <FilterAltIcon />
-    },
-    {
-      text: 'Results',
-      icon: <AutoAwesomeMotionIcon />
-    },
+  function showSelectDialog() {
+    appDispatch({
+      type: 'toggleSelectDialog',
+      value: true
+    });
+    console.log('Select CLICKED!');
+  }
+
+  function showHelpDialog() {
+    appDispatch({
+      type: 'toggleHelpDialog',
+      value: true
+    });
+    console.log('HELP CLICKED!');
+  }
+
+  function showSettingsDialog() {
+    appDispatch({
+      type: 'toggleSettingsDialog',
+      value: true
+    });
+    console.log('Settings CLICKED!');
+  }
+
+  const itemsListMap = [
     {
       text: 'Home',
       icon: <HomeIcon />,
-      onClick: () => navigate('/')
+      onClick: () => navigate('/'),
+      disabled: false,
+      route: 'all'
     },
     {
       text: 'Map',
       icon: <MapIcon />,
-      onClick: () => navigate('/map')
+      onClick: () => navigate('/map'),
+      disabled: false,
+      route: 'all'
     },
     {
       text: 'About',
       icon: <InfoIcon />,
-      onClick: () => navigate('/about-maphidro')
+      onClick: () => navigate('/about-maphidro'),
+      disabled: false,
+      route: 'all'
     },
     {
       text: 'UX',
       icon: <QuestionAnswerIcon />,
-      onClick: () => navigate('/ux')
+      onClick: () => navigate('/ux'),
+      disabled: false,
+      route: 'all'
+    },
+
+    {
+      text: 'Projects',
+      icon: <BookIcon />,
+      disabled: true,
+      route: 'map'
+    },
+    {
+      text: 'Timeline',
+      icon: <HistoryIcon />,
+      disabled: true,
+      route: 'map'
+    },
+    {
+      text: 'Download',
+      icon: <DownloadIcon />,
+      disabled: true,
+      route: 'map'
+    },
+    {
+      text: 'Select',
+      icon: <AddLocationAltIcon />,
+      onClick: () => showSelectDialog(),
+      disabled: false,
+      route: 'map'
+    },
+    {
+      text: 'Filters',
+      icon: <FilterAltIcon />,
+      disabled: true,
+      route: 'map'
+    },
+    {
+      text: 'Results',
+      icon: <AutoAwesomeMotionIcon />,
+      disabled: true,
+      route: 'map'
+    },
+    {
+      text: 'Logout',
+      icon: <LogoutIcon />,
+      onClick: () => handleLogout(),
+      disabled: false,
+      route: 'map'
+    },
+    {
+      text: 'Help',
+      icon: <HelpIcon />,
+      onClick: () => showHelpDialog(),
+      disabled: false,
+      route: 'map'
+    },
+    {
+      text: 'Settings',
+      icon: <SettingsIcon />,
+      onClick: () => showSettingsDialog(),
+      disabled: false,
+      route: 'map'
+    }
+  ];
+
+  const itemsList = [
+    {
+      text: 'Home',
+      icon: <HomeIcon />,
+      onClick: () => navigate('/'),
+      route: 'all'
+    },
+    {
+      text: 'Map',
+      icon: <MapIcon />,
+      onClick: () => navigate('/map'),
+      route: 'all'
+    },
+    {
+      text: 'About',
+      icon: <InfoIcon />,
+      onClick: () => navigate('/about-maphidro'),
+      route: 'all'
+    },
+    {
+      text: 'UX',
+      icon: <QuestionAnswerIcon />,
+      onClick: () => navigate('/ux'),
+      route: 'all'
+    },
+
+    {
+      text: 'Logout',
+      icon: <LogoutIcon />,
+      onClick: () => handleLogout(),
+      route: 'map'
     }
   ];
 
   const list = (anchor: Anchor) => (
-    <Box
-      sx={{ width: 250 }}
-      role="presentation"
-      onClick={toggleDrawer(anchor, false)}
-      onKeyDown={toggleDrawer(anchor, false)}>
+    <>
       <List>
         <ListItem key={'Logout'} disablePadding>
           <ListItemButton onClick={handleLogout}>
@@ -214,7 +300,7 @@ export default function TemporaryDrawer() {
           </ListItemButton>
         </ListItem>
       </List>
-    </Box>
+    </>
   );
 
   return (
@@ -225,17 +311,33 @@ export default function TemporaryDrawer() {
           role="presentation"
           onClick={toggleDrawer('left', false)}
           onKeyDown={toggleDrawer('left', false)}>
-          <List>
-            {itemsList.map((item, index) => {
-              const { text, icon, onClick } = item;
-              return (
-                <ListItem button key={text} onClick={onClick}>
-                  {icon && <ListItemIcon>{icon}</ListItemIcon>}
-                  <ListItemText primary={text} />
-                </ListItem>
-              );
-            })}
-          </List>
+          {location.pathname === '/map' ? (
+            <List>
+              {itemsListMap.map((item, index) => {
+                const { text, icon, onClick, disabled } = item;
+
+                return (
+                  <ListItem button key={text} onClick={onClick} disabled={disabled}>
+                    {icon && <ListItemIcon>{icon}</ListItemIcon>}
+                    <ListItemText primary={text} />
+                  </ListItem>
+                );
+              })}
+            </List>
+          ) : (
+            <List>
+              {itemsList.map((item, index) => {
+                const { text, icon, onClick } = item;
+
+                return (
+                  <ListItem button key={text} onClick={onClick}>
+                    {icon && <ListItemIcon>{icon}</ListItemIcon>}
+                    <ListItemText primary={text} />
+                  </ListItem>
+                );
+              })}
+            </List>
+          )}
         </Box>
       </Drawer>
     </div>
