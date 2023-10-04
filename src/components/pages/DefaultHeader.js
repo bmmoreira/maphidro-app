@@ -85,20 +85,11 @@ function DefaultHeader() {
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'flex-end',
+            alignContent: 'center',
+            justifyContent: 'center',
             paddingRight: '20px',
             height: '80px'
           }}>
-          <div>
-            <IconButton aria-label="settings" sx={{ ...roundedButton }}>
-              <SettingsIcon />
-            </IconButton>
-            <IconButton aria-label="mail" sx={{ ...roundedButton }}>
-              <MailIcon />
-            </IconButton>
-            <IconButton aria-label="help" sx={{ ...roundedButton }}>
-              <HelpIcon />
-            </IconButton>
-          </div>
           {appState.loggedIn ? (
             <Button
               aria-label="account"

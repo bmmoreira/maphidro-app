@@ -6,6 +6,7 @@ import useWindowDimensions from '../Utils/useWindowDimensions.js';
 import DefaultHeader from './DefaultHeader';
 import MapHeader from './MapHeader';
 import MobileHeader from './MobileHeader';
+import { appSettings } from '../Utils/constants.js';
 
 function HeaderLoggedIn(props) {
   const { height, width } = useWindowDimensions();
@@ -13,7 +14,7 @@ function HeaderLoggedIn(props) {
 
   return (
     <div style={{ width: '100%', margin: 0, padding: 0 }}>
-      {width < 600 ? (
+      {width < appSettings.mobileBreakpoint ? (
         <MobileHeader />
       ) : (location.pathname === '/') |
         (location.pathname === '/about-maphidro') |

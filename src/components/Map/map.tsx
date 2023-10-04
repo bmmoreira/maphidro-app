@@ -44,7 +44,7 @@ import * as turf from '@turf/turf';
 import Backdrop from '@mui/material/Backdrop';
 import CircularProgress from '@mui/material/CircularProgress';
 import { Basin, layerType } from '../Utils/types';
-import { BASE_URL, COLLECTION_NAME } from '../Utils/constants';
+import { BASE_URL, COLLECTION_NAME, appSettings } from '../Utils/constants';
 import MobileResults from '../Modals/MobileResults';
 import Footer from '../pages/Footer';
 import useWindowDimensions from '../Utils/useWindowDimensions.js';
@@ -52,6 +52,8 @@ import FullScreenDialog from '../Modals/FullScreenDialog';
 import HelpDialog from '../Modals/HelpDialog';
 import SettingsDialog from '../Modals/SettingsDialog';
 import SelectDialog from '../Modals/SelectDialog';
+import StationDialog from '../Modals/StationDialog';
+import InitDialog from '../Modals/InitDialog';
 
 interface MaplibreMapProps {
   initialOptions?: Omit<maplibregl.MapOptions, 'container' | 'style'>;
@@ -598,7 +600,13 @@ function Map(props: MaplibreMapProps) {
 
       //const sObj = new Station(res.data.data.attributes);
       //show Station Modal;
-      props.showModalChart(new Station(st));
+
+      width < appSettings.mobileBreakpoint
+        ? appDispatch({
+            type: 'toggleStationDialog',
+            value: true
+          })
+        : props.showModalChart(new Station(st));
     } catch (error: any) {
       if (error.response) {
         // Request made and server responded
@@ -623,7 +631,9 @@ function Map(props: MaplibreMapProps) {
 
   return (
     <>
-      <div ref={rootRef} className={width < 600 ? 'map-wrap-mobile' : 'map-wrap'}>
+      <div
+        ref={rootRef}
+        className={width < appSettings.mobileBreakpoint ? 'map-wrap-mobile' : 'map-wrap'}>
         <div ref={mapContainerRef} className="map">
           {appState.modals.panelBox && (
             <PanelModals flyTo={flyToStation} onLayersHandleChange={layersHandleChange} />
@@ -636,6 +646,9 @@ function Map(props: MaplibreMapProps) {
           </Backdrop>
           <HelpDialog />
           <SettingsDialog />
+          <InitDialog />
+          {appState.modals.stationdialog && <StationDialog />}
+
           <SelectDialog onLayersHandleChange={layersHandleChange} />
         </div>
       </div>

@@ -82,7 +82,19 @@ const resources = {
       year: 'Year',
       img: 'en',
       details: 'Details',
-      about_app: 'About this App'
+      about_app: 'About this App',
+      instructions: 'Instructions',
+      init01:
+        'This application shows historical precipitation series from the National Hydrometereological Network (RNH) coordinated by ANA (National Water Agency). The data from the rainfall stations in this application are operated by the SGB (Brazilian Geological Survey)',
+      init02:
+        '- Access the rainfall stations of the National Hydrometereological Network, by clicking on the circles (Clusters) and the station icons.',
+      init03:
+        '- View monthly and daily precipitation by clicking on the tabs: Monthly and Daily, when opening the seasons modal.',
+      init04:
+        "- The monthly average rainfall in millimeters at the station can be compared with the precipitation measured by satellite at the station's 10km2 'pixel'. The station's in situ monthly average is in purple. In green is the precipitation measured by satellite.",
+      init05:
+        '- The precipitation year can be selected for in situ and satellite by clicking on the bottom of the modal, dropdown menu.',
+      init06: '- The day of the maximum month is in parentheses in the Daily precipitation tab.'
     }
   },
   pt: {
@@ -162,7 +174,19 @@ const resources = {
       year: 'Ano',
       img: 'pt',
       details: 'Detalhes',
-      about_app: 'Sobre este App'
+      about_app: 'Sobre este App',
+      instructions: 'Instruções',
+      init01:
+        'Esta aplicação mostra séries históricas de precipitação da Rede Hidrometereológica Nacional(RNH) coordenadas pela ANA(Agência Nacional de Águas). Os dados das estações pluviométricas neste aplicativos são operadas pelo SGB(Serviço Geológico do Brasil)',
+      init02:
+        '- Acesse as estações pluviométricas das Rede Hidrometereológica Nacional, clicando nos círculos(Clusters) e nos ícones das estacões.',
+      init03:
+        '- Visualize precipitação mensal e diária clicando nas abas: Mensal e Diária, ao abrir o modal das estações.',
+      init04:
+        "- A média mensal em milímetros de chuva da estação pode ser comparada com a precipitação medida por satélite no 'pixel' de 10km2 da estação. A média mensal in situ da estação está em roxo. Em verde está a precipitação medida por satélite.",
+      init05:
+        '- O ano de precipitação pode ser selecionado para in situ e satélite clicando na parte inferior do modal, menu dropdown.',
+      init06: '- O dia do mês das máximas estão entre parenteses na aba de precipitação Diário.'
     }
   },
   fr: {
@@ -242,7 +266,20 @@ const resources = {
       year: 'An',
       img: 'fr',
       details: 'Détails',
-      about_app: 'à propos de cette App'
+      about_app: 'à propos de cette App',
+      instructions: 'Instructions',
+      init01:
+        "Cette application montre les séries historiques de précipitations du Réseau Hydrométéorologique National (RNH) coordonné par l'ANA (Agence Nationale de l'Eau). Les données des stations pluviométriques de cette application sont exploitées par le SGB (Brazilian Geological Survey)",
+      init02:
+        '- Accédez aux stations pluviométriques du Réseau Hydrométéorologique National, en cliquant sur les cercles (Clusters) et les icônes des stations.',
+      init03:
+        "- Visualisez les précipitations mensuelles et quotidiennes en cliquant sur les onglets : Mensuel et Quotidien, lors de l'ouverture du modal des saisons.",
+      init04:
+        "- Les précipitations moyennes mensuelles en millimètres à la station peuvent être comparées aux précipitations mesurées par satellite au 'pixel' de 10 km2 de la station. La moyenne mensuelle in situ de la station est en violet. En vert se trouvent les précipitations mesurées par satellite.",
+      init05:
+        "- L'année de précipitation peut être sélectionnée pour in situ et par satellite en cliquant en bas du menu déroulant modal.",
+      init06:
+        "- Le jour du mois maximum est entre parenthèses dans l'onglet Précipitations quotidiennes."
     }
   },
   es: {
@@ -323,7 +360,19 @@ const resources = {
       millimeters: 'mm',
       img: 'es',
       details: 'detalles',
-      about_app: 'acerca de esta App'
+      about_app: 'acerca de esta App',
+      instructions: 'Instrucciones',
+      init01:
+        'Esta aplicación muestra series históricas de precipitación de la Red Hidrometeorológica Nacional (RNH) coordinada por la ANA (Agencia Nacional del Agua). Los datos de las estaciones pluviométricas de esta aplicación son operados por el SGB (Servicio Geológico Brasileño)',
+      init02:
+        '- Acceder a las estaciones pluviométricas de la Red Hidrometeorológica Nacional, haciendo clic en los círculos (Clusters) y los iconos de estaciones.',
+      init03:
+        '- Ver la precipitación mensual y diaria haciendo clic en las pestañas: Mensual y Diaria, al abrir el modal de estaciones.',
+      init04:
+        "- La precipitación promedio mensual en milímetros en la estación se puede comparar con la precipitación medida por satélite en el 'píxel' de 10 km2 de la estación. El promedio mensual in situ de la estación está en color violeta. En verde está la precipitación medida por satélite.",
+      init05:
+        '- El año de precipitación se puede seleccionar para in situ y satélite haciendo clic en la parte inferior del menú desplegable modal.',
+      init06: '- El día del mes máximo está entre paréntesis en la pestaña Precipitación diaria.'
     }
   }
 };

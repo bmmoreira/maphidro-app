@@ -25,13 +25,11 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import ChartModal from './components/ChartModal/ChartModal';
 import AppDrawer from './components/Drawer/AppDrawer';
 import axios from 'axios';
-import { BASE_URL, COLLECTION_NAME } from './components/Utils/constants';
+import { BASE_URL, COLLECTION_NAME, appSettings } from './components/Utils/constants';
 import './main.css';
 import UX from './components/pages/Ux';
 import UXGuest from './components/pages/UXGuest';
 import { layerType } from './components/Utils/types';
-import FullScreenDialog from './components/Modals/FullScreenDialog';
-import ScrollModal from './components/Modals/ScrollModal';
 
 interface MonthNames {
   name: string;
@@ -115,7 +113,9 @@ const App: React.FC = () => {
       helpdialog: false,
       settingsdialog: false,
       selectdialog: false,
-      scrollModal: false
+      stationdialog: false,
+      scrollModal: false,
+      initModal: true
     },
     header: {
       counterSelect: 1,
@@ -307,6 +307,12 @@ we should probably do those types of things within a useEffect.
       case 'toggleSelectDialog':
         draft.modals.selectdialog = action.value;
         break;
+      case 'toggleStationDialog':
+        draft.modals.stationdialog = action.value;
+        break;
+      case 'toggleInitModal':
+        draft.modals.initModal = action.value;
+        break;
       case 'toggleScrollModal':
         draft.modals.scrollModal = action.value;
         break;
@@ -370,7 +376,7 @@ we should probably do those types of things within a useEffect.
         type: 'searchDataAction',
         searchDataValue: res.data.data
       });
-      if (width < 600) {
+      if (width < appSettings.mobileBreakpoint) {
         dispatch({
           type: 'toggleMobileModal',
           value: true

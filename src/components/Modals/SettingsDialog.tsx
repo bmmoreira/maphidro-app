@@ -39,6 +39,10 @@ export default function SettingsDialog() {
     setOpen(false);
   };
 
+  function updateApp() {
+    window.location.reload(); // refresh the browser
+  }
+
   return (
     <Dialog
       fullScreen
@@ -61,10 +65,10 @@ export default function SettingsDialog() {
       </AppBar>
       <List>
         <ListItem button>
-          <ListItemText primary="Update" secondary="Application Update" />
+          <ListItemText primary="Update" secondary="Application Update" onClick={updateApp} />
         </ListItem>
         <Divider />
-        <ListItem button>
+        <ListItem button disabled>
           <ListItemText primary="Profile" secondary="User Details" />
         </ListItem>
       </List>

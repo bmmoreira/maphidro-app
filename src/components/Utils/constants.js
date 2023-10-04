@@ -6,6 +6,10 @@ export const LOGIN_URL = 'https://mh-api.maphidro.com';
 export const COLLECTION_NAME = 'api/mhstations';
 export const PASSMINLENGHT = 5;
 
+export const appSettings = {
+  mobileBreakpoint: 900
+};
+
 export const bgColor = '#312f38';
 export const bgColorButton = '#44414d';
 export const bgColorBox = '#615d6f';

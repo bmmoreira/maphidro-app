@@ -39,6 +39,18 @@ export default function HelpDialog() {
     setOpen(false);
   };
 
+  const openInitModal = () => {
+    appDispatch({
+      type: 'toggleHelpDialog',
+      value: false
+    });
+    setOpen(false);
+    appDispatch({
+      type: 'toggleInitModal',
+      value: true
+    });
+  };
+
   return (
     <Dialog
       fullScreen
@@ -61,10 +73,18 @@ export default function HelpDialog() {
       </AppBar>
       <List>
         <ListItem button>
+          <ListItemText
+            primary="Instructions"
+            secondary="Usage Instructions"
+            onClick={openInitModal}
+          />
+        </ListItem>
+        <Divider />
+        <ListItem button disabled>
           <ListItemText primary="Download Data" secondary="data pattern" />
         </ListItem>
         <Divider />
-        <ListItem button>
+        <ListItem button disabled>
           <ListItemText primary="Satellite Data" secondary="about JSON Format" />
         </ListItem>
       </List>

@@ -5,6 +5,7 @@ import useWindowDimensions from '../Utils/useWindowDimensions.js';
 import BottomNavigation from '@mui/material/BottomNavigation';
 import BottomNavigationAction from '@mui/material/BottomNavigationAction';
 import { useLocation } from 'react-router-dom';
+import { appSettings } from '../Utils/constants.js';
 
 import HomeIcon from '@mui/icons-material/Home';
 import MapIcon from '@mui/icons-material/Map';
@@ -110,7 +111,7 @@ function Footer() {
 
   return (
     <>
-      {width < 600 ? (
+      {width < appSettings.mobileBreakpoint ? (
         location.pathname === '/' ||
         location.pathname === '/about-maphidro' ||
         location.pathname === '/ux' ? (
