@@ -15,6 +15,8 @@ import { TransitionProps } from '@mui/material/transitions';
 import StateContext from '../../StateContext';
 import DispatchContext from '../../DispatchContext';
 import { lightBlue } from '../Utils/sytles';
+import LanguageSwitcher from '../../utils/LanguageSwitcher';
+import { Grid } from '@mui/material';
 
 export default function SettingsDialog() {
   const appState = useContext(StateContext);
@@ -72,6 +74,22 @@ export default function SettingsDialog() {
           <ListItemText primary="Profile" secondary="User Details" />
         </ListItem>
       </List>
+      <Divider />
+      <Grid
+        container
+        spacing={0}
+        sx={{
+          padding: '10px',
+          display: 'flex',
+          justifyContent: 'start',
+          alignContent: 'center',
+          alignItems: 'center'
+        }}>
+        <Typography sx={{ padding: '10px' }} component="div">
+          Language:
+        </Typography>
+        <LanguageSwitcher />
+      </Grid>
     </Dialog>
   );
 }

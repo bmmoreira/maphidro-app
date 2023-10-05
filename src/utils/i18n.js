@@ -9,7 +9,7 @@ const resources = {
     translation: {
       data_visualization: 'Data Visualization',
       intro_text:
-        'This application uses open source libraries to collect and display calibrated satellite data and compare them with in situ rainfall stations operated by ANA (Agência Nacional de Águas) in Brazil. Shows 20-year satellite precipitation measurements of more than 4000 pluviometric and fluviometric points of interest in Brazil',
+        'This application uses open source libraries to collect and display calibrated satellite data and compare them with in situ rainfall stations operated by ANA (Agência Nacional de Águas) in Brazil. Shows 20-year satellite precipitation measurements of more than 1500 pluviometric and fluviometric points of interest in Brazil',
       satellite: 'Satellite',
       intro_ana:
         'This application uses precipitation data provided by ANA (National Water Agency). Hydrometeorological stations are operated by partner entities or contracted by ANA, which is responsible for planning, standardizing procedures and equipment, inspection, data organization hydrometeorological surveys and their publication.',
@@ -94,14 +94,15 @@ const resources = {
         "- The monthly average rainfall in millimeters at the station can be compared with the precipitation measured by satellite at the station's 10km2 'pixel'. The station's in situ monthly average is in purple. In green is the precipitation measured by satellite.",
       init05:
         '- The precipitation year can be selected for in situ and satellite by clicking on the bottom of the modal, dropdown menu.',
-      init06: '- The day of the maximum month is in parentheses in the Daily precipitation tab.'
+      init06: '- The day of the maximum month is in parentheses in the Daily precipitation tab.',
+      app_libraries: 'Open source Libraries in this App'
     }
   },
   pt: {
     translation: {
       data_visualization: 'Visualização de Dados',
       intro_text:
-        'Este aplicativo usa bibliotecas de código aberto para coletar e exibir dados calibrados de satelite e compará-los com estações pluviométricas in situ operadas pela ANA (Agência Nacional de Águas) no Brasil. Mostra medições de precipitação de satélites de 20 anos de mais de 4000 pontos de interesse pluviométricos e fluviométricos no Brasil.',
+        'Este aplicativo usa bibliotecas de código aberto para coletar e exibir dados calibrados de satelite e compará-los com estações pluviométricas in situ operadas pela ANA (Agência Nacional de Águas) no Brasil. Mostra medições de precipitação de satélites de 20 anos de mais de 1500 pontos de interesse pluviométricos e fluviométricos no Brasil.',
       satellite: 'Satélite',
       intro_ana:
         'Este aplicativo utiliza-se de dados de precipitação disponibilizados pela ANA (Agência Nacional de Águas). As estações hidrometeorológicas são operadas por entidades parceiras ou contratadas pela ANA, que é a responsável pelo planejamento, normatização de procedimentos e equipamentos, fiscalização, organização dos dados hidrometeorológicos e sua publicação.',
@@ -186,7 +187,8 @@ const resources = {
         "- A média mensal em milímetros de chuva da estação pode ser comparada com a precipitação medida por satélite no 'pixel' de 10km2 da estação. A média mensal in situ da estação está em roxo. Em verde está a precipitação medida por satélite.",
       init05:
         '- O ano de precipitação pode ser selecionado para in situ e satélite clicando na parte inferior do modal, menu dropdown.',
-      init06: '- O dia do mês das máximas estão entre parenteses na aba de precipitação Diário.'
+      init06: '- O dia do mês das máximas estão entre parenteses na aba de precipitação Diário.',
+      app_libraries: 'Bibliotecas de código aberto neste aplicativo'
     }
   },
   fr: {
@@ -279,7 +281,8 @@ const resources = {
       init05:
         "- L'année de précipitation peut être sélectionnée pour in situ et par satellite en cliquant en bas du menu déroulant modal.",
       init06:
-        "- Le jour du mois maximum est entre parenthèses dans l'onglet Précipitations quotidiennes."
+        "- Le jour du mois maximum est entre parenthèses dans l'onglet Précipitations quotidiennes.",
+      app_libraries: 'Bibliothèques open source dans cette application'
     }
   },
   es: {
@@ -372,7 +375,8 @@ const resources = {
         "- La precipitación promedio mensual en milímetros en la estación se puede comparar con la precipitación medida por satélite en el 'píxel' de 10 km2 de la estación. El promedio mensual in situ de la estación está en color violeta. En verde está la precipitación medida por satélite.",
       init05:
         '- El año de precipitación se puede seleccionar para in situ y satélite haciendo clic en la parte inferior del menú desplegable modal.',
-      init06: '- El día del mes máximo está entre paréntesis en la pestaña Precipitación diaria.'
+      init06: '- El día del mes máximo está entre paréntesis en la pestaña Precipitación diaria.',
+      app_libraries: 'Bibliotecas de código abierto en esta aplicación'
     }
   }
 };
