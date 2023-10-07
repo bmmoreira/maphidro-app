@@ -6,6 +6,7 @@ import BottomNavigation from '@mui/material/BottomNavigation';
 import BottomNavigationAction from '@mui/material/BottomNavigationAction';
 import { useLocation } from 'react-router-dom';
 import { appSettings } from '../Utils/constants.js';
+import { useTranslation } from 'react-i18next';
 
 import HomeIcon from '@mui/icons-material/Home';
 import MapIcon from '@mui/icons-material/Map';
@@ -15,6 +16,7 @@ import QuestionAnswerIcon from '@mui/icons-material/QuestionAnswer';
 import { styled, alpha } from '@mui/material/styles';
 
 function Footer() {
+  const { t } = useTranslation();
   const [value, setValue] = React.useState(0);
   const { height, width } = useWindowDimensions();
   const location = useLocation();
@@ -37,7 +39,7 @@ function Footer() {
             setValue(newValue);
           }}>
           <BottomNavigationAction
-            label="Home"
+            label={t('home')}
             icon={
               <HomeIcon
                 sx={{
@@ -54,7 +56,7 @@ function Footer() {
             }}
           />
           <BottomNavigationAction
-            label="Map"
+            label={t('map')}
             icon={
               <MapIcon
                 sx={{
@@ -71,7 +73,7 @@ function Footer() {
             }}
           />
           <BottomNavigationAction
-            label="About"
+            label={t('about')}
             icon={
               <InfoIcon
                 sx={{
@@ -128,21 +130,21 @@ function Footer() {
               to="/"
               className="mx-1"
               style={{ textDecoration: 'none', fontWeight: '600', color: '#595f88' }}>
-              Home
+              {t('home')}
             </Link>{' '}
             |{' '}
             <Link
               className="mx-1"
               to="/map"
               style={{ textDecoration: 'none', fontWeight: '600', color: '#595f88' }}>
-              Map
+              {t('map')}
             </Link>{' '}
             |{' '}
             <Link
               className="mx-1"
               to="/about-maphidro"
               style={{ textDecoration: 'none', fontWeight: '600', color: '#595f88' }}>
-              About MapHidro
+              {t('about_maphidro')}
             </Link>{' '}
             |{' '}
             <Link
@@ -153,7 +155,7 @@ function Footer() {
             </Link>{' '}
             <span>
               {' '}
-              - Copyright &copy; {new Date().getFullYear()} MapHidro . All rights reserved.
+              - Copyright &copy; {new Date().getFullYear()} MapHidro . {t('copyrights')}
             </span>
           </div>
         </footer>

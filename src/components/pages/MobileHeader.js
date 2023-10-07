@@ -14,6 +14,7 @@ import Typography from '@mui/material/Typography';
 import InputBase from '@mui/material/InputBase';
 import MenuIcon from '@mui/icons-material/Menu';
 import { roundedButton } from '../Utils/constants.js';
+import { useTranslation } from 'react-i18next';
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -58,6 +59,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 function MobileHeader() {
+  const { t } = useTranslation();
   const appDispatch = useContext(DispatchContext);
   const appState = useContext(StateContext);
   const searchInputRef = React.useRef(null);
@@ -132,7 +134,7 @@ function MobileHeader() {
                 <StyledInputBase
                   ref={searchInputRef}
                   sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 2 }}
-                  placeholder="Search…"
+                  placeholder={t('search')}
                   onChange={(e) => {
                     onSearchChangeHandler2(e);
                   }}

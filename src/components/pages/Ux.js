@@ -8,6 +8,7 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Page from './Page';
 import { BootstrapButton } from '../Utils/sytles';
+import { useTranslation } from 'react-i18next';
 
 import form from './form.json';
 
@@ -83,6 +84,8 @@ const Questions = () => {
 };
 
 export default function UX(props) {
+  const { t } = useTranslation();
+
   const [sent, setSent] = useState(false);
   const methods = useGoogleForm({ form });
   const onSubmit = async (data) => {
@@ -107,7 +110,7 @@ export default function UX(props) {
             justifyContent: 'center',
             fontSize: '1rem'
           }}>
-          User Experience Questionary
+          {t('uxpage_title')}
         </Typography>
         <Typography
           variant="h6"

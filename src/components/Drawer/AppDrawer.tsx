@@ -25,11 +25,14 @@ import HomeIcon from '@mui/icons-material/Home';
 import MapIcon from '@mui/icons-material/Map';
 import InfoIcon from '@mui/icons-material/Info';
 import QuestionAnswerIcon from '@mui/icons-material/QuestionAnswer';
+import { useTranslation } from 'react-i18next';
+
 import { Link, useNavigate } from 'react-router-dom';
 
 type Anchor = 'top' | 'left' | 'bottom' | 'right';
 
 export default function TemporaryDrawer() {
+  const { t } = useTranslation();
   const appState = useContext(StateContext);
   const appDispatch = useContext(DispatchContext);
   const navigate = useNavigate();
@@ -88,28 +91,28 @@ export default function TemporaryDrawer() {
 
   const itemsListMap = [
     {
-      text: 'Home',
+      text: t('home'),
       icon: <HomeIcon />,
       onClick: () => navigate('/'),
       disabled: false,
       route: 'all'
     },
     {
-      text: 'Map',
+      text: t('map'),
       icon: <MapIcon />,
       onClick: () => navigate('/map'),
       disabled: false,
       route: 'all'
     },
     {
-      text: 'About',
+      text: t('about'),
       icon: <InfoIcon />,
       onClick: () => navigate('/about-maphidro'),
       disabled: false,
       route: 'all'
     },
     {
-      text: 'UX',
+      text: t('uxsurvey'),
       icon: <QuestionAnswerIcon />,
       onClick: () => navigate('/ux'),
       disabled: false,
@@ -117,58 +120,58 @@ export default function TemporaryDrawer() {
     },
 
     {
-      text: 'Projects',
+      text: t('projects'),
       icon: <BookIcon />,
       disabled: true,
       route: 'map'
     },
     {
-      text: 'Timeline',
+      text: t('timeline'),
       icon: <HistoryIcon />,
       disabled: true,
       route: 'map'
     },
     {
-      text: 'Download',
+      text: t('download'),
       icon: <DownloadIcon />,
       disabled: true,
       route: 'map'
     },
     {
-      text: 'Select',
+      text: t('select'),
       icon: <AddLocationAltIcon />,
       onClick: () => showSelectDialog(),
       disabled: false,
       route: 'map'
     },
     {
-      text: 'Filters',
+      text: t('filters'),
       icon: <FilterAltIcon />,
       disabled: true,
       route: 'map'
     },
     {
-      text: 'Results',
+      text: t('results'),
       icon: <AutoAwesomeMotionIcon />,
       disabled: true,
       route: 'map'
     },
     {
-      text: 'Logout',
+      text: t('logout'),
       icon: <LogoutIcon />,
       onClick: () => handleLogout(),
       disabled: false,
       route: 'map'
     },
     {
-      text: 'Help',
+      text: t('help'),
       icon: <HelpIcon />,
       onClick: () => showHelpDialog(),
       disabled: false,
       route: 'map'
     },
     {
-      text: 'Settings',
+      text: t('settings'),
       icon: <SettingsIcon />,
       onClick: () => showSettingsDialog(),
       disabled: false,
@@ -178,32 +181,32 @@ export default function TemporaryDrawer() {
 
   const itemsList = [
     {
-      text: 'Home',
+      text: t('home'),
       icon: <HomeIcon />,
       onClick: () => navigate('/'),
       route: 'all'
     },
     {
-      text: 'Map',
+      text: t('map'),
       icon: <MapIcon />,
       onClick: () => navigate('/map'),
       route: 'all'
     },
     {
-      text: 'About',
+      text: t('about'),
       icon: <InfoIcon />,
       onClick: () => navigate('/about-maphidro'),
       route: 'all'
     },
     {
-      text: 'UX',
+      text: t('uxsurvey'),
       icon: <QuestionAnswerIcon />,
       onClick: () => navigate('/ux'),
       route: 'all'
     },
 
     {
-      text: 'Logout',
+      text: t('logout'),
       icon: <LogoutIcon />,
       onClick: () => handleLogout(),
       route: 'map'

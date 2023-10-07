@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import DispatchContext from '../../DispatchContext';
 import StateContext from '../../StateContext';
 import { roundedButton, loginButtom, styleWhite } from '../Utils/constants.js';
+import { useTranslation } from 'react-i18next';
 
 import SettingsIcon from '@mui/icons-material/Settings';
 import MailIcon from '@mui/icons-material/Mail';
@@ -14,6 +15,7 @@ import PersonIcon from '@mui/icons-material/Person';
 import LogoutIcon from '@mui/icons-material/Logout';
 
 function DefaultHeader() {
+  const { t } = useTranslation();
   const appDispatch = useContext(DispatchContext);
   const appState = useContext(StateContext);
 
@@ -97,7 +99,7 @@ function DefaultHeader() {
               endIcon={<LogoutIcon />}
               color="primary"
               sx={{ ...loginButtom }}>
-              Log out
+              {t('logout')}
             </Button>
           ) : (
             <Button
@@ -105,7 +107,7 @@ function DefaultHeader() {
               endIcon={<PersonIcon />}
               color="primary"
               sx={{ ...loginButtom }}>
-              Log in
+              {t('login')}
             </Button>
           )}
         </Grid>

@@ -27,8 +27,10 @@ import AutoAwesomeMotionIcon from '@mui/icons-material/AutoAwesomeMotion';
 import AddLocationAltIcon from '@mui/icons-material/AddLocationAlt';
 import PublicIcon from '@mui/icons-material/Public';
 import useWindowDimensions from '../Utils/useWindowDimensions.js';
+import { useTranslation } from 'react-i18next';
 
 function DefaultHeader() {
+  const { t } = useTranslation();
   const appDispatch = useContext(DispatchContext);
   const appState = useContext(StateContext);
   const { height, width } = useWindowDimensions();
@@ -160,7 +162,7 @@ function DefaultHeader() {
           color="secondary">
           <AddLocationAltIcon sx={{ position: 'relative', top: '0px', left: '0px' }} />
         </Badge>
-        <div>Select</div>
+        <div>{t('select')}</div>
       </IconButton>
       <IconButton aria-label={notificationsLabel(100)} sx={{ ...buttonStyle }} disabled>
         <Badge
@@ -172,7 +174,7 @@ function DefaultHeader() {
           color="secondary">
           <FilterAltIcon sx={{ position: 'relative', top: '0px', left: '0px' }} />
         </Badge>
-        <div>Filters</div>
+        <div>{t('filters')}</div>
       </IconButton>
 
       <IconButton aria-label={notificationsLabel(100)} sx={{ ...buttonStyle }} disabled>
@@ -185,7 +187,7 @@ function DefaultHeader() {
           color="secondary">
           <AutoAwesomeMotionIcon sx={{ position: 'relative', top: '0px', left: '0px' }} />
         </Badge>
-        <div>Results</div>
+        <div>{t('results')}</div>
       </IconButton>
     </Grid>
   );
@@ -211,7 +213,7 @@ function DefaultHeader() {
           color="secondary">
           <AddLocationAltIcon sx={{ position: 'relative', top: '0px', left: '0px' }} />
         </Badge>
-        <div>Select</div>
+        <div>{t('select')}</div>
       </IconButton>
     </Grid>
   );
@@ -237,7 +239,7 @@ function DefaultHeader() {
           color="secondary">
           <BookIcon sx={{ position: 'relative', top: '0px', left: '0px' }} />
         </Badge>
-        <div>Projects</div>
+        <div>{t('projects')}</div>
       </IconButton>
       <IconButton
         aria-label={notificationsLabel(100)}
@@ -253,7 +255,7 @@ function DefaultHeader() {
           color="secondary">
           <HistoryIcon sx={{ position: 'relative', top: '0px', left: '0px' }} />
         </Badge>
-        <div>Timeline</div>
+        <div>{t('timeline')}</div>
       </IconButton>
       <IconButton
         aria-label={notificationsLabel(100)}
@@ -269,7 +271,7 @@ function DefaultHeader() {
           color="secondary">
           <DownloadIcon sx={{ position: 'relative', top: '0px', left: '0px' }} />
         </Badge>
-        <div>Download</div>
+        <div>{t('download')}</div>
       </IconButton>
     </Grid>
   );
@@ -295,7 +297,7 @@ function DefaultHeader() {
           color="secondary">
           <BookIcon sx={{ position: 'relative', top: '0px', left: '0px' }} />
         </Badge>
-        <div>Projects</div>
+        <div>{t('projects')}</div>
       </IconButton>
     </Grid>
   );
@@ -326,7 +328,7 @@ function DefaultHeader() {
           endIcon={<LogoutIcon />}
           color="primary"
           sx={{ ...loginButtom }}>
-          Log out
+          {t('logout')}
         </Button>
       ) : (
         <Button
@@ -334,7 +336,7 @@ function DefaultHeader() {
           endIcon={<PersonIcon />}
           color="primary"
           sx={{ ...loginButtom }}>
-          Log in
+          {t('login')}
         </Button>
       )}
     </Grid>
@@ -371,7 +373,7 @@ function DefaultHeader() {
           onClick={handleLogout}
           color="primary"
           sx={{ ...loginButtom, width: '60px', fontSize: '0.7rem' }}>
-          Log out
+          {t('logout')}
         </Button>
       ) : (
         <Button
@@ -379,7 +381,7 @@ function DefaultHeader() {
           endIcon={<PersonIcon />}
           color="primary"
           sx={{ ...loginButtom }}>
-          Log in
+          {t('login')}
         </Button>
       )}
     </Grid>
@@ -426,7 +428,7 @@ function DefaultHeader() {
           <TextField
             hiddenLabel
             size="small"
-            placeholder="search for stations"
+            placeholder={t('search_for')}
             sx={{
               width: '400px',
               fontStyle: 'italic',
@@ -464,7 +466,7 @@ function DefaultHeader() {
           }}>
           <Chip
             icon={<PublicIcon />}
-            label="Where"
+            label={t('where')}
             sx={{
               color: styleWhite.colorButtonTitle,
               backgroundColor: styleWhite.bgButton,
@@ -473,7 +475,7 @@ function DefaultHeader() {
           />
           <Chip
             icon={<WatchLaterIcon />}
-            label="When"
+            label={t('when')}
             sx={{
               color: styleWhite.colorButtonTitle,
               backgroundColor: styleWhite.bgButton,
@@ -482,7 +484,7 @@ function DefaultHeader() {
           />
           <Chip
             icon={<TuneIcon />}
-            label="How"
+            label={t('how')}
             sx={{
               color: styleWhite.colorButtonTitle,
               backgroundColor: styleWhite.bgButton,

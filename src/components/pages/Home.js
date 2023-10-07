@@ -15,7 +15,7 @@ function Home() {
   return (
     <Page title="Your Map Statistics">
       <h2 className="text-center" style={{ marginTop: '20px' }}>
-        <strong>{appState.user.username}</strong>, this is your landing page.
+        <strong>{t('indevelopment')}</strong>
       </h2>
       <p className="lead text-muted text-center">{t('app_libraries')}</p>
       <Grid
@@ -42,9 +42,7 @@ function Home() {
       </Container>
       <Container className="d-flex justify-content-center">
         <Row className="d-flex justify-content-center">
-          <Col className="col-sm-4 text-left d-flex align-items-center">
-            Dissertation project for MSc in Informatics Engineering and Web Technology UAB/UTAD
-          </Col>
+          <Col className="col-sm-4 text-left d-flex align-items-center">{t('uab_text')}</Col>
           <Col className="col-sm-3 text-left">
             <Image src="./images/modals/logo_uab.png" alt="Uab_Logo" rounded />
           </Col>

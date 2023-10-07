@@ -17,11 +17,12 @@ import DispatchContext from '../../DispatchContext';
 import { lightBlue } from '../Utils/sytles';
 import LanguageSwitcher from '../../utils/LanguageSwitcher';
 import { Grid } from '@mui/material';
+import { useTranslation } from 'react-i18next';
 
 export default function SettingsDialog() {
+  const { t } = useTranslation();
   const appState = useContext(StateContext);
   const appDispatch = useContext(DispatchContext);
-
   const [open, setOpen] = React.useState(appState.modals.settingsdialog);
 
   const Transition = React.forwardRef(function Transition(
@@ -58,20 +59,24 @@ export default function SettingsDialog() {
             <CloseIcon />
           </IconButton>
           <Typography sx={{ ml: 2, flex: 1 }} variant="h6" component="div">
-            MapHidro Settings
+            {t('app_settings')}
           </Typography>
           <Button autoFocus color="inherit" onClick={handleClose}>
-            close
+            {t('close')}
           </Button>
         </Toolbar>
       </AppBar>
       <List>
         <ListItem button>
-          <ListItemText primary="Update" secondary="Application Update" onClick={updateApp} />
+          <ListItemText
+            primary={t('option_update')}
+            secondary={t('application_update')}
+            onClick={updateApp}
+          />
         </ListItem>
         <Divider />
         <ListItem button disabled>
-          <ListItemText primary="Profile" secondary="User Details" />
+          <ListItemText primary={t('profile')} secondary={t('user_profile')} />
         </ListItem>
       </List>
       <Divider />
@@ -86,7 +91,7 @@ export default function SettingsDialog() {
           alignItems: 'center'
         }}>
         <Typography sx={{ padding: '10px' }} component="div">
-          Language:
+          {t('language')}:
         </Typography>
         <LanguageSwitcher />
       </Grid>

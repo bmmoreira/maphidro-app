@@ -19,6 +19,7 @@ import { layerType } from '../Utils/types';
 import Grid from '@mui/material/Grid';
 import Checkbox from '@mui/material/Checkbox';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { useTranslation } from 'react-i18next';
 
 const theme = createTheme();
 
@@ -37,6 +38,7 @@ interface SelectProps {
 }
 
 export default function SelectDialog(props: SelectProps) {
+  const { t } = useTranslation();
   const appState = useContext(StateContext);
   const appDispatch = useContext(DispatchContext);
   const mapLayers: layerType[] = appState.mapLayers;
@@ -73,10 +75,10 @@ export default function SelectDialog(props: SelectProps) {
             <CloseIcon />
           </IconButton>
           <Typography sx={{ ml: 2, flex: 1 }} variant="h6" component="div">
-            Select Layers
+            {t('select_layers')}
           </Typography>
           <Button autoFocus color="inherit" onClick={handleClose}>
-            close
+            {t('close')}
           </Button>
         </Toolbar>
       </AppBar>
@@ -88,7 +90,7 @@ export default function SelectDialog(props: SelectProps) {
           padding: '5px'
         }}>
         <Grid item xs={12}>
-          <Item2 sx={{ fontSize: '1rem', fontWeight: '600' }}>Map Layers</Item2>
+          <Item2 sx={{ fontSize: '1rem', fontWeight: '600' }}>{t('map_layers')}</Item2>
         </Grid>
         {mapLayers.map((layer, idx) => (
           <Grid item xs={12} key={idx}>

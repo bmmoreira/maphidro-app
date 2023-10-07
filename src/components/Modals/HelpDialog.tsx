@@ -15,8 +15,10 @@ import { TransitionProps } from '@mui/material/transitions';
 import StateContext from '../../StateContext';
 import DispatchContext from '../../DispatchContext';
 import { lightBlue } from '../Utils/sytles';
+import { useTranslation } from 'react-i18next';
 
 export default function HelpDialog() {
+  const { t } = useTranslation();
   const appState = useContext(StateContext);
   const appDispatch = useContext(DispatchContext);
 
@@ -64,28 +66,28 @@ export default function HelpDialog() {
             <CloseIcon />
           </IconButton>
           <Typography sx={{ ml: 2, flex: 1 }} variant="h6" component="div">
-            MapHidro Help
+            {t('maphidro_help')}
           </Typography>
           <Button autoFocus color="inherit" onClick={handleClose}>
-            close
+            {t('close')}
           </Button>
         </Toolbar>
       </AppBar>
       <List>
         <ListItem button>
           <ListItemText
-            primary="Instructions"
-            secondary="Usage Instructions"
+            primary={t('instructions')}
+            secondary={t('usage_instructions')}
             onClick={openInitModal}
           />
         </ListItem>
         <Divider />
         <ListItem button disabled>
-          <ListItemText primary="Download Data" secondary="data pattern" />
+          <ListItemText primary={t('download_data')} secondary={t('data_patern')} />
         </ListItem>
         <Divider />
         <ListItem button disabled>
-          <ListItemText primary="Satellite Data" secondary="about JSON Format" />
+          <ListItemText primary={t('satelite_data')} secondary={t('about_json')} />
         </ListItem>
       </List>
     </Dialog>
