@@ -18,6 +18,7 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import HidroDataMobile from '../HidroData/HidroDataMobile';
+import HidroData from '../HidroData/HidroData';
 
 interface AllYearsOptions {
   value: string;
@@ -59,6 +60,7 @@ type HeatSquareValue = {
 export default function StationDialog() {
   const appState = useContext(StateContext);
   const appDispatch = useContext(DispatchContext);
+  const { height, width } = useWindowDimensions();
 
   const [open, setOpen] = React.useState(appState.modals.settingsdialog);
 
@@ -228,8 +230,6 @@ export default function StationDialog() {
     });
   };
 
-  const { height, width } = useWindowDimensions();
-
   return (
     <Dialog fullScreen open={appState.modals.stationdialog} onClose={handleClose}>
       <AppBar
@@ -246,37 +246,16 @@ export default function StationDialog() {
           </Button>
         </Toolbar>
       </AppBar>
-      <HidroDataMobile />
-      <Container fluid>
-        <Row className="justify-content-md-center">
-          <Col>
-            <div className="loc">IN SITU-(ANA): </div>
-
-            <Select
-              menuPlacement="top"
-              defaultValue={{
-                label: `${appState.barChart.locBarSelectedYear}`,
-                value: `${appState.barChart.locBarSelectedYear}`
-              }}
-              onChange={handleChangeLoc}
-              options={selectLocal}
-            />
-          </Col>
-          <Col>
-            <div className="sat">SAT-(IMERGE): </div>
-
-            <Select
-              menuPlacement="top"
-              defaultValue={{
-                label: `${appState.barChart.satBarSelectedYear}`,
-                value: `${appState.barChart.satBarSelectedYear}`
-              }}
-              onChange={handleChangeSat}
-              options={selectSat}
-            />
-          </Col>
-        </Row>
-      </Container>
+      {width < 500 ? (
+        <HidroDataMobile
+          selectLocal={selectLocal}
+          selectSat={selectSat}
+          handleChangeLoc={handleChangeLoc}
+          handleChangeSat={handleChangeSat}
+        />
+      ) : (
+        <HidroData />
+      )}
     </Dialog>
   );
 }

@@ -6,6 +6,7 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Image from 'react-bootstrap/Image';
 import Grid from '@mui/material/Grid';
+import { Link } from 'react-router-dom';
 
 import { useTranslation } from 'react-i18next';
 function Home() {
@@ -17,6 +18,14 @@ function Home() {
       <h2 className="text-center" style={{ marginTop: '20px' }}>
         <strong>{t('indevelopment')}</strong>
       </h2>
+      <h5 className="text-center">
+        <Link
+          className="mx-1"
+          to="/map"
+          style={{ textDecoration: 'underline dotted', fontWeight: '600', color: '#595f88' }}>
+          {t('mapaccess')}
+        </Link>
+      </h5>
       <p className="lead text-muted text-center">{t('app_libraries')}</p>
       <Grid
         container
@@ -40,14 +49,40 @@ function Home() {
           <span className="font-init">{t('intro_text')}</span>
         </p>
       </Container>
-      <Container className="d-flex justify-content-center">
-        <Row className="d-flex justify-content-center">
-          <Col className="col-sm-4 text-left d-flex align-items-center">{t('uab_text')}</Col>
-          <Col className="col-sm-3 text-left">
-            <Image src="./images/modals/logo_uab.png" alt="Uab_Logo" rounded />
-          </Col>
-        </Row>
-      </Container>
+      <Grid
+        container
+        spacing={0}
+        sx={{
+          padding: 0,
+          display: 'flex',
+          justifyContent: 'center',
+          marginBottom: '20px'
+        }}>
+        <Grid
+          xs={6}
+          spacing={0}
+          sx={{
+            padding: 0,
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            textAlign: 'center'
+          }}>
+          {' '}
+          {t('uab_text')}
+        </Grid>
+        <Grid
+          xs={6}
+          spacing={0}
+          sx={{
+            padding: 0,
+            display: 'flex',
+            justifyContent: 'center'
+          }}>
+          {' '}
+          <Image src="./images/modals/logo_uab.png" alt="Uab_Logo" rounded />
+        </Grid>
+      </Grid>
     </Page>
   );
 }

@@ -3,12 +3,16 @@ import './hidrodata.css';
 import Box from '@mui/material/Box';
 import Tabs, { tabsClasses } from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
+import Select from 'react-select';
+
 import { useTheme } from '@mui/material/styles';
 import Container from 'react-bootstrap/Container';
 import Grid from '@mui/material/Grid';
+import Typography from '@mui/material/Typography';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import { Image } from 'react-bootstrap';
+import { lightBlue } from '../Utils/sytles';
 import { useState, useContext } from 'react';
 import {
   ResponsiveContainer,
@@ -41,7 +45,7 @@ import InfoIcon from '@mui/icons-material/Info';
   dataLoad: boolean;
 } */
 
-const HidroData = function () {
+const HidroData = function (props) {
   const [value, setValue] = React.useState(0);
   const appState = useContext(StateContext);
   const [key, setKey] = useState('home');
@@ -169,6 +173,51 @@ const HidroData = function () {
             />
           </BarChart>
         </ResponsiveContainer>
+        <Grid
+          container
+          spacing={0}
+          sx={{
+            padding: 0,
+            display: 'flex',
+            justifyContent: 'center',
+            margin: '10px 0 5px 0'
+          }}>
+          <Grid item xs={12}>
+            <Typography sx={{ color: lightBlue.titleColor, fontSize: '1rem' }}>
+              Selecione os anos de preciptação abaixo
+            </Typography>
+          </Grid>
+        </Grid>
+        <Container fluid>
+          <Row className="justify-content-md-center">
+            <Col>
+              <div className="loc">IN SITU-(ANA): </div>
+
+              <Select
+                menuPlacement="top"
+                defaultValue={{
+                  label: `${appState.barChart.locBarSelectedYear}`,
+                  value: `${appState.barChart.locBarSelectedYear}`
+                }}
+                onChange={props.handleChangeLoc}
+                options={props.selectLocal}
+              />
+            </Col>
+            <Col>
+              <div className="sat">SAT-(IMERGE): </div>
+
+              <Select
+                menuPlacement="top"
+                defaultValue={{
+                  label: `${appState.barChart.satBarSelectedYear}`,
+                  value: `${appState.barChart.satBarSelectedYear}`
+                }}
+                onChange={props.handleChangeSat}
+                options={props.selectSat}
+              />
+            </Col>
+          </Row>
+        </Container>
       </TabPanel>
       <TabPanel value={value} index={1} dir={theme.direction}>
         <HeatCalendar
@@ -179,6 +228,54 @@ const HidroData = function () {
       </TabPanel>
       <TabPanel value={value} index={2} dir={theme.direction}>
         <StationInfo />
+      </TabPanel>
+      <TabPanel value={value} index={3} dir={theme.direction}>
+        <Box
+          sx={{
+            width: '100%',
+            height: '30px',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            textAlign: 'center',
+            margin: '20px 0 20px 0'
+          }}>
+          <Typography
+            sx={{
+              ml: 2,
+              flex: 1,
+              fontSize: '1rem',
+              color: lightBlue.titleColor
+            }}
+            variant="h6"
+            component="div">
+            {t('click_download')}
+          </Typography>
+        </Box>
+        <Container fluid>
+          <Row className="justify-content-md-center">
+            <Col>
+              <a
+                href={`http://www.snirh.gov.br/hidroweb/rest/api/documento/convencionais?tipo=3&documentos=0${appState.stationData.stCode}`}
+                download>
+                <Image fluid src="./images/buttons/download_ana_csv.png" alt="downloadANA" />
+              </a>
+            </Col>
+            <Col>
+              {' '}
+              <button className="d-button" type="button" onClick={exportJsonData}>
+                <Image fluid src="./images/buttons/download_gpm_json.png" alt="downloadJSON" />
+              </button>
+            </Col>
+
+            <Col>
+              {' '}
+              <button className="d-button" type="button" onClick={exportCsvData}>
+                <Image fluid src="./images/buttons/download_gpm_csv.png" alt="downloadCSV" />
+              </button>
+            </Col>
+          </Row>
+        </Container>
       </TabPanel>
     </Box>
   );

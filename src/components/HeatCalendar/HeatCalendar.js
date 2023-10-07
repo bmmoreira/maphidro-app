@@ -94,6 +94,8 @@ const HeatCalendar = (props) => {
       {loaded && (
         <CalendarHeatmap
           id={123748912}
+          horizontal={true}
+          gutterSize={1}
           startDate={new Date(`${appState.satHeatmap.year}-01-01`)}
           endDate={new Date(`${appState.satHeatmap.year}-12-30`)}
           monthLabels={[

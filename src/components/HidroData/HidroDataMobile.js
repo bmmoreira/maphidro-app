@@ -10,6 +10,8 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import { Image } from 'react-bootstrap';
 import { useState, useContext } from 'react';
+import Select from 'react-select';
+
 import {
   ResponsiveContainer,
   XAxis,
@@ -20,7 +22,7 @@ import {
   BarChart,
   Bar
 } from 'recharts';
-import HeatCalendar from '../HeatCalendar/HeatCalendar';
+import HeatCalendarMobile from '../HeatCalendar/HeatCalendarMobile';
 import StationInfo from './StationInfo';
 import { useTranslation } from 'react-i18next';
 import { Parser } from 'json2csv';
@@ -43,7 +45,7 @@ import { lightBlue } from '../Utils/sytles';
   dataLoad: boolean;
 } */
 
-const HidroData = function () {
+const HidroData = function (props) {
   const [value, setValue] = React.useState(0);
   const appState = useContext(StateContext);
   const [key, setKey] = useState('home');
@@ -159,23 +161,28 @@ const HidroData = function () {
           />
           <Tab icon={<DateRangeIcon />} iconPosition="start" label={t('daily')} {...a11yProps(1)} />
           <Tab icon={<InfoIcon />} iconPosition="start" label={t('details')} {...a11yProps(2)} />
-          <Tab icon={<RadarIcon />} iconPosition="start" label="Downloads" {...a11yProps(2)} />
         </Tabs>
       </Box>
       <TabPanel value={value} index={0} dir={theme.direction}>
-        <Box sx={{ width: '100%', height: '30px' }}>
+        <Box
+          sx={{
+            width: '100%',
+            height: '30px',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            textAlign: 'center'
+          }}>
           <Typography
             sx={{
               ml: 2,
               flex: 1,
               fontSize: '1rem',
-              display: 'flex',
-              justifyContent: 'center',
               color: lightBlue.titleColor
             }}
             variant="h6"
             component="div">
-            Séries Históricas - Precipitação(mm)
+            {t('series')}
           </Typography>
         </Box>
 
@@ -199,9 +206,101 @@ const HidroData = function () {
             />
           </BarChart>
         </ResponsiveContainer>
+        <Grid
+          container
+          spacing={0}
+          sx={{
+            padding: 0,
+            display: 'flex',
+            textAlign: 'center',
+            justifyContent: 'center',
+            margin: '10px 0 5px 0'
+          }}>
+          <Grid item xs={12}>
+            <Typography sx={{ color: lightBlue.titleColor, fontSize: '1rem' }}>
+              {t('select_years')}
+            </Typography>
+          </Grid>
+        </Grid>
+        <Container fluid>
+          <Row className="justify-content-md-center">
+            <Col>
+              <div className="loc">IN SITU-(ANA): </div>
+
+              <Select
+                menuPlacement="top"
+                defaultValue={{
+                  label: `${appState.barChart.locBarSelectedYear}`,
+                  value: `${appState.barChart.locBarSelectedYear}`
+                }}
+                onChange={props.handleChangeLoc}
+                options={props.selectLocal}
+              />
+            </Col>
+            <Col>
+              <div className="sat">SAT-(IMERGE): </div>
+
+              <Select
+                menuPlacement="top"
+                defaultValue={{
+                  label: `${appState.barChart.satBarSelectedYear}`,
+                  value: `${appState.barChart.satBarSelectedYear}`
+                }}
+                onChange={props.handleChangeSat}
+                options={props.selectSat}
+              />
+            </Col>
+          </Row>
+        </Container>
+        <Box
+          sx={{
+            width: '100%',
+            height: '30px',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            textAlign: 'center',
+            margin: '20px 0 20px 0'
+          }}>
+          <Typography
+            sx={{
+              ml: 2,
+              flex: 1,
+              fontSize: '1rem',
+              color: lightBlue.titleColor
+            }}
+            variant="h6"
+            component="div">
+            {t('click_download')}
+          </Typography>
+        </Box>
+        <Container fluid>
+          <Row className="justify-content-md-center">
+            <Col>
+              <a
+                href={`http://www.snirh.gov.br/hidroweb/rest/api/documento/convencionais?tipo=3&documentos=0${appState.stationData.stCode}`}
+                download>
+                <Image fluid src="./images/buttons/download_ana_csv.png" alt="downloadANA" />
+              </a>
+            </Col>
+            <Col>
+              {' '}
+              <button className="d-button" type="button" onClick={exportJsonData}>
+                <Image fluid src="./images/buttons/download_gpm_json.png" alt="downloadJSON" />
+              </button>
+            </Col>
+
+            <Col>
+              {' '}
+              <button className="d-button" type="button" onClick={exportCsvData}>
+                <Image fluid src="./images/buttons/download_gpm_csv.png" alt="downloadCSV" />
+              </button>
+            </Col>
+          </Row>
+        </Container>
       </TabPanel>
       <TabPanel value={value} index={1} dir={theme.direction}>
-        <HeatCalendar
+        <HeatCalendarMobile
           //dailyPrec={dailyPrec}
 
           locload={appState.dataLocLoaded}

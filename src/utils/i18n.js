@@ -145,7 +145,11 @@ const resources = {
       uab_text:
         'Dissertation project for MSc in Informatics Engineering and Web Technology UAB/UTAD',
       search_for: 'Search for stations',
-      search: 'search...'
+      search: 'search...',
+      mapaccess: 'Acesse o mapa clicando aqui',
+      series: 'Historical Series - Precipitation (mm)',
+      select_years: 'Select the year of precipitation below',
+      click_download: 'Click on the buttons to download data'
     }
   },
   pt: {
@@ -289,7 +293,11 @@ const resources = {
       uab_text:
         'Projeto de dissertação para Mestrado em Engenharia Informática e Tecnologia Web UAB/UTAD',
       search_for: 'Busca por estações',
-      search: 'busca...'
+      search: 'busca...',
+      mapaccess: 'Acesse o mapa clicando aqui',
+      series: 'Séries Históricas - Precipitação(mm)',
+      select_years: 'Selecione o ano de precipitação abaixo',
+      click_download: 'Clique nos botões para descarregar'
     }
   },
   fr: {
@@ -433,7 +441,11 @@ const resources = {
       uab_text:
         'Dissertation project for MSc in Informatics Engineering and Web Technology UAB/UTAD',
       search_for: 'Search for stations',
-      search: 'search...'
+      search: 'search...',
+      mapaccess: 'Acesse o mapa clicando aqui',
+      series: 'Historical Series - Precipitation (mm)',
+      select_years: 'Select the year of precipitation below',
+      click_download: 'Click on the buttons to download data'
     }
   },
   es: {
@@ -528,7 +540,6 @@ const resources = {
         '- El año de precipitación se puede seleccionar para in situ y satélite haciendo clic en la parte inferior del menú desplegable modal.',
       init06: '- El día del mes máximo está entre paréntesis en la pestaña Precipitación diaria.',
       app_libraries: 'Bibliotecas de código abierto en esta aplicación',
-
       option_language: 'Language',
       option_update: 'Update',
       application_update: 'Application Update',
@@ -578,7 +589,11 @@ const resources = {
       uab_text:
         'Dissertation project for MSc in Informatics Engineering and Web Technology UAB/UTAD',
       search_for: 'Search for stations',
-      search: 'search...'
+      search: 'search...',
+      mapaccess: 'Acesse o mapa clicando aqui',
+      series: 'Historical Series - Precipitation (mm)',
+      select_years: 'Select the year of precipitation below',
+      click_download: 'Click on the buttons to download data'
     }
   }
 };

@@ -248,41 +248,15 @@ const ChartModal = function (props: ChartProps) {
       <Modal.Body className="text-center">
         {debug ? <div className="debug">Debug screen width: {width}</div> : null}
 
-        <HidroData />
+        <HidroData
+          selectLocal={selectLocal}
+          selectSat={selectSat}
+          handleChangeLoc={handleChangeLoc}
+          handleChangeSat={handleChangeSat}
+        />
       </Modal.Body>
 
-      <Modal.Footer>
-        <Container fluid>
-          <Row className="justify-content-md-center">
-            <Col>
-              <div className="loc">IN SITU-(ANA): </div>
-
-              <Select
-                menuPlacement="top"
-                defaultValue={{
-                  label: `${appState.barChart.locBarSelectedYear}`,
-                  value: `${appState.barChart.locBarSelectedYear}`
-                }}
-                onChange={handleChangeLoc}
-                options={selectLocal}
-              />
-            </Col>
-            <Col>
-              <div className="sat">SAT-(IMERGE): </div>
-
-              <Select
-                menuPlacement="top"
-                defaultValue={{
-                  label: `${appState.barChart.satBarSelectedYear}`,
-                  value: `${appState.barChart.satBarSelectedYear}`
-                }}
-                onChange={handleChangeSat}
-                options={selectSat}
-              />
-            </Col>
-          </Row>
-        </Container>
-      </Modal.Footer>
+      <Modal.Footer></Modal.Footer>
     </Modal>
   );
 };
