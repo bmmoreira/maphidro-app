@@ -191,7 +191,7 @@ const HidroData = function (props) {
         <Container fluid>
           <Row className="justify-content-md-center">
             <Col>
-              <div className="loc">IN SITU-(ANA): </div>
+              <div className="loc">IN SITU-(ANA-CPRM): </div>
 
               <Select
                 menuPlacement="top"
