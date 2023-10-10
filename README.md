@@ -8,7 +8,7 @@ This application uses open source libraries to collect and display calibrated sa
 
 ## Screenshot
 
-![react maplibre MapHidroCharts](/assets/maphidro.gif 'MapHidroCharts')
+![react maplibre MapHidroCharts](/assets/maphidro2.gif 'MapHidroCharts')
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
