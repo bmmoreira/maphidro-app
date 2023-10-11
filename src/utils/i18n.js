@@ -149,7 +149,10 @@ const resources = {
       mapaccess: 'Acesse o mapa clicando aqui',
       series: 'Historical Series - Precipitation (mm)',
       select_years: 'Select the year of precipitation below',
-      click_download: 'Click on the buttons to download data'
+      click_download: 'Click on the buttons to download data',
+      thanks_response: 'Thank you for your response',
+      survey_text01:
+        'Please give us your opinion, in order to evaluate the maphidro.com portal, by filling out the following questionnaire below. It is made up of pairs of opposites relating to the properties that the product may have. Graduations between opposites are represented by circles. By checking one of the circles, you can express your opinion about a concept. The questionnaire is anonymous, there are no "right" or "wrong" answers. Only your personal opinion counts!'
     }
   },
   pt: {
@@ -297,7 +300,10 @@ const resources = {
       mapaccess: 'Acesse o mapa clicando aqui',
       series: 'Séries Históricas - Precipitação(mm)',
       select_years: 'Selecione o ano de precipitação abaixo',
-      click_download: 'Clique nos botões para descarregar'
+      click_download: 'Clique nos botões para descarregar',
+      thanks_response: 'Obrigado por sua resposta',
+      survey_text01:
+        'Por favor dê-nos a sua opinião, a fim de avaliar o portal maphidro.com, preenchendo o seguinte questionário abaixo. É constituído por pares de opostos relativos às propriedades que o produto possa ter. As graduações entre os opostos são representadas por círculos. Ao marcar um dos círculos, você pode expressar sua opinião sobre um conceito. O questionário é anômimo, não existem respostas "certas" ou "erradas". Só a sua opinião pessoal conta!'
     }
   },
   fr: {
@@ -445,7 +451,10 @@ const resources = {
       mapaccess: 'Acesse o mapa clicando aqui',
       series: 'Historical Series - Precipitation (mm)',
       select_years: 'Select the year of precipitation below',
-      click_download: 'Click on the buttons to download data'
+      click_download: 'Click on the buttons to download data',
+      thanks_response: 'Merci pour votre réponse',
+      survey_text01:
+        "Merci de nous donner votre avis, afin d'évaluer le portail maphidro.com, en remplissant le questionnaire suivant ci-dessous. Il est constitué de couples d’opposés relatifs aux propriétés que peut avoir le produit. Les graduations entre les opposés sont représentées par des cercles. En cochant l'un des cercles, vous pouvez exprimer votre opinion sur un concept. Le questionnaire est anonyme, il n’y a pas de « bonnes » ou de « mauvaises » réponses. Seul votre avis personnel compte !"
     }
   },
   es: {
@@ -593,7 +602,10 @@ const resources = {
       mapaccess: 'Acesse o mapa clicando aqui',
       series: 'Historical Series - Precipitation (mm)',
       select_years: 'Select the year of precipitation below',
-      click_download: 'Click on the buttons to download data'
+      click_download: 'Click on the buttons to download data',
+      thanks_response: 'Gracias por su respuesta',
+      survey_text01:
+        'Por favor danos tu opinión, para poder evaluar el portal maphidro.com, llenando el siguiente cuestionario a continuación. Está formado por pares de opuestos relativos a las propiedades que pueda tener el producto. Las graduaciones entre opuestos están representadas por círculos. Marcando uno de los círculos, podrás expresar tu opinión sobre un concepto. El cuestionario es anónimo, no hay respuestas "correctas" o "incorrectas". ¡Solo tu opinión personal cuenta!'
     }
   }
 };

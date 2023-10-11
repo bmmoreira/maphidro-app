@@ -112,16 +112,14 @@ export default function UX(props) {
           }}>
           {t('uxpage_title')}
         </Typography>
-        <Typography
-          variant="h6"
-          component="h2"
-          sx={{ padding: '25px 0 0px 10px', color: 'gray', fontSize: '0.875rem' }}>
-          Por favor dê-nos a sua opinião, a fim de avaliar o portal maphidro.com, preenchendo o
-          seguinte questionário abaixo. É constituído por pares de opostos relativos às propriedades
-          que o produto possa ter. As graduações entre os opostos são representadas por círculos. Ao
-          marcar um dos círculos, você pode expressar sua opinião sobre um conceito. O questionário
-          é anômimo, não existem respostas "certas" ou "erradas". Só a sua opinião pessoal conta!
-        </Typography>
+        {!sent && (
+          <Typography
+            variant="h6"
+            component="h2"
+            sx={{ padding: '25px 0 0px 10px', color: 'gray', fontSize: '0.875rem' }}>
+            {t('survey_text01')}
+          </Typography>
+        )}
         {!sent && (
           <GoogleFormProvider {...methods}>
             <Form onSubmit={methods.handleSubmit(onSubmit)}>
@@ -137,7 +135,7 @@ export default function UX(props) {
                   color="primary"
                   type="submit"
                   sx={{ width: '100px' }}>
-                  Submit
+                  {t('submit')}
                 </BootstrapButton>
               </Box>
             </Form>
@@ -153,7 +151,7 @@ export default function UX(props) {
               display: 'flex',
               justifyContent: 'center'
             }}>
-            Thank you for your response!
+            {t('thanks_response')}
           </Typography>
         )}
       </Box>
