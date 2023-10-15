@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-
+import Grid from '@mui/material/Grid';
+import Typography from '@mui/material/Typography';
 import { useLinearInput } from 'react-google-forms-hooks';
 
 const Container = styled.div`
@@ -28,13 +29,39 @@ export default function ShortAnswerInput({ id }) {
 
   return (
     <>
-      <Container>
-        <div>{legend.labelFirst}</div>
+      <Grid
+        container
+        spacing={0}
+        sx={{
+          padding: 0,
+          backgroundColor: '#0f9bd9'
+        }}>
+        <Grid item xs={3.2}>
+          <Typography sx={{ padding: '5px 0 5px 10px', color: 'white' }}>
+            {legend.labelFirst}
+          </Typography>
+        </Grid>
+
         {options.map((o) => {
-          return <input key={o.id} type="radio" {...o.registerOption()} />;
+          return (
+            <Grid
+              item
+              xs={0.8}
+              sx={{
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center'
+              }}>
+              <input key={o.id} type="radio" {...o.registerOption()} />
+            </Grid>
+          );
         })}
-        <div>{legend.labelLast}</div>
-      </Container>
+        <Grid item xs={3.2}>
+          <Typography sx={{ padding: '5px 0 5px 10px', color: 'white' }}>
+            {legend.labelLast}
+          </Typography>
+        </Grid>
+      </Grid>
       <ErrorLabel>{error && 'This field is required'}</ErrorLabel>
     </>
   );

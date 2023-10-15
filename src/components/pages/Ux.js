@@ -19,7 +19,7 @@ const Form = styled.form`
 `;
 
 const QuestionContainer = styled.div`
-  margin-bottom: 20px;
+  margin-bottom: 1px;
 `;
 
 const QuestionLabel = styled.h3`
