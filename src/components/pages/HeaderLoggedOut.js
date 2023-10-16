@@ -8,11 +8,12 @@ import { loginButtom } from '../Utils/constants.js';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import { LOGIN_URL } from '../Utils/constants';
-
+import { useTranslation } from 'react-i18next';
 import Input from '@mui/base/Input';
 import { styled } from '@mui/system';
 
 function HeaderLoggedOut() {
+  const { t } = useTranslation();
   const appDispatch = useContext(DispatchContext);
   const [username, setUsername] = useState();
   const [password, setPassword] = useState();
@@ -63,7 +64,7 @@ function HeaderLoggedOut() {
             <div className="col-12 d-flex justify-content-center col-lg-3 p-0 align-items-center">
               <CustomInput
                 aria-label="username"
-                placeholder="Username"
+                placeholder={t('username')}
                 onChange={(e) => {
                   setUsername(e.target.value);
                 }}
@@ -74,7 +75,7 @@ function HeaderLoggedOut() {
             <div className="col-12 d-flex justify-content-center col-lg-3 p-0 align-items-center">
               <CustomInput
                 aria-label="Password"
-                placeholder="Password"
+                placeholder={t('password')}
                 onChange={(e) => {
                   setPassword(e.target.value);
                 }}
@@ -99,7 +100,7 @@ function HeaderLoggedOut() {
                     boxShadow: 'none'
                   }
                 }}>
-                Sign In
+                {t('signin')}
               </Button>
             </div>
           </div>

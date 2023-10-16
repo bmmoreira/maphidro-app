@@ -31,17 +31,20 @@ const Questions = () => {
     <div>
       {form.fields.map((field) => {
         const { id } = field;
+        let count = 0;
 
         let questionInput = null;
         switch (field.type) {
           case 'RADIO':
             questionInput = <RadioInput id={id} />;
+            count++;
             break;
           case 'LINEAR':
             questionInput = <LinearGrid id={id} />;
             break;
           case 'SHORT_ANSWER':
             questionInput = <ShortAnswerInput id={id} />;
+            count++;
             break;
           default:
             return null;

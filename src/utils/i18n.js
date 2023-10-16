@@ -152,7 +152,22 @@ const resources = {
       click_download: 'Click on the buttons to download data',
       thanks_response: 'Thank you for your response',
       survey_text01:
-        'Please give us your opinion, in order to evaluate the maphidro.com portal, by filling out the following questionnaire below. It is made up of pairs of opposites relating to the properties that the product may have. Graduations between opposites are represented by circles. By checking one of the circles, you can express your opinion about a concept. The questionnaire is anonymous, there are no "right" or "wrong" answers. Only your personal opinion counts!'
+        'Please give us your opinion, in order to evaluate the maphidro.com portal, by filling out the following questionnaire below. It is made up of pairs of opposites relating to the properties that the product may have. Graduations between opposites are represented by circles. By checking one of the circles, you can express your opinion about a concept. The questionnaire is anonymous, there are no "right" or "wrong" answers. Only your personal opinion counts!',
+      signin: 'SIGN IN',
+      signup: 'Sign up for MapHidro',
+      username: 'Username',
+      email: 'Email',
+      password: 'Password',
+      register_access: 'Register to access',
+      home_text_01:
+        'Dissertation project for MSc in Informatics Engineering and Web Technology UAB/UTAD',
+      home_text_02: 'MapHidro: Historical Series Precipitation in situ/satellite',
+      create_username: 'Create your username',
+      create_password: 'Create a password',
+      email_placeholder: 'you@example.com',
+      user_alreadyregistered: 'That username is already taken',
+      valid_email: 'You must provide a valid email',
+      password_min: 'Password must be at least 5'
     }
   },
   pt: {
@@ -303,7 +318,22 @@ const resources = {
       click_download: 'Clique nos botões para descarregar',
       thanks_response: 'Obrigado por sua resposta',
       survey_text01:
-        'Por favor dê-nos a sua opinião, a fim de avaliar o portal maphidro.com, preenchendo o seguinte questionário abaixo. É constituído por pares de opostos relativos às propriedades que o produto possa ter. As graduações entre os opostos são representadas por círculos. Ao marcar um dos círculos, você pode expressar sua opinião sobre um conceito. O questionário é anômimo, não existem respostas "certas" ou "erradas". Só a sua opinião pessoal conta!'
+        'Por favor dê-nos a sua opinião, a fim de avaliar o portal maphidro.com, preenchendo o seguinte questionário abaixo. É constituído por pares de opostos relativos às propriedades que o produto possa ter. As graduações entre os opostos são representadas por círculos. Ao marcar um dos círculos, você pode expressar sua opinião sobre um conceito. O questionário é anômimo, não existem respostas "certas" ou "erradas". Só a sua opinião pessoal conta!',
+      signin: 'Entrar',
+      signup: 'Cadastre-se no MapHidro',
+      username: 'Nome de Usuário',
+      email: 'Email',
+      password: 'Senha',
+      register_access: 'Registre-se para acessar',
+      home_text_01:
+        'Projeto de dissertação para Mestrado em Engenharia Informática e Tecnologia Web UAB/UTAD',
+      home_text_02: 'MapHidro: Séries Históricas de Precipitação in situ/satélite',
+      create_username: 'Crie seu nome de usuário',
+      create_password: 'Crie sua senha',
+      email_placeholder: 'voce@exemplo.com',
+      user_alreadyregistered: 'Esse nome de usuário já está em uso',
+      valid_email: 'Você deve inserir um e-mail valido',
+      password_min: 'A senha deve ser pelo menos 5'
     }
   },
   fr: {
@@ -454,7 +484,22 @@ const resources = {
       click_download: 'Click on the buttons to download data',
       thanks_response: 'Merci pour votre réponse',
       survey_text01:
-        "Merci de nous donner votre avis, afin d'évaluer le portail maphidro.com, en remplissant le questionnaire suivant ci-dessous. Il est constitué de couples d’opposés relatifs aux propriétés que peut avoir le produit. Les graduations entre les opposés sont représentées par des cercles. En cochant l'un des cercles, vous pouvez exprimer votre opinion sur un concept. Le questionnaire est anonyme, il n’y a pas de « bonnes » ou de « mauvaises » réponses. Seul votre avis personnel compte !"
+        "Merci de nous donner votre avis, afin d'évaluer le portail maphidro.com, en remplissant le questionnaire suivant ci-dessous. Il est constitué de couples d’opposés relatifs aux propriétés que peut avoir le produit. Les graduations entre les opposés sont représentées par des cercles. En cochant l'un des cercles, vous pouvez exprimer votre opinion sur un concept. Le questionnaire est anonyme, il n’y a pas de « bonnes » ou de « mauvaises » réponses. Seul votre avis personnel compte !",
+      signin: 'SE CONNECTER',
+      signup: 'Inscrivez-vous à MapHidro',
+      username: "Nom d'utilisateur",
+      email: 'Email',
+      password: 'Mot de passe',
+      register_access: 'Inscrivez-vous pour accéder',
+      home_text_01:
+        'Projet de thèse pour MSc en Ingénierie Informatique et Technologie Web UAB/UTAD',
+      home_text_02: 'MapHidro : Série historique Précipitations in situ/satellite',
+      create_username: "Créez votre nom d'utilisateur",
+      create_password: 'Créer un mot de passe',
+      email_placeholder: 'vous@exemple.com',
+      user_alreadyregistered: "Ce nom d'utilisateur est déjà pris",
+      valid_email: 'vous devez fournir une adresse email valide',
+      password_min: 'Le mot de passe doit être au moins 5'
     }
   },
   es: {
@@ -605,7 +650,22 @@ const resources = {
       click_download: 'Click on the buttons to download data',
       thanks_response: 'Gracias por su respuesta',
       survey_text01:
-        'Por favor danos tu opinión, para poder evaluar el portal maphidro.com, llenando el siguiente cuestionario a continuación. Está formado por pares de opuestos relativos a las propiedades que pueda tener el producto. Las graduaciones entre opuestos están representadas por círculos. Marcando uno de los círculos, podrás expresar tu opinión sobre un concepto. El cuestionario es anónimo, no hay respuestas "correctas" o "incorrectas". ¡Solo tu opinión personal cuenta!'
+        'Por favor danos tu opinión, para poder evaluar el portal maphidro.com, llenando el siguiente cuestionario a continuación. Está formado por pares de opuestos relativos a las propiedades que pueda tener el producto. Las graduaciones entre opuestos están representadas por círculos. Marcando uno de los círculos, podrás expresar tu opinión sobre un concepto. El cuestionario es anónimo, no hay respuestas "correctas" o "incorrectas". ¡Solo tu opinión personal cuenta!',
+      signin: 'INICIAR SESIÓN',
+      signup: 'Regístrate en MapHidro',
+      username: 'Nombre de usuario',
+      email: 'Correo electrónico',
+      password: 'Contraseña',
+      register_access: 'Regístrese para acceder',
+      home_text_01:
+        'Proyecto de tesis de Maestría en Ingeniería Informática y Tecnologías Web UAB/UTAD',
+      home_text_02: 'MapHidro: Serie Histórica Precipitación in situ/satélite',
+      create_username: 'Crea tu nombre de usuario',
+      create_password: 'Crear una contraseña',
+      email_placeholder: 'tu@ejemplo.com',
+      user_alreadyregistered: 'Ese nombre de usuario ya se encuentra en uso',
+      valid_email: 'Tu debes proveer un correo valido',
+      password_min: 'La contraseña debe ser al menos 5'
     }
   }
 };

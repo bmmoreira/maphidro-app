@@ -7,12 +7,14 @@ import DispatchContext from '../../DispatchContext';
 import { CSSTransition } from 'react-transition-group';
 import { LOGIN_URL, PASSMINLENGHT } from '../Utils/constants';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 /*
 Adding validation and automatically log in a successfully registered user
 */
 
 function HomeGuest() {
+  const { t } = useTranslation();
   const appDispatch = useContext(DispatchContext);
   const navigate = useNavigate();
 
@@ -358,9 +360,11 @@ function HomeGuest() {
     <Page wide={true} title="Welcome to Maphidro!">
       <div className="row align-items-center">
         <div className="col-lg-7 py-3 py-md-5 text-center">
-          <h1 className="display-3">Register to access</h1>
+          <h1 className="display-3">{t('register_access')}</h1>
           <p className="lead text-muted">
-            Dissertation project for MSc in Informatics Engineering and Web Technology UAB/UTAD
+            {t('home_text_01')}
+            <br />
+            {t('home_text_02')}
           </p>
           <Image src="./images/modals/logo_uab.png" alt="Uab_Logo" rounded />
         </div>
@@ -368,7 +372,7 @@ function HomeGuest() {
           <form onSubmit={handleSubmit}>
             <div className="form-group">
               <label htmlFor="username-register" className="text-muted mb-1">
-                <small>Username</small>
+                <small>{t('username')}</small>
               </label>
               <input
                 onChange={(e) =>
@@ -381,7 +385,7 @@ function HomeGuest() {
                 name="username"
                 className="form-control"
                 type="text"
-                placeholder="Create your username"
+                placeholder={t('create_username')}
                 autoComplete="off"
               />
               {/*  Giving a logic so when CSSTransition should exist or not in the DOM
@@ -399,7 +403,7 @@ function HomeGuest() {
             </div>
             <div className="form-group">
               <label htmlFor="email-register" className="text-muted mb-1">
-                <small>Email</small>
+                <small>{t('email')}</small>
               </label>
               <input
                 onChange={(e) =>
@@ -412,7 +416,7 @@ function HomeGuest() {
                 name="email"
                 className="form-control"
                 type="text"
-                placeholder="you@example.com"
+                placeholder={t('email_placeholder')}
                 autoComplete="off"
               />
               <CSSTransition
@@ -427,7 +431,7 @@ function HomeGuest() {
             </div>
             <div className="form-group">
               <label htmlFor="password-register" className="text-muted mb-1">
-                <small>Password</small>
+                <small>{t('password')}</small>
               </label>
               <input
                 onChange={(e) =>
@@ -440,7 +444,7 @@ function HomeGuest() {
                 name="password"
                 className="form-control"
                 type="password"
-                placeholder="Create a password"
+                placeholder={t('create_password')}
               />
               <CSSTransition
                 in={state.password.hasErrors}
@@ -452,7 +456,7 @@ function HomeGuest() {
                 </div>
               </CSSTransition>
               <button type="submit" className="py-3 mt-4 btn btn-lg btn-success btn-block">
-                Sign up for MapHidro
+                {t('signup')}
               </button>
             </div>
           </form>
