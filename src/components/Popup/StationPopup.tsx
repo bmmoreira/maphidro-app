@@ -45,7 +45,7 @@ const StationPopup = (props: StPopupProp) => {
             </tr>
             <tr>
               <th scope="row">{t('code')}</th>
-              <td>{props.stationObj.code}</td>
+              <td>{props.stationObj.code}AA</td>
             </tr>
             <tr>
               <th scope="row">{t('type')}</th>

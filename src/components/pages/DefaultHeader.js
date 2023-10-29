@@ -51,7 +51,7 @@ function DefaultHeader() {
             paddingRight: '20px',
             justifyContent: 'right'
           }}>
-          <img src="assets/mh_logo.png" alt="maphidro logo" />
+          <img src="assets/images/logo_top.png" alt="maphidro logo" />
         </Grid>
         <Grid
           xs={8}

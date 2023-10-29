@@ -349,6 +349,7 @@ function Map(props: MaplibreMapProps) {
         operator: e.features[0].properties.operator,
         uf: e.features[0].properties.uf
       };
+      console.log(e.features[0]);
       // Ensure that if the map is zoomed out such that
       // multiple copies of the feature are visible, the
       // popup appears over the copy being pointed to.
@@ -382,6 +383,14 @@ function Map(props: MaplibreMapProps) {
       popUpRef.current.setLngLat(coordinates).setDOMContent(popupNode).addTo(mapLibre);
       //popUpRef.current.setLngLat(coordinates).setHTML('<div>'+ teste +'</div>').addTo(mapLibre);
     }); // map on click
+
+    mapLibre.on('mouseenter', 'unclustered-point', function () {
+      mapLibre.getCanvas().style.cursor = 'pointer';
+    });
+
+    mapLibre.on('mouseleave', 'unclustered-point', function () {
+      mapLibre.getCanvas().style.cursor = '';
+    });
 
     mapLibre.on('mouseenter', 'clusters', function () {
       mapLibre.getCanvas().style.cursor = 'pointer';

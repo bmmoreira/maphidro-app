@@ -56,7 +56,7 @@ export default function InitDialog() {
             tabIndex={-1}
             sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
             <img
-              src="/assets/images/registered_stations.png"
+              src="/assets/images/intro_image2.png"
               alt=""
               srcset=""
               style={{ maxWidth: '100%', height: 'auto', padding: '0', magin: '0' }}

@@ -141,6 +141,19 @@ function DefaultHeader() {
     }
   };
 
+  const gridBanners = (
+    <Grid
+      xs={8}
+      sx={{
+        backgroundColor: styleWhite.bg,
+        display: 'flex',
+        gap: '10px',
+        justifyContent: 'center'
+      }}>
+      <img src="assets/images/logos_top2.png" alt="maphidro logo" />
+    </Grid>
+  );
+
   const gridRightButtons = (
     <Grid
       xs={8}
@@ -413,7 +426,7 @@ function DefaultHeader() {
           }}>
           <img src="assets/mh_logo.png" alt="maphidro logo" />
         </Grid>
-        {width < 1280 ? gridLeftCompact : gridLeftButtons}
+        {width < 1280 ? gridLeftCompact : gridBanners}
       </Grid>
 
       <Grid container spacing={0} sx={{ backgroundColor: styleWhite.bg, display: 'flex' }}>
