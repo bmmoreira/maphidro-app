@@ -12,7 +12,7 @@ import maplibreglWorker from 'maplibre-gl/dist/maplibre-gl-csp-worker';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 //@ts-ignore
 maplibregl.workerClass = maplibreglWorker;
-
+import { FeatureCollection, Geometry, GeoJsonProperties } from 'geojson';
 import StateContext from '../../StateContext';
 import DispatchContext from '../../DispatchContext';
 import './map.css';
@@ -73,6 +73,11 @@ function Map(props: MaplibreMapProps) {
   const appState = useContext(StateContext);
 
   const [isLoading, setIsLoading] = useState(true);
+  const [showOverlay, setShowOverlay] = useState(true);
+  const toggleOverlay = () => {
+    setShowOverlay(!showOverlay);
+    console.log('overlay');
+  };
 
   if (process.env.REACT_APP_API_KEY == null) {
     throw new Error('You have to configure env REACT_APP_API_KEY, see README');
@@ -197,6 +202,10 @@ function Map(props: MaplibreMapProps) {
     setSearchValue({ value: e.target.value });
   };
 
+  /**
+   * Animation to station coordenates
+   * @param {Array} coord - Station Coordenates
+   */
   const flyToStation = (coord: number[]) => {
     map!.flyTo({
       center: [coord[0], coord[1]], // Fly to the selected target
@@ -513,7 +522,13 @@ function Map(props: MaplibreMapProps) {
     };
   }, []);
 
-  async function getFromAPI(id: any) {
+  /**
+   * Get data station from the Rest API.
+   * @async
+   * @param {string} id - The id of the station.
+   * @returns {object} object with attributes fields of the station
+   */
+  async function getFromAPI(id: string) {
     try {
       const response = await axios.get(`${BASE_URL}/${COLLECTION_NAME}?filters[stCode]=${id}`);
 
@@ -529,6 +544,12 @@ function Map(props: MaplibreMapProps) {
     }
   }
 
+  /**
+   * Get Station Data and add to redux state and show modal
+   * @param id {string} - The id of the station
+   * @param uf {string} - The Federal State from the station
+   * @returns
+   */
   async function getStationData(id: string, uf: string) {
     try {
       const sId = String(id).padStart(8, '0');
@@ -631,12 +652,6 @@ function Map(props: MaplibreMapProps) {
       return error.response.data;
     }
   }
-
-  const [showOverlay, setShowOverlay] = useState(true);
-  const toggleOverlay = () => {
-    setShowOverlay(!showOverlay);
-    console.log('overlay');
-  };
 
   return (
     <>
