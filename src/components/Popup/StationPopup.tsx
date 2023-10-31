@@ -63,11 +63,11 @@ const StationPopup = (props: StPopupProp) => {
               <td>{props.stationObj.stLongitude.toFixed(4)}</td>
             </tr>
             <tr>
-              <th scope="row">Ínic.Satélite</th>
+              <th scope="row">Iníc.Satélite</th>
               <td>{formatDate(props.stationObj.stSatInit as Date)}</td>
             </tr>
             <tr>
-              <th scope="row">Ínic.Insitu</th>
+              <th scope="row">Iníc.Insitu</th>
               <td>{formatDate(props.stationObj.stLocInit as Date)}</td>
             </tr>
           </tbody>
