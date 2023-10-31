@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import Table from 'react-bootstrap/Table';
 import Station from '../DataModels/Station4';
 import StateContext from '../../StateContext';
+import { formatDate } from '../Utils/utils';
 
 interface StationInfoProps {
   dataLoad: boolean;
@@ -102,6 +103,16 @@ const StationInfo = function (props: StationInfoProps) {
                 <span>{t('sediments')}:</span>
               </td>
               <td>{appState.stationData.stSediments == 'Sim' ? t('yes') : t('no')}</td>
+            </tr>
+            <tr>
+              <td>
+                <span>Ínic. reg. de Satélite:</span>
+              </td>
+              <td>{formatDate(appState.stationData.stSatInit as Date)}</td>
+              <td>
+                <span>Ínic. reg. de insitu:</span>
+              </td>
+              <td>{formatDate(appState.stationData.stLocInit as Date)}</td>
             </tr>
           </tbody>
         </Table>

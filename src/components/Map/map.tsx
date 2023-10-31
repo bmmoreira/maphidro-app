@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState, useReducer, useContext } from 'reac
 import * as ReactDOMClient from 'react-dom/client';
 import LoadingDotsIcon from '../pages/LoadingDotsIcon';
 import PanelModals from '../Modals/PanelModals';
+import { createRoot } from 'react-dom/client';
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 //@ts-ignore
@@ -54,14 +55,13 @@ import SettingsDialog from '../Modals/SettingsDialog';
 import SelectDialog from '../Modals/SelectDialog';
 import StationDialog from '../Modals/StationDialog';
 import InitDialog from '../Modals/InitDialog';
+import StationInfo from '../DataModels/StationInfo';
 
 interface MaplibreMapProps {
   initialOptions?: Omit<maplibregl.MapOptions, 'container' | 'style'>;
   onCreated?(map: maplibregl.Map): void;
   onLoaded(map: maplibregl.Map): void;
   onRemoved?(): void;
-  showModalChart(sObj: Station): void;
-
   setOffCanvas(open: boolean): void;
   offCanvas: boolean;
 }
@@ -197,10 +197,10 @@ function Map(props: MaplibreMapProps) {
     }
   };
 
-  const searchChangeHandler = async (e: { target: { value: string } }) => {
+  /*   const searchChangeHandler = async (e: { target: { value: string } }) => {
     search(e.target.value);
     setSearchValue({ value: e.target.value });
-  };
+  }; */
 
   /**
    * Animation to station coordenates
@@ -346,7 +346,7 @@ function Map(props: MaplibreMapProps) {
     // the unclustered-point layer, open a popup at
     // the location of the feature, with
     // description HTML from its properties.
-    mapLibre.on('click', 'unclustered-point', function (e: any) {
+    mapLibre.on('click', 'unclustered-point', async function (e: any) {
       const coordinates = e.features[0].geometry.coordinates.slice();
       const stationJSON: StationObject = {
         name: e.features[0].properties.name,
@@ -365,6 +365,7 @@ function Map(props: MaplibreMapProps) {
       while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
         coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
       }
+      const sdata = await populateStationData(e.features[0].properties.code);
 
       //getLocData(stationJSON.code, stationJSON.uf);
       //getSatData(stationJSON.code, stationJSON.uf);
@@ -375,21 +376,18 @@ function Map(props: MaplibreMapProps) {
           <StationPopup stationObj={stationJSON} getData={getStationData} />
         </div>
       ); */
-
       const popupNode = document.createElement('div');
       if (height < 800) {
         ReactDOM.render(
-          <StationPopupCompact stationObj={stationJSON} getData={getStationData} />,
+          <StationPopupCompact stationObj={sdata} getData={showStationModal} />,
           popupNode
         );
       } else {
-        ReactDOM.render(
-          <StationPopup stationObj={stationJSON} getData={getStationData} />,
-          popupNode
-        );
+        ReactDOM.render(<StationPopup stationObj={sdata} getData={showStationModal} />, popupNode);
       }
 
       popUpRef.current.setLngLat(coordinates).setDOMContent(popupNode).addTo(mapLibre);
+
       //popUpRef.current.setLngLat(coordinates).setHTML('<div>'+ teste +'</div>').addTo(mapLibre);
     }); // map on click
 
@@ -523,7 +521,7 @@ function Map(props: MaplibreMapProps) {
   }, []);
 
   /**
-   * Get data station from the Rest API.
+   * Fetch data station from the Rest API.
    * @async
    * @param {string} id - The id of the station.
    * @returns {object} object with attributes fields of the station
@@ -547,12 +545,11 @@ function Map(props: MaplibreMapProps) {
   /**
    * Get Station Data and add to redux state and show modal
    * @param id {string} - The id of the station
-   * @param uf {string} - The Federal State from the station
-   * @returns
+   * @returns {object} object with attributes fields of the station
    */
-  async function getStationData(id: string, uf: string) {
+  async function populateStationData(id: string) {
     try {
-      const sId = String(id).padStart(8, '0');
+      //const sId = String(id).padStart(8, '0');
 
       const [apiData] = await Promise.all([getFromAPI(id)]);
       /*   const [stData, apiData] = await Promise.all([
@@ -561,54 +558,7 @@ function Map(props: MaplibreMapProps) {
         getFromAPI(id)
       ]); */
 
-      /*    const res = await axios({
-        method: 'get',
-        url: `/data/stations/stations-${uf}.json`
-      });
-      const ufStations = stData.data.stations; */
-      const st = {
-        stCode: apiData.stCode,
-        stType: apiData.stType,
-        stName: apiData.stName,
-        stAccountable: apiData.stAccountable,
-        stOperator: apiData.stOperator,
-        stUF: apiData.stUF,
-        stCounty: apiData.stCounty,
-        stLatitude: apiData.stLatitude,
-        stLongitude: apiData.stLongitude,
-        stFaultDays: apiData.stFaultDays,
-        stFaultMonths: apiData.stFaultMonths,
-        stBasin: apiData.stBasin,
-        stRiver: apiData.stRiver,
-        stADren: apiData.stADren,
-        stEscale: apiData.stEscale,
-        stRegLevel: apiData.stRegLevel,
-        stLiqDischarge: apiData.stLiqDischarge,
-        stPluviometer: apiData.stPluviometer,
-        stEvaporimeter: apiData.stEvaporimeter,
-        stClimatological: apiData.stClimatological,
-        stTelemetry: apiData.stTelemetry,
-        stInitScale: apiData.stInitScale,
-        stInitRegLevel: apiData.stInitRegLevel,
-        stInitRegDesLiq: apiData.stInitRegDesLiq,
-        stInitRegSed: apiData.stInitRegSed,
-        stInitRegQual: apiData.stInitRegQual,
-        stInitRegPluv: apiData.stInitRegPluv,
-        stInitRegRain: apiData.stInitRegRain,
-        stInitRegEvap: apiData.stInitRegEvap,
-        stInitRegClim: apiData.stInitRegClim,
-        stInitRegTele: apiData.stInitRegTele,
-        stOperating: apiData.stOperating,
-        stRegINC_TEL: apiData.stRegINC_TEL,
-        stSediments: apiData.stSediments,
-        stWaterQuality: apiData.stWaterQuality
-      };
-
-      /*      ufStations.forEach((item: any) => {
-        if (item._id == id) {
-          st = item;
-        }
-      }); */
+      const stationInfo = new StationInfo(apiData);
 
       const locFirstYear = new Date(apiData.raindata._initRegisterTime).getFullYear();
       const locLastYear = new Date(apiData.raindata._lastRegisterTime).getFullYear();
@@ -617,7 +567,7 @@ function Map(props: MaplibreMapProps) {
 
       appDispatch({
         type: 'loadData',
-        infoValue: st,
+        infoValue: stationInfo,
         locValue: apiData.raindata,
         satValue: apiData.satdata._satData,
         valueLocLastYear: locLastYear,
@@ -628,15 +578,7 @@ function Map(props: MaplibreMapProps) {
         valueSelecetedSatBar: satLastYear - 1
       });
 
-      //const sObj = new Station(res.data.data.attributes);
-      //show Station Modal;
-
-      width < appSettings.mobileBreakpoint
-        ? appDispatch({
-            type: 'toggleStationDialog',
-            value: true
-          })
-        : props.showModalChart(new Station(st));
+      return stationInfo;
     } catch (error: any) {
       if (error.response) {
         // Request made and server responded
@@ -651,6 +593,18 @@ function Map(props: MaplibreMapProps) {
       }
       return error.response.data;
     }
+  }
+
+  function showStationModal() {
+    width < appSettings.mobileBreakpoint
+      ? appDispatch({
+          type: 'toggleStationDialog',
+          value: true
+        })
+      : appDispatch({
+          type: 'toggleStationModal',
+          value: true
+        });
   }
 
   return (

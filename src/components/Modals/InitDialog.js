@@ -9,6 +9,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 import StateContext from '../../StateContext';
 import DispatchContext from '../../DispatchContext';
 import { useTranslation } from 'react-i18next';
+import { Typography } from '@mui/material';
 
 export default function InitDialog() {
   const { t } = useTranslation();
@@ -58,44 +59,42 @@ export default function InitDialog() {
             <img
               src="/assets/images/intro_image2.png"
               alt=""
-              srcset=""
+              srcSet=""
               style={{ maxWidth: '100%', height: 'auto', padding: '0', magin: '0' }}
             />
-            <div style={{ marginTop: '20px', marginBottom: '20px' }}>
-              {t('init01')} <br /> {t('init02')}
-            </div>
+            {t('init01')} <br /> {t('init02')}
             <img
               src="/assets/images/clusters_stations.png"
               alt=""
-              srcset=""
+              srcSet=""
               style={{ maxWidth: '100%', height: 'auto', padding: '0', magin: '0' }}
             />
-            <div style={{ marginTop: '20px', marginBottom: '10px' }}>{t('init03')}</div>
+            {t('init03')}
             <img
               src="/assets/images/navigation_icons.png"
               alt=""
-              srcset=""
+              srcSet=""
               style={{ maxWidth: '100%', height: 'auto', padding: '0', magin: '0' }}
             />
-            <div style={{ marginTop: '20px', marginBottom: '10px' }}>{t('init04')}</div>
+            {t('init04')}
             <img
               src="/assets/images/month_precipitation.png"
               alt=""
-              srcset=""
+              srcSet=""
               style={{ maxWidth: '100%', height: 'auto', padding: '0', magin: '0' }}
             />
-            <div style={{ marginTop: '20px', marginBottom: '10px' }}>{t('init05')}</div>
+            {t('init05')}
             <img
               src="/assets/images/menu_dropdown.png"
               alt=""
-              srcset=""
+              srcSet=""
               style={{ maxWidth: '100%', height: 'auto', padding: '0', magin: '0' }}
             />
-            <div style={{ marginTop: '20px', marginBottom: '10px' }}>{t('init06')}</div>
+            {t('init06')}
             <img
               src="/assets/images/day_max.png"
               alt=""
-              srcset=""
+              srcSet=""
               style={{ maxWidth: '100%', height: 'auto', padding: '0', magin: '0' }}
             />
           </DialogContentText>

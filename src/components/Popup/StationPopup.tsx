@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 import Button from 'react-bootstrap/esm/Button';
-
+import StateContext from '../../StateContext';
+import { formatDate } from '../Utils/utils';
+import StationInfo from '../DataModels/StationInfo';
 export type StationObject = {
   name: string;
   code: string;
@@ -14,11 +16,12 @@ export type StationObject = {
 };
 
 type StPopupProp = {
-  stationObj: StationObject;
+  stationObj: StationInfo;
   getData(id: string, uf: string): void;
 };
 
 const StationPopup = (props: StPopupProp) => {
+  const appState = useContext(StateContext);
   const { t } = useTranslation();
 
   return (
@@ -30,7 +33,7 @@ const StationPopup = (props: StPopupProp) => {
           <thead>
             <tr>
               <th scope="row">{t('name')}</th>
-              <td>{props.stationObj.name.substring(0, 11)}..</td>
+              <td>{props.stationObj.stName.substring(0, 11)}..</td>
             </tr>
           </thead>
           <tbody>
@@ -38,26 +41,34 @@ const StationPopup = (props: StPopupProp) => {
               <td colSpan={2}>
                 <Button
                   className="data-button"
-                  onClick={() => props.getData(props.stationObj.code, props.stationObj.uf)}>
+                  onClick={() => props.getData(props.stationObj.stCode, props.stationObj.stUF)}>
                   {t('rain_data')}
                 </Button>
               </td>
             </tr>
             <tr>
               <th scope="row">{t('code')}</th>
-              <td>{props.stationObj.code}</td>
+              <td>{props.stationObj.stCode}</td>
             </tr>
             <tr>
               <th scope="row">{t('type')}</th>
-              <td>{props.stationObj.type == 'pluv' ? t('pluviometric') : t('fluviometric')}</td>
+              <td>{props.stationObj.stType == 'fluv' ? t('fluviometric') : t('pluviometric')}</td>
             </tr>
             <tr>
               <th scope="row">{t('latitude')}</th>
-              <td>{props.stationObj.latitude.toFixed(4)}</td>
+              <td>{props.stationObj.stLatitude.toFixed(4)}</td>
             </tr>
             <tr>
               <th scope="row">{t('longitude')}</th>
-              <td>{props.stationObj.longitude.toFixed(4)}</td>
+              <td>{props.stationObj.stLongitude.toFixed(4)}</td>
+            </tr>
+            <tr>
+              <th scope="row">Ínic.Satélite</th>
+              <td>{formatDate(props.stationObj.stSatInit as Date)}</td>
+            </tr>
+            <tr>
+              <th scope="row">Ínic.Insitu</th>
+              <td>{formatDate(props.stationObj.stLocInit as Date)}</td>
             </tr>
           </tbody>
         </table>

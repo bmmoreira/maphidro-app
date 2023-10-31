@@ -424,7 +424,7 @@ function DefaultHeader() {
             paddingRight: '20px',
             justifyContent: 'right'
           }}>
-          <img src="assets/mh_logo.png" alt="maphidro logo" />
+          <img src="./assets/mh_logo.png" alt="maphidro logo3" />
         </Grid>
         {width < 1280 ? gridLeftCompact : gridBanners}
       </Grid>

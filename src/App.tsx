@@ -95,6 +95,7 @@ const App: React.FC = () => {
     isSearchOpen: false,
     isChatOpen: false,
     unreadChatCount: 0,
+    stationAction: false,
     modals: {
       panelBox: false,
       projects: false,
@@ -113,6 +114,7 @@ const App: React.FC = () => {
       helpdialog: false,
       settingsdialog: false,
       selectdialog: false,
+      station: false,
       stationdialog: false,
       scrollModal: false,
       initModal: true
@@ -160,6 +162,9 @@ we should probably do those types of things within a useEffect.
 
   function mapReducer(draft: any, action: any) {
     switch (action.type) {
+      case 'toggleStationModal':
+        draft.modals.station = action.value;
+        break;
       case 'setMapref':
         draft.mapRef = action.value;
         break;
@@ -194,12 +199,9 @@ we should probably do those types of things within a useEffect.
         draft.barChart.locFirstYear = action.valueLocFirstYear;
         draft.barChart.satFirstYear = action.valueSatFirstYear;
         draft.barChart.satLastYear = action.valueSatLastYear;
-
         draft.barChart.locBarSelectedYear = action.valueSelecetedLocBar;
         draft.barChart.satBarSelectedYear = action.valueSelecetedSatBar;
-        () => {
-          toggleChartModal();
-        };
+        draft.stationLoaded = action.stationLoaded;
         break;
       case 'chart':
         draft.barChart.locBar = action.locBar;
@@ -393,14 +395,6 @@ we should probably do those types of things within a useEffect.
 
   const handleMapLoading = () => setLoading(false);
 
-  const [chartModal, setChartModal] = useState(false);
-  const toggleChartModal = () => {
-    //setStationObj(stationObj);
-    setChartModal((prevState) => {
-      return !prevState;
-    });
-  };
-
   /*
   Well, when our main component first renders we would just immediately wanna send an Axios request
   to the server to check if our token is still valid or not. If it's no longer valid, if the server says
@@ -458,7 +452,6 @@ we should probably do those types of things within a useEffect.
                     <Map
                       initialOptions={{ center: [-55.59, -15.91], zoom: 4.1 }}
                       onLoaded={handleMapLoading}
-                      showModalChart={toggleChartModal}
                       offCanvas={offCanvas}
                       setOffCanvas={setOffCanvas}
                     />
@@ -477,11 +470,16 @@ we should probably do those types of things within a useEffect.
 
             <Footer />
             <AppDrawer />
-            {chartModal && (
+            {state.modals.station && (
               <ChartModal
                 //stationObj={stationObj}
-                show={chartModal}
-                onHide={() => setChartModal(false)}
+                show={state.modals.station}
+                onHide={() =>
+                  dispatch({
+                    type: 'toggleStationModal',
+                    value: false
+                  })
+                }
               />
             )}
           </div>

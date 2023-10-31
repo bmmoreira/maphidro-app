@@ -44,22 +44,15 @@ function DefaultHeader() {
           m: 0
         }}>
         <Grid
-          xs={4}
+          xs={12}
           sx={{
             backgroundColor: styleWhite.bg,
             display: 'flex',
             paddingRight: '20px',
             justifyContent: 'right'
           }}>
-          <img src="assets/images/logo_top.png" alt="maphidro logo" />
+          <img src="assets/images/logos_top.png" alt="maphidro logo" />
         </Grid>
-        <Grid
-          xs={8}
-          sx={{
-            backgroundColor: styleWhite.bg,
-            display: 'flex',
-            gap: '10px'
-          }}></Grid>
       </Grid>
 
       <Grid container spacing={0} sx={{ backgroundColor: styleWhite.bg, display: 'flex' }}>
