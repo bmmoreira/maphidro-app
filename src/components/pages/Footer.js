@@ -1,5 +1,7 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import StateContext from '../../StateContext';
 import { Link, useNavigate } from 'react-router-dom';
+
 import Box from '@mui/material/Box';
 import useWindowDimensions from '../Utils/useWindowDimensions.js';
 import BottomNavigation from '@mui/material/BottomNavigation';
@@ -20,6 +22,7 @@ function Footer() {
   const [value, setValue] = React.useState(0);
   const { height, width } = useWindowDimensions();
   const location = useLocation();
+  const appState = useContext(StateContext);
 
   const navigate = useNavigate();
 
@@ -89,23 +92,27 @@ function Footer() {
               }
             }}
           />
-          <BottomNavigationAction
-            label="UX"
-            icon={
-              <QuestionAnswerIcon
-                sx={{
-                  color: 'white'
-                }}
-              />
-            }
-            onClick={() => navigate('/ux')}
-            sx={{
-              color: '#ccc',
-              '&& .Mui-selected': {
-                color: 'white'
+          {appState.loggedIn ? (
+            <BottomNavigationAction
+              label="UX"
+              icon={
+                <QuestionAnswerIcon
+                  sx={{
+                    color: 'white'
+                  }}
+                />
               }
-            }}
-          />
+              onClick={() => navigate('/ux')}
+              sx={{
+                color: '#ccc',
+                '&& .Mui-selected': {
+                  color: 'white'
+                }
+              }}
+            />
+          ) : (
+            ''
+          )}
         </BottomNavigation>
       </Box>
     );
@@ -146,13 +153,16 @@ function Footer() {
               style={{ textDecoration: 'none', fontWeight: '600', color: '#595f88' }}>
               {t('about_maphidro')}
             </Link>{' '}
-            |{' '}
-            <Link
-              className="mx-1"
-              to="/ux"
-              style={{ textDecoration: 'none', fontWeight: '600', color: '#595f88' }}>
-              UX
-            </Link>{' '}
+            {appState.loggedIn ? (
+              <Link
+                className="mx-1"
+                to="/ux"
+                style={{ textDecoration: 'none', fontWeight: '600', color: '#595f88' }}>
+                UX
+              </Link>
+            ) : (
+              ''
+            )}{' '}
             <span>
               {' '}
               - Copyright &copy; {new Date().getFullYear()} MapHidro . {t('copyrights')}

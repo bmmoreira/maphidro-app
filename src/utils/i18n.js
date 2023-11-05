@@ -167,7 +167,10 @@ const resources = {
       email_placeholder: 'you@example.com',
       user_alreadyregistered: 'That username is already taken',
       valid_email: 'You must provide a valid email',
-      password_min: 'Password must be at least 5'
+      password_min: 'Password must be at least 5',
+      please_register: 'Please register to access the map functionality.',
+      visit_homepage: 'You can visit the this link to sign up: ',
+      homepage: 'HomePage'
     }
   },
   pt: {
@@ -302,11 +305,11 @@ const resources = {
       copyrights: 'Todos os direitos reservados',
       submit: 'Enviar',
       about1:
-        'This application uses open source libraries to collect and display calibrated satellite data and compare them with in situ rainfall stations operated by CRPM(Geological Survey of Brazil) from the National Hydrometeorological Network (RHN) coordinated by ANA (National Water and Sanitation Agency) in Brazil. Shows 20-year satellite precipitation measurements of more than 1500 pluviometric points of interest in Brazil',
+        'Este é um projeto de aplicação que resulta da dissertação de mestrado em Engenharia Informática e Tecnologia Web da UAB(Universidade Aberta) e da UTAD(Universidade de Trás-os-Montes e Alto Douro)',
       about2:
-        'The Satellite precipitation data is provided by the Center for Weather Forecasting and Climate Studies (CPTEC), a division of the National Institute for Space Research (INPE). The MERGE product has been generated using the Global Precipitation Measurement (GPM) Integrated Multi-satellite Retrievals for GPM (IMERG) data. More details on the technique can be found at',
+        'Utiliza bibliotecas de código aberto para coletar e exibir dados de satélite calibrados da NASA Global Precipitation Measurement (GPM) e compará-los com estações pluviométricas in situ operadas pelo CRPM (Serviço Geológico do Brasil) da Rede Hidrometeorológica Nacional (RHN) coordenada pela ANA (National Agência de Águas e Saneamento) no Brasil. O produto de satélite foi gerado usando dados de precipitação GPM (IMERG). Mais detalhes sobre a técnica podem ser encontrados em',
       about3:
-        "NASA's Global Precipitation Measurement Mission (GPM) uses several satellites to measure Earth's rain and snowfall for the benefit of humanity. GPM is an international mission launched by NASA and JAXA(Japan) that sets the standard for measurements of precipitation in space.",
+        'Mostra medições de precipitação por satélite de 20 anos de mais de 1.500 pontos pluviométricos de interesse no Brasil.',
       indevelopment: 'Este aplicativo está em desenvolvimento',
       uab_text:
         'Projeto de dissertação para Mestrado em Engenharia Informática e Tecnologia Web UAB/UTAD',
@@ -333,7 +336,10 @@ const resources = {
       email_placeholder: 'voce@exemplo.com',
       user_alreadyregistered: 'Esse nome de usuário já está em uso',
       valid_email: 'Você deve inserir um e-mail valido',
-      password_min: 'A senha deve ser pelo menos 5'
+      password_min: 'A senha deve ser pelo menos 5',
+      please_register: 'Por favor registre-se para acessar a funcionalidade do mapa.',
+      visit_homepage: 'Você pode visitar este link para registrar-se: ',
+      homepage: 'Página inicial'
     }
   },
   fr: {
@@ -499,7 +505,10 @@ const resources = {
       email_placeholder: 'vous@exemple.com',
       user_alreadyregistered: "Ce nom d'utilisateur est déjà pris",
       valid_email: 'vous devez fournir une adresse email valide',
-      password_min: 'Le mot de passe doit être au moins 5'
+      password_min: 'Le mot de passe doit être au moins 5',
+      please_register: 'Please register to access the map functionality.',
+      visit_homepage: 'You can visit the this link to sign up: ',
+      homepage: 'HomePage'
     }
   },
   es: {
@@ -665,7 +674,10 @@ const resources = {
       email_placeholder: 'tu@ejemplo.com',
       user_alreadyregistered: 'Ese nombre de usuario ya se encuentra en uso',
       valid_email: 'Tu debes proveer un correo valido',
-      password_min: 'La contraseña debe ser al menos 5'
+      password_min: 'La contraseña debe ser al menos 5',
+      please_register: 'Please register to access the map functionality.',
+      visit_homepage: 'You can visit the this link to sign up: ',
+      homepage: 'HomePage'
     }
   }
 };
