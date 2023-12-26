@@ -1,6 +1,6 @@
 <!-- @format -->
 
-# MapHidro - MapLibre Application using React
+# MapHidro - Uab/Utad Dissertation Project
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
